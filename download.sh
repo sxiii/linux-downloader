@@ -1,6 +1,8 @@
 #!/bin/bash
 # Script that downloads recent linux distro ISOs for you.
-# Requirements: linux, bash, curl, wget, awk, grep
+# Theoretically, the script should always download recent linux ISOs without any updates.
+# But if the developers change the download URL or something else, it might be required to do manual changes.
+# Requirements: linux, bash, curl, wget, awk, grep, xargs
 # Written by SecurityXIII / August 2020
 
 # WARNING! Script is UNFINISHED.
@@ -32,6 +34,18 @@ deepin=("Deepin" "amd64" "release" "deepinurl")
 mxlinux=("MX Linux" "amd64" "release" "mxurl")
 knoppix=("Knoppix" "amd64" "release" "knoppixurl")
 kali=("Kali Linux" "amd64" "kali-weekly" "kaliurl")
+puppy=("Puppy Linux" "amd64" "bionicpup64" "puppyurl")
+
+fedora=("Fedora" "amd64" "fedora-rawhide-nightly" "fedoraurl")
+centos=("CentOS" "amd64" "stream" "centosurl")
+opensuse=("OpenSUSE" "amd64" "leap" "suseurl")
+rosa=("ROSA Linux" "amd64" "desktop-fresh" "rosaurl")
+
+alpine=("Alpine" "amd64" "extended" "alpineurl")
+tinycore=("TinyCore" "amd64" "current" "tinycoreurl")
+porteus=("Porteus" "amd64" "kiosk" "porteusurl")
+slitaz=("SliTaz" "amd64" "rolling" "slitazurl")
+
 
 echo "This script will download recent (latest) linux distribution ISO for you."
 echo "Please choose distro to download (type-in number):"
@@ -129,7 +143,63 @@ x=$(curl -s $mirror | grep -m1 live-amd64.iso | awk -F">" '{ print $7 }' | awk -
 new="$mirror/$x"
 }
 
-if [ $z = "y" ]; then $"${arr[3]}"; wget $new ; fi
+puppyurl () {
+mirror="http://distro.ibiblio.org/puppylinux/puppy-bionic/bionicpup64/"
+x=$(curl -s $mirror | grep -m1 uefi.iso | awk -F">" '{ print $4 }' | awk -F"<" '{ print $1 }')
+new="$mirror/$x"
+}
 
+fedoraurl () {
+mirror="https://www.happyassassin.net/nightlies.html"
+new=$(curl -s $mirror | grep -A7 "Fedora Rawhide" | grep .iso | awk -F\" '{ print $2 }')
+}
+
+centosurl () {
+mirrorone="https://www.centos.org/centos-stream/"
+one=$(curl -s $mirrorone | grep x86_64 | awk -F\" '{ print $2 }' | awk -F"/" '{ print $5 }')
+mirror="http://mirror.yandex.ru/centos/$one/isos/x86_64/"
+x=$(curl -s $mirror | grep -m1 dvd1 | awk -F\" '{ print $2 }' | awk -F\" '{ print $1 }')
+new="$mirror/$x"
+}
+
+suseurl () {
+mirrorone="https://software.opensuse.org/distributions/leap"
+one=$(curl -s $mirrorone | grep -m1 "openSUSE Leap" | awk -F"Leap" '{ print $2 }' | awk -F"<" '{ print $1 }' | xargs)
+mirror="http://mirror.yandex.ru/opensuse/distribution/leap/$one/iso/"
+x=$(curl -s $mirror | grep -m1 "x86_64.iso" | awk -F\" '{ print $2 }')
+new="$mirror/$x"
+}
+
+rosaurl () {
+mirror="https://www.rosalinux.ru/rosa-linux-download-links/"
+new="$(curl -s $mirror | grep -A3 -m1 KDE4 | grep 64-bit | awk -F\" '{ print $4 }')"
+}
+
+alpineurl () {
+mirrorone="https://alpinelinux.org/downloads/"
+one=$(curl -s $mirrorone | grep Current | awk -F">" '{ print $3 }' | awk -F"<" '{ print $1 }')
+shortv=$(echo $one | awk -F"." '{ print $1"."$2}')
+new="http://dl-cdn.alpinelinux.org/alpine/v$shortv/releases/x86_64/alpine-extended-$one-x86_64.iso"
+}
+
+tinycoreurl () {
+mirrorone="http://tinycorelinux.net/downloads.html"
+one=$(curl -s $mirrorone | grep TinyCore-current.iso | awk -F\" '{ print $2 }')
+mirror="http://tinycorelinux.net/"
+new="$mirror/$one"
+}
+
+porteusurl () {
+mirrorone="https://porteus-kiosk.org/download.html"
+one=$(curl -s $mirrorone | grep "Porteus-Kiosk.*x86_64.iso" | grep -m1 public| awk -F\" '{ print $2 }')
+mirror="https://porteus-kiosk.org/"
+new="$mirror/$one"
+}
+
+slitazurl () {
+new="http://mirror.slitaz.org/iso/rolling/slitaz-rolling-core64.iso"
+}
+
+if [ $z = "y" ]; then $"${arr[3]}"; wget $new ; fi
 # Add multiple download support with "1,2,3,10"
 # Add all support with "all"
