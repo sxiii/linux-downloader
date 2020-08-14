@@ -17,7 +17,7 @@ distro_all=("${arch[@]}" "${deb[@]}" "${rpm[@]}" "${other[@]}" "${sourcebased[@]
 
 # Legend ## Distroname ## Arch  ## Type     ## Download URL 
 archlinux=("ArchLinux" "amd64" "rolling" "archurl")
-manjaro=("Manjaro" "amd64" "rolling" "manjarourl")
+manjaro=("Manjaro" "amd64" "rolling" "manjarourl") # TBD
 arcolinux=("Arcolinux" "amd64" "rolling" "arcourl")
 archbang=("Archbang" "amd64" "rolling" "archbangurl")
 
@@ -25,7 +25,13 @@ debian=("Debian" "amd64" "testing" "debianurl")
 ubuntu=("Ubuntu" "amd64" "daily-live" "ubuntuurl")
 linuxmint=("Linux Mint" "amd64" "release" "minturl")
 altlinux=("ALT Linux" "amd64" "release" "alturl")
-zorinos=("ZorinOS" "amd64" "release" "zorinurl")
+zorinos=("ZorinOS" "amd64" "core" "zorinurl")
+elementaryos=("Elementary OS" "amd64" "release" "elementurl") # TBD
+popos=("PopOS" "amd64" "release" "popurl") # TBD
+deepin=("Deepin" "amd64" "release" "deepinurl")
+mxlinux=("MX Linux" "amd64" "release" "mxurl")
+knoppix=("Knoppix" "amd64" "release" "knoppixurl")
+kali=("Kali Linux" "amd64" "kali-weekly" "kaliurl")
 
 echo "This script will download recent (latest) linux distribution ISO for you."
 echo "Please choose distro to download (type-in number):"
@@ -47,6 +53,7 @@ new="$mirror/$x.iso"
 }
 
 manjarourl () {
+### TBD
 mirror=""
 x=$()
 new="$mirror/$x.iso"
@@ -86,6 +93,40 @@ new="http://mirror.yandex.ru/altlinux-nightly/current/regular-cinnamon-latest-x8
 zorinurl () {
 mirror="https://sourceforge.net/projects/zorin-os/files/latest/download"
 new="$mirror -O zorinos-core-64bit-latest.iso"
+}
+
+elementurl () {
+### TBD
+mirror=""
+new=""
+}
+
+popurl () {
+### TBD
+mirror=""
+new=""
+}
+
+deepinurl () {
+mirror="https://sourceforge.net/projects/deepin/files/latest/download"
+new="$mirror -O deepin-latest.iso"
+}
+
+mxurl () {
+mirror="https://sourceforge.net/projects/mx-linux/files/latest/download"
+new="$mirror -O mx-x64-latest.iso"
+}
+
+knoppixurl () {
+mirror="http://mirror.yandex.ru/knoppix/DVD/"
+x=$(curl -s $mirror | grep -m1 EN.iso | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
+new="$mirror/$x"
+}
+
+kaliurl () {
+mirror="http://cdimage.kali.org/kali-weekly/"
+x=$(curl -s $mirror | grep -m1 live-amd64.iso | awk -F">" '{ print $7 }' | awk -F"<" '{ print $1 }')
+new="$mirror/$x"
 }
 
 if [ $z = "y" ]; then $"${arr[3]}"; wget $new ; fi
