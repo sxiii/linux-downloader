@@ -13,13 +13,13 @@ arch=(archlinux manjaro arcolinux archbang)
 deb=(debian ubuntu linuxmint altlinux zorinos elementaryos popos deepin mxlinux knoppix kali puppy)
 rpm=(fedora centos opensuse rosa)
 other=(alpine tinycore porteus slitaz)
-sourcebased=(gentoo sabayon nixos slackware)
+sourcebased=(gentoo sabayon calculate nixos)
 # All distributions
 distro_all=("${arch[@]}" "${deb[@]}" "${rpm[@]}" "${other[@]}" "${sourcebased[@]}")
 
 # Legend ## Distroname ## Arch  ## Type     ## Download URL 
 archlinux=("ArchLinux" "amd64" "rolling" "archurl")
-manjaro=("Manjaro" "amd64" "rolling" "manjarourl") # TBD
+manjaro=("Manjaro" "amd64" "rolling" "manjarourl")
 arcolinux=("Arcolinux" "amd64" "rolling" "arcourl")
 archbang=("Archbang" "amd64" "rolling" "archbangurl")
 
@@ -28,8 +28,8 @@ ubuntu=("Ubuntu" "amd64" "daily-live" "ubuntuurl")
 linuxmint=("Linux Mint" "amd64" "release" "minturl")
 altlinux=("ALT Linux" "amd64" "release" "alturl")
 zorinos=("ZorinOS" "amd64" "core" "zorinurl")
-elementaryos=("Elementary OS" "amd64" "release" "elementurl") # TBD
-popos=("PopOS" "amd64" "release" "popurl") # TBD
+elementaryos=("Elementary OS" "amd64" "release" "elementurl")
+popos=("PopOS" "amd64" "release" "popurl")
 deepin=("Deepin" "amd64" "release" "deepinurl")
 mxlinux=("MX Linux" "amd64" "release" "mxurl")
 knoppix=("Knoppix" "amd64" "release" "knoppixurl")
@@ -46,6 +46,10 @@ tinycore=("TinyCore" "amd64" "current" "tinycoreurl")
 porteus=("Porteus" "amd64" "kiosk" "porteusurl")
 slitaz=("SliTaz" "amd64" "rolling" "slitazurl")
 
+gentoo=("Gentoo" "amd64" "admincd" "gentoourl")
+sabayon=("Sabayon" "amd64" "daily" "sabayonurl")
+calculate=("Calculate Linux" "amd64" "release" "calcurl")
+nixos=("NixOS" "amd64" "unstable" "nixurl")
 
 echo "This script will download recent (latest) linux distribution ISO for you."
 echo "Please choose distro to download (type-in number):"
@@ -67,10 +71,8 @@ new="$mirror/$x.iso"
 }
 
 manjarourl () {
-### TBD
-mirror=""
-x=$()
-new="$mirror/$x.iso"
+mirror="https://manjaro.org/downloads/official/xfce/"
+new=$(curl -s $mirror | grep -m1 "manjaro/storage/xfce" | awk -F\" '{ print $2 }')
 }
 
 arcourl () {
@@ -110,15 +112,16 @@ new="$mirror -O zorinos-core-64bit-latest.iso"
 }
 
 elementurl () {
-### TBD
-mirror=""
-new=""
+echo "Sorry, Elementary OS can be only manually downloaded via the URL: https://elementary.io"
+exit
 }
 
 popurl () {
-### TBD
-mirror=""
-new=""
+mirror="https://pop-iso.sfo2.cdn.digitaloceanspaces.com"
+x=$(curl -s $mirror | html2text | grep intel_5 | tail -2 | head -1 | awk -F".iso" '{ print $1 }')
+v=$(echo $x | awk -F"_" '{ print $2 }')
+arch=$(echo $x | awk -F"_" '{ print $3 }')
+new="$mirror/$v/$arch/$x.iso"
 }
 
 deepinurl () {
@@ -198,6 +201,34 @@ new="$mirror/$one"
 
 slitazurl () {
 new="http://mirror.slitaz.org/iso/rolling/slitaz-rolling-core64.iso"
+}
+
+gentoourl () {
+mirror="https://gentoo.c3sl.ufpr.br//releases/amd64/autobuilds"
+one=$(curl -s "$mirror/latest-iso.txt" | grep "admin" | awk '{ print $1 }')
+new="$mirror/$one"
+}
+
+sabayonurl () {
+new="http://sabayonlinux.mirror.garr.it/mirrors/sabayonlinux//iso/daily/Sabayon_Linux_DAILY_amd64_Xfce.iso"
+}
+
+calcurl () {
+mirror="https://mirror.yandex.ru/calculate/nightly/"
+x=$(curl -s $mirror | grep "<a" | tail -1 | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
+mirror+=$x
+x=$(curl -s $mirror | grep -m1 cldc | awk -F\" '{ print $2 }')
+new="$mirror/$x"
+echo $new
+}
+
+nixurl () {
+mirror="https://channels.nixos.org/nixos-unstable"
+saved=$(curl -sL $mirror)
+dir=$(echo $saved | awk -F"nixos" '{ print $26 }')
+file=$(echo $saved | awk -F"nixos" '{ print $28 }' | awk -F".iso" '{ print $1 }')
+result="nixos"; result+=$dir; result+="nixos"; result+=$file
+new="https://releases.nixos.org/nixos/unstable/$result.iso"
 }
 
 if [ $z = "y" ]; then $"${arr[3]}"; wget $new ; fi
