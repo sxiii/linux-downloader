@@ -107,6 +107,7 @@ fedoraurl () {
 mirror="https://www.happyassassin.net/nightlies.html"
 x=$(curl -s $mirror | grep -A7 "Fedora Rawhide" | grep .iso | awk -F\" '{ print $4 }')
 new="$x -O fedora.iso"
+notlive
 }
 
 centosurl () {
@@ -115,6 +116,7 @@ one=$(curl -s $mirrorone | grep x86_64 | awk -F\" '{ print $2 }' | awk -F"/" '{ 
 mirror="http://mirror.yandex.ru/centos/$one/isos/x86_64/"
 x=$(curl -s $mirror | grep -m1 dvd1 | awk -F\" '{ print $2 }' | awk -F\" '{ print $1 }')
 new="$mirror/$x -O centos.iso"
+notlive
 }
 
 suseurl () {
@@ -130,6 +132,12 @@ mirror="https://www.rosalinux.ru/rosa-linux-download-links/"
 x="$(curl -s $mirror | grep -A3 -m1 KDE4 | grep 64-bit | awk -F\" '{ print $4 }')"
 new="$x -O rosa.iso"
 }
+
+mandrivaurl () {
+mirror="https://sourceforge.net/projects/openmandriva/files/latest/download"
+new="$mirror -O mandriva.iso"
+}
+
 
 alpineurl () {
 mirrorone="https://alpinelinux.org/downloads/"
