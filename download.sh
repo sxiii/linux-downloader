@@ -1,11 +1,13 @@
 #!/bin/bash
-echo "Script that downloads recent (latest release) linux distro ISOs for you."
-echo "It consist of the file with distro download functions (distrofunctions.sh) as well as this script."
-echo "Theoretically, the script should always download recent linux ISOs without any updates."
-echo "But if the developers change the download URL or something else, it might be required to do manual changes."
-echo "Requirements: linux, bash, curl, wget, awk, grep, xargs"
-echo "Written by SecurityXIII / August 2020"
-echo
+echo "/------------------------------------------------------------------------------------------------------------------------\ "
+echo "| Script that downloads recent (latest release) linux distro ISOs for you. This is kinda distrohopper-dream machine.     | "
+echo "| It consist of the file with distro download functions (distrofunctions.sh) as well as this script.                     | "
+echo "| Theoretically, the script should always download recent linux ISOs without any updates. But, if the developer(s)       | "
+echo "| change the download URL or something else, it might be required to do manual changes - probably in distrofunctions.sh. | "
+echo "| Requirements: linux, bash, curl, wget, awk, grep, xargs  / ------------------------------------------------------------/ "
+echo "| Written by SecurityXIII / August 2020   /---------------/"
+echo "\-----------------------------------------/"
+echo "+ How to use?"
 echo "If you manually pick distros (opt. one or two) you will be prompted about launching a VM for test spin for each distro."
 echo "Multiple values are also supported. Please choose:"
 echo "* one distribution (e.g. type 0 for archlinux)*"
@@ -17,9 +19,7 @@ echo "* 'all' option, the script will ONLY download ALL of the ISOs (warning: th
 
 # "WIP". Todo:	1. Multiple architecture support;
 #		2. Multiple download mirror support;
-#		3. Auto-check if ISO is already downloaded and has the same size; skip downloading.
-# Add: openmandriva, mageia, clearos, reactos, void, kaos, 4mlinux, haiku, clearlinux, guix, pclinuxos, easyos, freebsd
-# Left to check: Fedora, CentOS.
+# Add: mageia, clearos, reactos, void, kaos, 4mlinux, haiku, clearlinux, guix, pclinuxos, easyos, freebsd
 
 # Load the functions from distrofunctions.sh:
 . distrofunctions.sh
@@ -27,7 +27,7 @@ echo "* 'all' option, the script will ONLY download ALL of the ISOs (warning: th
 # Categories
 arch=(archlinux manjaro arcolinux archbang)
 deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy)
-rpm=(fedora centos opensuse rosa)
+rpm=(fedora centos opensuse rosa mandriva)
 other=(alpine tinycore porteus slitaz)
 sourcebased=(gentoo sabayon calculate nixos)
 
@@ -57,6 +57,7 @@ fedora=("Fedora" "amd64" "fedora-rawhide-nightly" "fedoraurl")
 centos=("CentOS" "amd64" "stream" "centosurl")
 opensuse=("OpenSUSE" "amd64" "leap" "suseurl")
 rosa=("ROSA" "amd64" "desktop-fresh" "rosaurl")
+mandriva=("Mandriva" "amd64" "release" "mandrivaurl")
 
 alpine=("Alpine" "amd64" "extended" "alpineurl")
 tinycore=("TinyCore" "amd64" "current" "tinycoreurl")
