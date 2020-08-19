@@ -1,12 +1,12 @@
 #!/bin/bash
-echo "/---------------------------------------------------------------------------------------------------------------------------------------\ "
-echo "| Script downloads recent (latest release) linux ISOs and spins a VM for a test. This is kinda distrohopper dream machine.              | "
-echo "| It consist of the file with distro download functions (distrofunctions.sh) as well as this script.                                    | "
-echo "| Theoretically, the script should always download recent linux ISOs without any updates. But, if the developer(s)                      | "
-echo "| change the download URL or something else, it might be required to do manual changes - probably in distrofunctions.sh.                | "
-echo "| Requirements: linux, bash, curl, wget, awk, grep, xargs, paste, column (this tools usually are preinstalled on linux)                 | "
-echo "| Also, some distros are shared as archive. That's why you need xz for guix, bzip2 for minix, zip for haiku and finally 7z for kolibri. | "
-echo "| Written by SecurityXIII / August 2020 / Kopimi un-license  /--------------------------------------------------------------------------/ "
+echo "/----------------------------------------------------------------------------------------------------------------------------------------\ "
+echo "| Script downloads recent (latest release) linux ISOs and spins a VM for a test. This is kinda distrohopper dream machine.               | "
+echo "| It consist of the file with distro download functions (distrofunctions.sh) as well as this script.                                     | "
+echo "| Theoretically, the script should always download recent linux ISOs without any updates. But, if the developer(s)                       | "
+echo "| change the download URL or something else, it might be required to do manual changes - probably in distrofunctions.sh.                 | "
+echo "| Requirements: linux, bash, curl, wget, awk, grep, xargs, paste, column (this tools usually are preinstalled on linux)                  | "
+echo "| Some distros are shared as archive. So you'll need xz for guix, bzip2 for minix, zip for haiku & reactos, and, finally 7z for kolibri. | "
+echo "| Written by SecurityXIII / August 2020 / Kopimi un-license  /---------------------------------------------------------------------------/ "
 echo "\------------------------------------------------------------/"
 echo "+ How to use?"
 echo "If you manually pick distros (opt. one or two) you will be prompted about launching a VM for test spin for each distro."
@@ -20,7 +20,6 @@ echo "* 'all' option, the script will ONLY download ALL of the ISOs (warning: th
 
 # "WIP". Todo:	1. Multiple architecture support;
 #		2. Multiple download mirror support;
-#              3. Show categories for user and allow to download all distros from specific category.	
 
 ram=1024 # Amount (mb) of RAM, for VM.
 
@@ -38,7 +37,8 @@ notlinux=(freebsd openindiana minix haiku menuetos kolibrios reactos)
 
 # All distributions
 category_names=("Arch-based" "DEB-based" "RPM-based" "Other" "Source-based" "Containers" "Not linux")
-distro_all=("${arch[@]}" "${deb[@]}" "${rpm[@]}" "${other[@]}" "${sourcebased[@]}" "${containers[@]}" "${notlinux[@]}")
+distro_all=("arch" "deb" "rpm" "other" "sourcebased" "containers" "notlinux")
+distro_arr=("${arch[@]}" "${deb[@]}" "${rpm[@]}" "${other[@]}" "${sourcebased[@]}" "${containers[@]}" "${notlinux[@]}")
 
 # Legend ## Distroname ## Arch  ## Type     ## Download URL 
 archlinux=("ArchLinux" "amd64" "rolling" "archurl")
@@ -99,22 +99,34 @@ menuetos=("MenuetOS" "amd64" "release" "menueturl")
 kolibrios=("KolibriOS" "amd64" "release" "kolibrios")
 reactos=("ReactOS" "amd64" "release" "reactosurl")
 
-for ((i=0; i<${#distro_all[@]}; i++)); do dist=${distro_all[$i]}; typeset -n arr=$dist; colout+="$i = ${arr[0]} \n"; done
+q=0;
 
-printf "$colout" | paste - - - - - - | column -t
+for ((i=0; i<${#distro_all[@]}; i++)); do
+	col+="${category_names[$i]}: \n"
+	dist=${distro_all[$i]}
+	typeset -n arr=$dist
+	for ((d=0; d<${#arr[@]}; d++)); do
+		col+="$q = ${arr[$d]} \n"
+		(( q++ ));
+	done
+printf "$col" > col$i.tmp
+col=""
+done
+
+pr -m -t -w120 col*tmp && rm *tmp
 
 echo "Please choose distro to download (type-in number or space-separated multiple numbers):"
 read x
 
 # Happens if the input is empty
-if [ -z "$x" ]; then echo "Wrong distribution number. Please type-in number of according distro. Exiting"; exit; fi # "Empty" handling
+if [ -z "$x" ]; then echo "Empty distribution number. Please type-in number of according distro. Exiting"; exit; fi # "Empty" handling
 
-# This questions are asked ONLY if user hadn't used the option "all"
+# This questions are asked ONLY if user hadn't used the option "all".
 if [ "$x" != "all" ]; then
 	for distr in $x; do 
-
-	dist=${distro_all[$distr]}
+	dist=${distro_arr[$distr]}
 	typeset -n arr=$dist
+
 	echo "You choose ${arr[0]} distro ${arr[2]}, built for ${arr[1]} arch. Do you want to download ${arr[0]} ISO? (y / n)"
 	read z
 	if [ $z = "y" ]; then $"${arr[3]}"; fi
@@ -124,7 +136,7 @@ if [ "$x" != "all" ]; then
 	if [ $z = "y" ]; then
 	        # ADD QEMU AVAILABILITY CHECK
 		isoname="$(echo ${arr[0]} | awk '{print tolower($0)}').iso"
-		# Uncomment the following two rows (a1 & a2) and comment out third (b1) if you want to make QEMU HDD
+		# Uncomment the following two rows (a1 & a2) and comment out others if you want to make QEMU HDD
 		# qemu-img create ./${arr[0]}.img 4G                                                # a1. Creating HDD (if you want changes to be preserved)
 		# qemu-system-x86_64 -hda ./${arr[0]}.img -boot d -cdrom ./${arr[0]}*.iso -m 1024   # a2. Booting from CDROM with HDD support (changes will be preserved)
 		[ -f ./$isoname ] && qemu-system-x86_64 -boot d -cdrom ./$isoname -m $ram           # b1. This is liveCD boot without HDD (all changes will be lost)
@@ -135,7 +147,13 @@ if [ "$x" != "all" ]; then
 	done
 else
 
-# Only download will happen if user picked "all" option
-	if [ "$x" = "all" ]; then i=0; for ((i=0; i<${#distro_all[@]}; i++)); do xx+="$i "; done; x=$xx; fi # "All" handling
-	$"${arr[3]}";
+# All handling: automatic download will happen if user picked "all" option, no questions asked.
+	if [ "$x" = "all" ]; then for ((i=0; i<${#distro_arr[@]}; i++)); do xx+="$i "; done; x=$xx; fi # "All" handling
+	for ((i=0; i<${#distro_arr[@]}; i++)); do 
+		for distr in $x; do 
+			dist=${distro_arr[$distr]}
+			typeset -n arr=$dist
+			$"${arr[3]}"
+		done
+	done
 fi
