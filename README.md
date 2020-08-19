@@ -3,12 +3,14 @@ Bash script for autodownloading of different Linux distros and testing them in q
 
 ## Linux Distrohopper Dream Machine Script
 ```
-/--------------------------------------------------------------------------------------------------------------------\
-| Script downloads recent (latest release) linux ISOs and spins a VM for a test. This is distrohopper dream machine. |
-| It consist of the file with distro download functions (distrofunctions.sh) as well as this script.                 |
-| Theoretically, the script should always download recent linux ISOs without any updates. But, if the developer(s)   |
-| change the download URL or something else, it might be required to do manual changes - distrofunctions.sh.         |
-\--------------------------------------------------------------------------------------------------------------------/
+/----------------------------------------------------------------------------------\
+| Script downloads recent (latest release) linux ISOs and spins a VM for a test.   |
+| This is distrohopper dream machine. It consist of the file with distro download  | 
+| functions (distrofunctions.sh) as well as this script. Theoretically, the script | 
+| should always download recent linux ISOs without any updates. But, if the dev(s) |
+| change the download URL or something else, it might be required to do manual     |
+| changes - distrofunctions.sh.                                                    |
+\----------------------------------------------------------------------------------/
 ```
 
 ## Requirements: 
