@@ -320,6 +320,7 @@ x=$(curl -s $mirror | grep ".iso" | awk -F"https://" '{ print $2 }' | awk -F\" '
 new="https://$x"
 notlive
 wgetcmd
+echo "Please wait, unpacking guix..."
 xz -d -v ./guix*xz
 mv guix*iso guix.iso
 }
@@ -339,33 +340,68 @@ wgetcmd
 }
 
 flatcarurl () {
+mirror="https://alpha.release.flatcar-linux.net/amd64-usr/current/flatcar_production_iso_image.iso"
+new="$mirror -O flatcar.iso"
+wgetcmd
 }
 
 silverblueurl () {
+mirror="https://silverblue.fedoraproject.org/download"
+x=$(curl -s $mirror | grep -m1 x86_64 | awk -F\' '{ print $2 }')
+new="$x -O silverblue.iso"
+wgetcmd
 }
 
 freebsdurl () {
 notlinux
+mirror="https://www.freebsd.org/where.html"
+x=$(curl -s $mirror | grep -m1 "amd64/amd64" | awk -F\" '{ print $2 }')
+one=$(curl -s $x | grep -m1 dvd1 | awk -F"FreeBSD" '{ print $2 }' | awk -F\" '{ print $1 }')
+new+=$x; new+="FreeBSD"; new+=$one; new+=" -O freebsd.iso"
+wgetcmd
 }
 
 indianaurl () {
 notlinux
+mirror="https://www.openindiana.org/download/"
+x=$(curl -s $mirror | grep "Live DVD" | awk -F"http://" '{ print $2 }' | awk -F\" '{ print $1 }')
+new="http://$x -O openindiana.iso"
+wgetcmd
 }
 
 minixurl () {
 notlinux
+mirror="https://wiki.minix3.org/doku.php?id=www:download:start"
+x=$(curl -s $mirror | grep -m1 iso.bz2 | awk -F"http://" '{ print $2 }' | awk -F\" '{ print $1 }')
+new="http://$x -O minix.iso.bz2"
+[ ! -f minix.iso ] && wgetcmd && echo "Please wait, unpacking minix..." && bzip2 -d minix.iso.bz2 || echo "Minix already downloaded."
 }
 
 haikuurl () {
 notlinux
+mirror="https://download.haiku-os.org/nightly-images/x86_64/"
+x=$(curl -s $mirror | grep -m1 zip | awk -F\" '{ print $2 }')
+new="$x -O haiku.zip"
+[ ! -f haiku.iso ] && wgetcmd && echo "Please wait, unzipping haiku..." && unzip haiku.zip && rm ReadMe.md && mv haiku*iso haiku.iso || echo "Haiku already downloaded."
 }
 
 menueturl () {
 notlinux
+mirror="http://www.menuetos.be/download.php?CurrentMenuetOS"
+new="$mirror -O menuetos.zip"
+[ ! -f menuetos.img ] && wgetcmd && echo "Please wait, unzipping menuetos..." && unzip menuetos.zip && mv M64*.IMG menuetos.img && rm menuetos.zip || echo "Menuet already downloaded."
 }
+
 kolibrios () {
 notlinux
+mirror="http://builds.kolibrios.org/eng/latest-iso.7z"
+new="$mirror -O kolibrios.7z"
+[ ! -f kolibrios.iso ] && wgetcmd && echo "Un7zipping kolibri..." && 7z x kolibrios.7z && mv kolibri.iso kolibrios.iso && rm kolibrios.7z || echo "Kolibri already downloaded."
 }
+
 reactosurl () {
 notlinux
+mirror="https://sourceforge.net/projects/reactos/files/latest/download"
+new="$mirror -O reactos.iso"
+wgetcmd
 }
