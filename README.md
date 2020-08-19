@@ -12,7 +12,7 @@ Bash script for autodownloading of different Linux distros and testing them in q
 ```
 
 ## Requirements: 
-* Basic stuff: linux, bash, curl, wget, awk, grep, xargs, paste, column (these tools usually are preinstalled on linux) 
+* Basic stuff: linux, bash, curl, wget, awk, grep, xargs, pr (these tools usually are preinstalled on linux) 
 * Additional: some distros are shared as archive. So you'll need xz for guix, bzip2 for minix, zip for haiku & reactos, and, finally 7z for kolibri.
 
 ## How to use?
