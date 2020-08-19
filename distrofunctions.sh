@@ -3,7 +3,9 @@
 # Download functions and commands
 
 wgetcmd () { wget -c $new; }
-#ariacmd () { aria2c --seed-time=0 -c $new; } # Set seeding time after downloading to zero ( this is sad :-( remove --seed-time=0 if you like to seed :-) )
+
+# This can be adopted for using torrents instead of direct HTTP/FTP files
+# ariacmd () { aria2c --seed-time=0 -c $new; } # Set seeding time after downloading to zero ( this is sad :-( remove --seed-time=0 if you like to seed :-) )
 
 # Other functions
 
@@ -11,6 +13,12 @@ notlive () {
 echo " / / ---------------------------------------------------------------------- \ \ "
 echo " | | Note: this is not a live disk (it'll require further installation).    | | "
 echo " \ \ -----------------------------------------------------------------------/ / "
+}
+
+notlinux () {
+echo " / / ------------------------------------------------------------------------------------- \ \ "
+echo " | | Note: this isn't actually linux. It was included as it's important opensource project | | "
+echo " \ \ --------------------------------------------------------------------------------------/ / "
 }
 
 # Update latest distro URL functions
@@ -45,7 +53,7 @@ wgetcmd
 parabolaurl () {
 mirror="https://wiki.parabola.nu/Get_Parabola"
 x=$(curl -s $mirror | grep systemd | grep lxde | grep ".iso" | grep Web | awk -F"redirector" '{ print $2 }' | awk -F\" '{ print $1 }')
-new="https://redirector$x"
+new="https://redirector$x -O parabola.iso"
 wgetcmd
 }
 
@@ -231,6 +239,46 @@ new="$x -O slitaz.iso"
 wgetcmd
 }
 
+pclinuxosurl () {
+mirror="http://ftp.nluug.nl/pub/os/Linux/distr/pclinuxos/pclinuxos/live-cd/64bit/"
+x="pclinuxos$(curl -s $mirror | grep -m1 .iso | awk -F"pclinuxos" '{ print $2 }' | awk -F\" '{ print $1 }')"
+new="$mirror$x -O pclinuxos.iso"
+wgetcmd
+}
+
+voidurl () {
+mirror="https://alpha.de.repo.voidlinux.org/live/current/"
+x=$(curl -s $mirror | grep "live" | grep -m1 "x86_64" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
+new="$mirror/$x -O void.iso"
+wgetcmd
+}
+
+fourmurl () {
+mirror="https://sourceforge.net/projects/linux4m/files/latest/download"
+new="$mirror -O 4mlinux.iso"
+wgetcmd
+}
+
+kaosurl () {
+mirror="https://sourceforge.net/projects/kaosx/files/latest/download"
+new="$mirror -O kaos.iso"
+wgetcmd
+}
+
+clearurl () {
+mirror="https://clearlinux.org/downloads"
+x=$(curl -s $mirror | grep live | grep -m1 iso | awk -F\" '{ print $2 }')
+new="$x -O clearlinux.iso"
+wgetcmd
+}
+
+dragoraurl () {
+mirror="http://rsync.dragora.org/current/iso/beta/"
+x=$(curl -s $mirror | grep -m1 x86_64 | awk -F\' '{ print $2 }')
+new="$mirror$x -O dragora.iso"
+wgetcmd
+}
+
 gentoourl () {
 mirror="https://gentoo.c3sl.ufpr.br//releases/amd64/autobuilds"
 one=$(curl -s "$mirror/latest-iso.txt" | grep "admin" | awk '{ print $1 }')
@@ -274,4 +322,50 @@ notlive
 wgetcmd
 xz -d -v ./guix*xz
 mv guix*iso guix.iso
+}
+
+rancherurl () {
+mirror="https://github.com/rancher/os/releases/latest"
+x=$(curl -s -L $mirror | grep -m1 rancheros.iso | awk -F\" '{ print $2 }')
+new="https://github.com$x -O rancheros.iso"
+wgetcmd
+}
+
+k3osurl () {
+mirror="https://github.com/rancher/k3os/releases/latest"
+x=$(curl -s -L $mirror | grep -m1 k3os-amd64.iso | awk -F\" '{ print $2 }')
+new="https://github.com$x -O k3os.iso"
+wgetcmd
+}
+
+flatcarurl () {
+}
+
+silverblueurl () {
+}
+
+freebsdurl () {
+notlinux
+}
+
+indianaurl () {
+notlinux
+}
+
+minixurl () {
+notlinux
+}
+
+haikuurl () {
+notlinux
+}
+
+menueturl () {
+notlinux
+}
+kolibrios () {
+notlinux
+}
+reactosurl () {
+notlinux
 }
