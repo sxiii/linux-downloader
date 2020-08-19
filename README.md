@@ -3,12 +3,12 @@ Bash script for autodownloading of different Linux distros and testing them in q
 
 ## Linux Distrohopper Dream Machine Script
 ```
-/--------------------------------------------------------------------------------------------------------------------------\
-| Script downloads recent (latest release) linux ISOs and spins a VM for a test. This is kinda distrohopper dream machine. |
-| It consist of the file with distro download functions (distrofunctions.sh) as well as this script.                       |
-| Theoretically, the script should always download recent linux ISOs without any updates. But, if the developer(s)         |
-| change the download URL or something else, it might be required to do manual changes - probably in distrofunctions.sh.   |
-\--------------------------------------------------------------------------------------------------------------------------/
+/--------------------------------------------------------------------------------------------------------------------\
+| Script downloads recent (latest release) linux ISOs and spins a VM for a test. This is distrohopper dream machine. |
+| It consist of the file with distro download functions (distrofunctions.sh) as well as this script.                 |
+| Theoretically, the script should always download recent linux ISOs without any updates. But, if the developer(s)   |
+| change the download URL or something else, it might be required to do manual changes - distrofunctions.sh.         |
+\--------------------------------------------------------------------------------------------------------------------/
 ```
 
 ## Requirements: 
@@ -27,6 +27,10 @@ Multiple values are also supported:
 1. Multiple architecture support
 2. Multiple download mirror support
 3. Adding more distributions
+
+## Notes
+* automation is in the main script
+* all URL/mirror/HTTP scraping are done in the distrofunctions.sh file
 
 Feel free to do a pull request or ask me to add your favourite distro in the issues.
 NB: I prefer the distros updated at least in 2019 or later.
