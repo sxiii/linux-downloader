@@ -402,6 +402,6 @@ new="$mirror -O kolibrios.7z"
 reactosurl () {
 notlinux
 mirror="https://sourceforge.net/projects/reactos/files/latest/download"
-new="$mirror -O reactos.iso"
-wgetcmd
+new="$mirror -O reactos.zip"
+[ ! -f reactos.iso ] && wgetcmd && echo "Please wait, unzipping reactos..." && unzip reactos.zip && mv React*iso reactos.iso && rm reactos.zip || echo "Menuet already downloaded."
 }
