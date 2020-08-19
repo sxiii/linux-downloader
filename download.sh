@@ -1,11 +1,12 @@
 #!/bin/bash
-echo "/---------------------------------------------------------------------------------------------------------------------------\ "
-echo "| Script downloads recent (latest release) linux ISOs and spins a VM for a test. This is kinda distrohopper dream machine.  | "
-echo "| It consist of the file with distro download functions (distrofunctions.sh) as well as this script.                        | "
-echo "| Theoretically, the script should always download recent linux ISOs without any updates. But, if the developer(s)          | "
-echo "| change the download URL or something else, it might be required to do manual changes - probably in distrofunctions.sh.    | "
-echo "| Requirements: linux, bash, curl, wget, awk, grep, xargs, paste, column; for guix you'll also need 'xz' as it's compressed | "
-echo "| Written by SecurityXIII / August 2020 / Kopimi un-license  /--------------------------------------------------------------/ "
+echo "/---------------------------------------------------------------------------------------------------------------------------------------\ "
+echo "| Script downloads recent (latest release) linux ISOs and spins a VM for a test. This is kinda distrohopper dream machine.              | "
+echo "| It consist of the file with distro download functions (distrofunctions.sh) as well as this script.                                    | "
+echo "| Theoretically, the script should always download recent linux ISOs without any updates. But, if the developer(s)                      | "
+echo "| change the download URL or something else, it might be required to do manual changes - probably in distrofunctions.sh.                | "
+echo "| Requirements: linux, bash, curl, wget, awk, grep, xargs, paste, column (this tools usually are preinstalled on linux)                 | "
+echo "| Also, some distros are shared as archive. That's why you need xz for guix, bzip2 for minix, zip for haiku and finally 7z for kolibri. | "
+echo "| Written by SecurityXIII / August 2020 / Kopimi un-license  /--------------------------------------------------------------------------/ "
 echo "\------------------------------------------------------------/"
 echo "+ How to use?"
 echo "If you manually pick distros (opt. one or two) you will be prompted about launching a VM for test spin for each distro."
@@ -21,6 +22,8 @@ echo "* 'all' option, the script will ONLY download ALL of the ISOs (warning: th
 #		2. Multiple download mirror support;
 #              3. Show categories for user and allow to download all distros from specific category.	
 
+ram=1024 # Amount (mb) of RAM, for VM.
+
 # Load the functions from distrofunctions.sh:
 . distrofunctions.sh
 
@@ -34,6 +37,7 @@ containers=(rancheros k3os flatcar silverblue) # What Else?
 notlinux=(freebsd openindiana minix haiku menuetos kolibrios reactos)
 
 # All distributions
+category_names=("Arch-based" "DEB-based" "RPM-based" "Other" "Source-based" "Containers" "Not linux")
 distro_all=("${arch[@]}" "${deb[@]}" "${rpm[@]}" "${other[@]}" "${sourcebased[@]}" "${containers[@]}" "${notlinux[@]}")
 
 # Legend ## Distroname ## Arch  ## Type     ## Download URL 
@@ -90,7 +94,7 @@ silverblue=("Silverblue" "amd64" "release" "silverblueurl")
 freebsd=("FreeBSD" "amd64" "release" "freebsdurl")
 openindiana=("OpenIndiana" "amd64" "release" "indianaurl")
 minix=("MINIX" "amd64" "release" "minixurl")
-haiku=("Haiku" "amd64" "release" "haikuurl")
+haiku=("Haiku" "amd64" "nightly" "haikuurl")
 menuetos=("MenuetOS" "amd64" "release" "menueturl")
 kolibrios=("KolibriOS" "amd64" "release" "kolibrios")
 reactos=("ReactOS" "amd64" "release" "reactosurl")
@@ -118,12 +122,14 @@ if [ "$x" != "all" ]; then
 	read z
 
 	if [ $z = "y" ]; then
-	        # ADD QUEMU AVAILABILITY CHECK
+	        # ADD QEMU AVAILABILITY CHECK
 		isoname="$(echo ${arr[0]} | awk '{print tolower($0)}').iso"
 		# Uncomment the following two rows (a1 & a2) and comment out third (b1) if you want to make QEMU HDD
 		# qemu-img create ./${arr[0]}.img 4G                                                # a1. Creating HDD (if you want changes to be preserved)
 		# qemu-system-x86_64 -hda ./${arr[0]}.img -boot d -cdrom ./${arr[0]}*.iso -m 1024   # a2. Booting from CDROM with HDD support (changes will be preserved)
-		qemu-system-x86_64 -boot d -cdrom ./$isoname -m 1024                                # b1. This is liveCD boot without HDD (all changes will be lost)
+		[ -f ./$isoname ] && qemu-system-x86_64 -boot d -cdrom ./$isoname -m $ram           # b1. This is liveCD boot without HDD (all changes will be lost)
+		# This is for floppy .IMG support
+		[ ! -f ./$isoname ] && imgname="$(echo ${arr[0]} | awk '{print tolower($0)}').img" && [ -f ./$imgname ] && qemu-system-x86_64 --fda ./$imgname -m $ram 
 	fi
 
 	done
