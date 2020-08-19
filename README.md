@@ -2,6 +2,7 @@
 Bash script for autodownloading of different Linux distros and testing them in qemu VM.
 
 ## Linux Distrohopper Dream Machine Script
+```
 /----------------------------------------------------------------------------------------------------------------------------------------\
 | Script downloads recent (latest release) linux ISOs and spins a VM for a test. This is kinda distrohopper dream machine.               |
 | It consist of the file with distro download functions (distrofunctions.sh) as well as this script.                                     |
@@ -11,6 +12,7 @@ Bash script for autodownloading of different Linux distros and testing them in q
 | Some distros are shared as archive. So you'll need xz for guix, bzip2 for minix, zip for haiku & reactos, and, finally 7z for kolibri. |
 | Written by SecurityXIII / August 2020 / Kopimi un-license  /---------------------------------------------------------------------------/
 \------------------------------------------------------------/
+```
 
 + How to use?
 If you manually pick distros (opt. one or two) you will be prompted about launching a VM for test spin for each distro.
