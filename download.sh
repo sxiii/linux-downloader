@@ -4,7 +4,7 @@ echo "| Script downloads recent (latest release) linux ISOs and spins a VM for a
 echo "| It consist of the file with distro download functions (distrofunctions.sh) as well as this script.                                     | "
 echo "| Theoretically, the script should always download recent linux ISOs without any updates. But, if the developer(s)                       | "
 echo "| change the download URL or something else, it might be required to do manual changes - probably in distrofunctions.sh.                 | "
-echo "| Requirements: linux, bash, curl, wget, awk, grep, xargs, paste, column (this tools usually are preinstalled on linux)                  | "
+echo "| Requirements: linux, bash, curl, wget, awk, grep, xargs, pr (these tools usually are preinstalled on linux)                            | "
 echo "| Some distros are shared as archive. So you'll need xz for guix, bzip2 for minix, zip for haiku & reactos, and, finally 7z for kolibri. | "
 echo "| Written by SecurityXIII / August 2020 / Kopimi un-license  /---------------------------------------------------------------------------/ "
 echo "\------------------------------------------------------------/"
