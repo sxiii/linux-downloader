@@ -20,20 +20,21 @@ Bash script for autodownloading of different Linux distros and testing them in q
 ## Currently supported distributions
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
 ```
-Arch-based:	   DEB-based:	   RPM-based:	   Other:	          Source-based:    Containers:      Not linux:
-0 = archlinux	 5 = debian	   18 = fedora	 25 = alpine	    35 = gentoo	     40 = rancheros   46 = freebsd
-1 = manjaro	   6 = ubuntu	   19 = centos	 26 = tinycore    36 = sabayon     41 = k3os	      47 = openindiana
-2 = arcolinux	 7 = linuxmint 20 = opensuse 27 = porteus	    37 = calculate   42 = flatcar     48 = minix
-3 = archbang	 8 = altlinux	 21 = rosa	   28 = slitaz	    38 = nixos	     43 = silverblue  49 = haiku
-4 = parabola	 9 = zorinos	 22 = mandriva 29 = pclinuxos   39 = guix	       44 = photon      50 = menuetos
-               10 = solus	   23 = mageia	 30 = void	    		               45 = coreos      51 = kolibrios
-		           11 = popos	   24 = clearos	 31 = fourmlinux  		     		                      52 = reactos
-		           12 = deepin	  		         32 = kaos	    		     		      
-		           13 = mxlinux	  		         33 = clearlinux  		     		      
-		           14 = knoppix	  		         34 = dragora	    		     		      
-		           15 = kali	  		   		    		     		      
-		           16 = puppy	  		   		    		     		      
-		           17 = pureos	  		   		    		     		      
+Arch-based:	 DEB-based:	  RPM-based:	   Other:	    Source-based:    Containers:      Not linux:
+0 = archlinux	 5 = debian	  18 = fedora	   25 = alpine	    35 = gentoo	     40 = rancheros   46 = freebsd
+1 = manjaro	 6 = ubuntu	  19 = centos	   26 = tinycore    36 = sabayon     41 = k3os	      47 = openindiana
+2 = arcolinux	 7 = linuxmint	  20 = opensuse	   27 = porteus	    37 = calculate   42 = flatcar     48 = minix
+3 = archbang	 8 = altlinux	  21 = rosa	   28 = slitaz	    38 = nixos	     43 = silverblue  49 = haiku
+4 = parabola	 9 = zorinos	  22 = mandriva	   29 = pclinuxos   39 = guix	     44 = photon      50 = menuetos
+		 10 = solus	  23 = mageia	   30 = void	    		     45 = coreos      51 = kolibrios
+		 11 = popos	  24 = clearos	   31 = fourmlinux  		     		      52 = reactos
+		 12 = deepin	  		   32 = kaos	    		     		      
+		 13 = mxlinux	  		   33 = clearlinux  		     		      
+		 14 = knoppix	  		   34 = dragora	    		     		      
+		 15 = kali	  		   		    		     		      
+		 16 = puppy	  		   		    		     		      
+		 17 = pureos	  		   		    		     		      
+ 		   		    		     		      
 ```
 
 ## How to use?
