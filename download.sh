@@ -20,6 +20,10 @@ echo "* 'all' option, the script will ONLY download ALL of the ISOs (warning: th
 
 # "WIP". Todo:	1. Multiple architecture support;
 #		2. Multiple download mirror support;
+#		3. Add qemu check
+#		4. Fix fedora
+#		5. Fix haiku
+#		6. Add elementaryOS
 
 ram=1024 # Amount (mb) of RAM, for VM.
 
