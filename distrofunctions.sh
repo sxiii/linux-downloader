@@ -352,6 +352,21 @@ new="$x -O silverblue.iso"
 wgetcmd
 }
 
+photonurl () {
+mirror="https://github.com/vmware/photon/wiki/Downloading-Photon-OS"
+x=$(curl -s $mirror | grep -m1 "Full ISO" | awk -F\" '{ print $2 }')
+new="$x -O photonos.iso"
+notlive
+wgetcmd
+}
+
+coreosurl () {
+mirror="https://builds.coreos.fedoraproject.org/streams/next.json"
+x=$(curl -s $mirror | grep iso | grep location | awk -F\" '{ print $4 }')
+new="$x -O coreos.iso"
+wgetcmd
+}
+
 freebsdurl () {
 notlinux
 mirror="https://www.freebsd.org/where.html"
