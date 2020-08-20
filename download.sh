@@ -32,7 +32,7 @@ deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix
 rpm=(fedora centos opensuse rosa mandriva mageia clearos)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora)
 sourcebased=(gentoo sabayon calculate nixos guix)
-containers=(rancheros k3os flatcar silverblue) # What Else?
+containers=(rancheros k3os flatcar silverblue photon coreos)
 notlinux=(freebsd openindiana minix haiku menuetos kolibrios reactos)
 
 # All distributions
@@ -90,6 +90,8 @@ rancheros=("RancherOS" "amd64" "release" "rancherurl")
 k3os=("K3OS" "amd64" "release" "k3osurl")
 flatcar=("Flatcar" "amd64" "release" "flatcarurl")
 silverblue=("Silverblue" "amd64" "release" "silverblueurl")
+photon=("PhotonOS" "amd64" "fulliso" "photonurl")
+coreos=("CoreOS" "amd64" "next" "coreosurl")
 
 freebsd=("FreeBSD" "amd64" "release" "freebsdurl")
 openindiana=("OpenIndiana" "amd64" "release" "indianaurl")
