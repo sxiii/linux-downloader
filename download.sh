@@ -124,7 +124,7 @@ read x
 if [ -z "$x" ]; then echo "Empty distribution number. Please type-in number of according distro. Exiting"; exit; fi # "Empty" handling
 
 # This questions are asked ONLY if user hadn't used the option "all".
-if [ "$x" != "all" ]; then
+if [ "$x" != "all" ] && [ "$x" != "filesize" ]; then
 	for distr in $x; do 
 	dist=${distro_arr[$distr]}
 	typeset -n arr=$dist
@@ -150,7 +150,8 @@ if [ "$x" != "all" ]; then
 else
 
 # All handling: automatic download will happen if user picked "all" option, no questions asked.
-	if [ "$x" = "all" ]; then for ((i=0; i<${#distro_arr[@]}; i++)); do xx+="$i "; done; x=$xx; fi # "All" handling
+	if [ $x = "all" ]; then 
+	for ((i=0; i<${#distro_arr[@]}; i++)); do xx+="$i "; done; x=$xx; 
 	for ((i=0; i<${#distro_arr[@]}; i++)); do 
 		for distr in $x; do 
 			dist=${distro_arr[$distr]}
@@ -158,4 +159,18 @@ else
 			$"${arr[3]}"
 		done
 	done
+	fi
+	
+# Sizecheck handling: show the distribution file sizes
+	if [ $x = "filesize" ]; then 
+	for ((i=0; i<${#distro_arr[@]}; i++)); do xx+="$i "; done; x=$xx;
+	for ((i=0; i<${#distro_arr[@]}; i++)); do 
+		for distr in $x; do 
+			dist=${distro_arr[$distr]}
+			typeset -n arr=$dist
+			$"${arr[3]}" "filesize"
+		done
+	done
+	fi
+	
 fi
