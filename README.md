@@ -1,5 +1,5 @@
 ## linux-downloader
-Bash script for autodownloading of different Linux distros and testing them in qemu VM.
+Bash script for autodownloading of different latest, "bleeding edge" Linux distros and testing them in qemu VM. Currently over 50 distributions are supported in 7 different "families".
 
 ## Linux Distrohopper Dream Machine Script
 ```
