@@ -6,8 +6,8 @@ echo "| Theoretically, the script should always download recent linux ISOs witho
 echo "| change the download URL or something else, it might be required to do manual changes - probably in distrofunctions.sh.                 | "
 echo "| Requirements: linux, bash, curl, wget, awk, grep, xargs, pr (these tools usually are preinstalled on linux)                            | "
 echo "| Some distros are shared as archive. So you'll need xz for guix, bzip2 for minix, zip for haiku & reactos, and, finally 7z for kolibri. | "
-echo "| Written by SecurityXIII / August 2020 / Kopimi un-license  /---------------------------------------------------------------------------/ "
-echo "\------------------------------------------------------------/"
+echo "| Written by SecurityXIII / August 2020 / Kopimi un-license / v 0.4 /--------------------------------------------------------------------/ "
+echo "\-------------------------------------------------------------------/"
 echo "+ How to use?"
 echo "If you manually pick distros (opt. one or two) you will be prompted about launching a VM for test spin for each distro."
 echo "Multiple values are also supported. Please choose:"
@@ -20,19 +20,16 @@ echo "* 'all' option, the script will ONLY download ALL of the ISOs (warning: th
 
 # "WIP". Todo:	1. Multiple architecture support;
 #		2. Multiple download mirror support;
-#		3. Add qemu check
-#		4. Fix fedora
-#		5. Fix haiku
-#		6. Add elementaryOS
 
 ram=1024 # Amount (mb) of RAM, for VM.
+cmd="qemu-system-x86_64" # The name of the qemu file to search & launch
 
 # Load the functions from distrofunctions.sh:
 . distrofunctions.sh
 
 # Categories
 arch=(archlinux manjaro arcolinux archbang parabola)
-deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy pureos)
+deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy pureos elementary)
 rpm=(fedora centos opensuse rosa mandriva mageia clearos)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora)
 sourcebased=(gentoo sabayon calculate nixos guix)
@@ -64,6 +61,7 @@ knoppix=("Knoppix" "amd64" "release" "knoppixurl")
 kali=("Kali" "amd64" "kali-weekly" "kaliurl")
 puppy=("Puppy" "amd64" "bionicpup64" "puppyurl")
 pureos=("PureOS" "amd64" "release" "pureurl")
+elementary=("ElementaryOS" "amd64" "release" "elementurl")
 
 fedora=("Fedora" "amd64" "fedora-rawhide-nightly" "fedoraurl")
 centos=("CentOS" "amd64" "stream" "centosurl")
@@ -142,12 +140,16 @@ if [ "$x" != "all" ] && [ "$x" != "filesize" ]; then
 	if [ $z = "y" ]; then
 	        # ADD QEMU AVAILABILITY CHECK
 		isoname="$(echo ${arr[0]} | awk '{print tolower($0)}').iso"
+		if ! type $cmd > /dev/null 2>&1; then
+		echo "qemu seems not installed. Cannot run VM, skipping."
+		else
 		# Uncomment the following two rows (a1 & a2) and comment out others if you want to make QEMU HDD
 		# qemu-img create ./${arr[0]}.img 4G                                                # a1. Creating HDD (if you want changes to be preserved)
 		# qemu-system-x86_64 -hda ./${arr[0]}.img -boot d -cdrom ./${arr[0]}*.iso -m 1024   # a2. Booting from CDROM with HDD support (changes will be preserved)
-		[ -f ./$isoname ] && qemu-system-x86_64 -boot d -cdrom ./$isoname -m $ram           # b1. This is liveCD boot without HDD (all changes will be lost)
+		[ -f ./$isoname ] && $cmd -boot d -cdrom ./$isoname -m $ram           # b1. This is liveCD boot without HDD (all changes will be lost)
 		# This is for floppy .IMG support
-		[ ! -f ./$isoname ] && imgname="$(echo ${arr[0]} | awk '{print tolower($0)}').img" && [ -f ./$imgname ] && qemu-system-x86_64 --fda ./$imgname -m $ram 
+		[ ! -f ./$isoname ] && imgname="$(echo ${arr[0]} | awk '{print tolower($0)}').img" && [ -f ./$imgname ] && $cmd --fda ./$imgname -m $ram
+		fi
 	fi
 
 	done
@@ -156,25 +158,25 @@ else
 # All handling: automatic download will happen if user picked "all" option, no questions asked.
 	if [ $x = "all" ]; then 
 	for ((i=0; i<${#distro_arr[@]}; i++)); do xx+="$i "; done; x=$xx; 
-	for ((i=0; i<${#distro_arr[@]}; i++)); do 
+	#for ((i=0; i<${#distro_arr[@]}; i++)); do 
 		for distr in $x; do 
 			dist=${distro_arr[$distr]}
 			typeset -n arr=$dist
 			$"${arr[3]}"
 		done
-	done
+	#done
 	fi
 	
 # Sizecheck handling: show the distribution file sizes
 	if [ $x = "filesize" ]; then 
 	for ((i=0; i<${#distro_arr[@]}; i++)); do xx+="$i "; done; x=$xx;
-	for ((i=0; i<${#distro_arr[@]}; i++)); do 
+	#for ((i=0; i<${#distro_arr[@]}; i++)); do 
 		for distr in $x; do 
 			dist=${distro_arr[$distr]}
-			typeset -n arr=$dist
+			typeset -n arr=$dist	
 			$"${arr[3]}" "filesize"
 		done
-	done
+	#done
 	fi
 	
 fi
