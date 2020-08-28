@@ -1,5 +1,5 @@
 ## linux-downloader
-Bash script for autodownloading of different latest, "bleeding edge" Linux distros and testing them in qemu VM. Currently over 50 distributions are supported in 7 different "families".
+Bash script for autodownloading of different latest, "bleeding edge" Linux distros and testing them in qemu VM. Currently over 50 distributions are supported in 7 different "families". Also, booting from iPXE mirrors (netboot.xyz and boot.salstar.sk) is also supported.
 
 ## Linux Distrohopper Dream Machine Script
 ```
@@ -21,28 +21,31 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
 ```
 Arch-based:	 DEB-based:	  RPM-based:	   Other:	    Source-based:    Containers:      Not linux:
-0 = archlinux	 5 = debian	  18 = fedora	   25 = alpine	    35 = gentoo	     40 = rancheros   46 = freebsd
-1 = manjaro	 6 = ubuntu	  19 = centos	   26 = tinycore    36 = sabayon     41 = k3os	      47 = openindiana
-2 = arcolinux	 7 = linuxmint	  20 = opensuse	   27 = porteus	    37 = calculate   42 = flatcar     48 = minix
-3 = archbang	 8 = altlinux	  21 = rosa	   28 = slitaz	    38 = nixos	     43 = silverblue  49 = haiku
-4 = parabola	 9 = zorinos	  22 = mandriva	   29 = pclinuxos   39 = guix	     44 = photon      50 = menuetos
-		 10 = solus	  23 = mageia	   30 = void	    		     45 = coreos      51 = kolibrios
-		 11 = popos	  24 = clearos	   31 = fourmlinux  		     		      52 = reactos
-		 12 = deepin	  		   32 = kaos	    		     		      
-		 13 = mxlinux	  		   33 = clearlinux  		     		      
-		 14 = knoppix	  		   34 = dragora	    		     		      
+0 = archlinux	 5 = debian	  19 = fedora	   26 = alpine	    36 = gentoo	     41 = rancheros   47 = freebsd
+1 = manjaro	 6 = ubuntu	  20 = centos	   27 = tinycore    37 = sabayon     42 = k3os	      48 = openindiana
+2 = arcolinux	 7 = linuxmint	  21 = opensuse	   28 = porteus	    38 = calculate   43 = flatcar     49 = minix
+3 = archbang	 8 = altlinux	  22 = rosa	   29 = slitaz	    39 = nixos	     44 = silverblue  50 = haiku
+4 = parabola	 9 = zorinos	  23 = mandriva	   30 = pclinuxos   40 = guix	     45 = photon      51 = menuetos
+		 10 = solus	  24 = mageia	   31 = void	    		     46 = coreos      52 = kolibrios
+		 11 = popos	  25 = clearos	   32 = fourmlinux  		     		      53 = reactos
+		 12 = deepin	  		   33 = kaos	    		     		      
+		 13 = mxlinux	  		   34 = clearlinux  		     		      
+		 14 = knoppix	  		   35 = dragora	    		     		      
 		 15 = kali	  		   		    		     		      
 		 16 = puppy	  		   		    		     		      
 		 17 = pureos	  		   		    		     		      
- 		   		    		     		      
+		 18 = elementary  		     		      
 ```
 
 ## How to use?
 If you manually pick distros (opt. one or two) you will be prompted about launching a VM for test spin for each distro.
 Multiple values are also supported:
-* one distribution downloading (e.g. type 0 for archlinux)*"
-* several distros - space separated (e.g. for getting both Arch and Debian, type '0 4' (without quotes))*"
-* 'all' option, the script will ONLY download ALL of the ISOs (warning: this can take a lot of space (80+GB) !)"
+* one distribution (e.g. type 0 for archlinux)*
+* several distros - space separated (e.g. for getting both Arch and Debian, type '0 4' (without quotes))*
+* 'all' option, the script will ONLY download ALL of the ISOs (warning: this can take a lot of space (80+GB) !)
+* 'filesize' option will check the local (downloaded) filesizes of ISOs vs. the current/recent ISOs filesizes on the websites
+* 'netbootxyz' option allows you to boot from netboot.xyz via network
+* 'netbootsal' option will boot from boot.salstar.sk
 
 ## Help needed
 "Work-in-progress". To do:	
@@ -51,8 +54,8 @@ Multiple values are also supported:
 3. Adding more distributions
 
 ## Notes
-* automation is in the main script
-* all URL/mirror/HTTP scraping are done in the distrofunctions.sh file
+* automation.sh is in the main script
+* distrofunctions.sh contains all URL/mirror/HTTP scraping stuff
 
 Feel free to do a pull request or ask me to add your favourite distro in the issues.
 NB: I prefer the distros updated at least in 2019 or later.
