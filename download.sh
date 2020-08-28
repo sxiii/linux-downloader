@@ -35,12 +35,12 @@ cmd="qemu-system-x86_64" # The name of the qemu file to search & launch
 
 # Categories
 arch=(archlinux manjaro arcolinux archbang parabola)
-deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy pureos elementary)
+deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy pureos elementary backbox)
 rpm=(fedora centos opensuse rosa mandriva mageia clearos)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora)
 sourcebased=(gentoo sabayon calculate nixos guix)
 containers=(rancheros k3os flatcar silverblue photon coreos)
-notlinux=(freebsd openindiana minix haiku menuetos kolibrios reactos)
+notlinux=(freebsd openindiana minix haiku menuetos kolibrios reactos freedos)
 
 # All distributions
 category_names=("Arch-based" "DEB-based" "RPM-based" "Other" "Source-based" "Containers" "Not linux")
@@ -68,6 +68,7 @@ kali=("Kali" "amd64" "kali-weekly" "kaliurl")
 puppy=("Puppy" "amd64" "bionicpup64" "puppyurl")
 pureos=("PureOS" "amd64" "release" "pureurl")
 elementary=("ElementaryOS" "amd64" "release" "elementurl")
+backbox=("Backbox" "amd64" "release" "backboxurl")
 
 fedora=("Fedora" "amd64" "fedora-rawhide-nightly" "fedoraurl")
 centos=("CentOS" "amd64" "stream" "centosurl")
@@ -108,6 +109,7 @@ haiku=("Haiku" "amd64" "nightly" "haikuurl")
 menuetos=("MenuetOS" "amd64" "release" "menueturl")
 kolibrios=("KolibriOS" "amd64" "release" "kolibrios")
 reactos=("ReactOS" "amd64" "release" "reactosurl")
+freedos=("FreeDOS" "amd64" "release" "freedosurl")
 
 q=0;
 
@@ -144,7 +146,6 @@ if [ "$x" != "all" ] && [ "$x" != "filesize" ] && [ "$x" != "netbootxyz" ] && [ 
 	read z
 
 	if [ $z = "y" ]; then
-	        # ADD QEMU AVAILABILITY CHECK
 		isoname="$(echo ${arr[0]} | awk '{print tolower($0)}').iso"
 		if ! type $cmd > /dev/null 2>&1; then
 		echo "qemu seems not installed. Cannot run VM, skipping."
