@@ -6,14 +6,20 @@ echo "| Theoretically, the script should always download recent linux ISOs witho
 echo "| change the download URL or something else, it might be required to do manual changes - probably in distrofunctions.sh.                 | "
 echo "| Requirements: linux, bash, curl, wget, awk, grep, xargs, pr (these tools usually are preinstalled on linux)                            | "
 echo "| Some distros are shared as archive. So you'll need xz for guix, bzip2 for minix, zip for haiku & reactos, and, finally 7z for kolibri. | "
-echo "| Written by SecurityXIII / August 2020 / Kopimi un-license / v 0.4 /--------------------------------------------------------------------/ "
-echo "\-------------------------------------------------------------------/"
+echo "| Written by SecurityXIII / August 2020 / Kopimi un-license  /---------------------------------------------------------------------------/ "
+echo "\------------------------------------------------------------/"
 echo "+ How to use?"
 echo "If you manually pick distros (opt. one or two) you will be prompted about launching a VM for test spin for each distro."
-echo "Multiple values are also supported. Please choose:"
+echo "Multiple values are also supported. Please choose one out of five options:"
 echo "* one distribution (e.g. type 0 for archlinux)*"
 echo "* several distros - space separated (e.g. for getting both Arch and Debian, type '0 4' (without quotes))*"
 echo "* 'all' option, the script will ONLY download ALL of the ISOs (warning: this can take a lot of space (80+GB) !)"
+echo "* 'filesize' option will check the local (downloaded) filesizes of ISOs vs. the current/recent ISOs filesizes on the websites"
+echo "* 'netbootxyz' option allows you to boot from netboot.xyz via network"
+echo "* 'netbootsal' option will boot from boot.salstar.sk"
+
+# the public ipxe mirror does not work
+#echo "* 'netbootipxe' option will boot from boot.ipxe.org"
 
 # NB: I wanted to add ElementaryOS but the developers made it way too hard to implement auto-downloading.
 # If you can find constant mirror or place for actual release of ElementaryOS, please do a pull-request or just leave a comment.
@@ -126,7 +132,7 @@ read x
 if [ -z "$x" ]; then echo "Empty distribution number. Please type-in number of according distro. Exiting"; exit; fi # "Empty" handling
 
 # This questions are asked ONLY if user hadn't used the option "all".
-if [ "$x" != "all" ] && [ "$x" != "filesize" ]; then
+if [ "$x" != "all" ] && [ "$x" != "filesize" ] && [ "$x" != "netbootxyz" ] && [ "$x" != "netbootsal" ] && [ "$x" != "netbootipxe" ]; then
 	for distr in $x; do 
 	dist=${distro_arr[$distr]}
 	typeset -n arr=$dist
@@ -179,4 +185,19 @@ else
 	#done
 	fi
 	
+
+	if [ $x = "netbootxyz" ]; then
+		echo "Downloading netboot image from netboot.xyz, please wait..." && netbootxyz
+		echo "Loading netboot.xyz.iso..." && $cmd -boot d -cdrom netboot.xyz.iso -m $ram
+	fi
+
+	if [ $x = "netbootsal" ]; then
+		echo "Downloading netboot image from boot.salstar.sk, please wait..." && netbootsal
+		echo "Loading ipxe.iso..." && $cmd -boot d -cdrom ipxe.iso -m $ram
+	fi
+
+	if [ $x = "netbootipxe" ]; then
+                echo "Downloading netboot image from boot.ipxe.org, please wait..." && netbootipxe
+                echo "Loading bootipxe.iso..." && $cmd -boot d -cdrom bootipxe.iso -m $ram
+	fi
 fi
