@@ -199,6 +199,13 @@ output="elementaryos.iso"
 checkfile $1
 }
 
+backboxurl () {
+mirror="https://bit.ly/2yNWmF3"
+new="$mirror"
+output="backbox.iso"
+checkfile $1
+}
+
 fedoraurl () {
 mirror="https://www.happyassassin.net/nightlies.html"
 x=$(curl -s $mirror | grep -m1 Fedora-Workstation-Live-x86_64-Rawhide | awk -F\" '{ print $4 }')
@@ -524,18 +531,27 @@ if [ "$1" == "filesize" ]; then
 fi
 }
 
+freedosurl () {
+#mirror="https://sourceforge.net/projects/freedos/files/latest/download"
+mirror="https://www.freedos.org/download/download/FD12CD.iso"
+new="$mirror"
+output="freedos.iso"
+notlinux
+checkfile $1
+}
+
 netbootxyz () {
 mirror="https://boot.netboot.xyz/ipxe/netboot.xyz.iso"
 new="$mirror"
 output="netboot.xyz.iso"
-wgetcmd
+checkfile $1
 }
 
 netbootsal () {
 mirror="http://boot.salstar.sk/ipxe/ipxe.iso"
 new="$mirror"
 output="ipxe.iso"
-wgetcmd
+checkfile $1
 }
 
 # this one is currently broken
@@ -544,5 +560,5 @@ netbootipxe () {
 mirror="http://boot.ipxe.org/ipxe.iso"
 new="$mirror"
 output="bootipxe.iso"
-wgetcmd
+checkfile $1
 }
