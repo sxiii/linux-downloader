@@ -21,20 +21,21 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
 ```
 Arch-based:	 DEB-based:	  RPM-based:	   Other:	    Source-based:    Containers:      Not linux:
-0 = archlinux	 5 = debian	  19 = fedora	   26 = alpine	    36 = gentoo	     41 = rancheros   47 = freebsd
-1 = manjaro	 6 = ubuntu	  20 = centos	   27 = tinycore    37 = sabayon     42 = k3os	      48 = openindiana
-2 = arcolinux	 7 = linuxmint	  21 = opensuse	   28 = porteus	    38 = calculate   43 = flatcar     49 = minix
-3 = archbang	 8 = altlinux	  22 = rosa	   29 = slitaz	    39 = nixos	     44 = silverblue  50 = haiku
-4 = parabola	 9 = zorinos	  23 = mandriva	   30 = pclinuxos   40 = guix	     45 = photon      51 = menuetos
-		 10 = solus	  24 = mageia	   31 = void	    		     46 = coreos      52 = kolibrios
-		 11 = popos	  25 = clearos	   32 = fourmlinux  		     		      53 = reactos
-		 12 = deepin	  		   33 = kaos	    		     		      
-		 13 = mxlinux	  		   34 = clearlinux  		     		      
-		 14 = knoppix	  		   35 = dragora	    		     		      
+0 = archlinux	 5 = debian	  20 = fedora	   27 = alpine	    37 = gentoo	     42 = rancheros   48 = freebsd
+1 = manjaro	 6 = ubuntu	  21 = centos	   28 = tinycore    38 = sabayon     43 = k3os	      49 = openindiana
+2 = arcolinux	 7 = linuxmint	  22 = opensuse	   29 = porteus	    39 = calculate   44 = flatcar     50 = minix
+3 = archbang	 8 = altlinux	  23 = rosa	   30 = slitaz	    40 = nixos	     45 = silverblue  51 = haiku
+4 = parabola	 9 = zorinos	  24 = mandriva	   31 = pclinuxos   41 = guix	     46 = photon      52 = menuetos
+		 10 = solus	  25 = mageia	   32 = void	    		     47 = coreos      53 = kolibrios
+		 11 = popos	  26 = clearos	   33 = fourmlinux  		     		      54 = reactos
+		 12 = deepin	  		   34 = kaos	    		     		      55 = freedos
+		 13 = mxlinux	  		   35 = clearlinux  		     		      
+		 14 = knoppix	  		   36 = dragora	    		     		      
 		 15 = kali	  		   		    		     		      
 		 16 = puppy	  		   		    		     		      
 		 17 = pureos	  		   		    		     		      
-		 18 = elementary  		     		      
+		 18 = elementary  		   		    		     		      
+		 19 = backbox	  		   		    		     		           		      
 ```
 
 ## How to use?
