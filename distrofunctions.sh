@@ -523,3 +523,26 @@ if [ "$1" == "filesize" ]; then
 [ ! -f $output ] && wgetcmd && echo "Please wait, unzipping reactos..." && unzip reactos.zip && mv React*iso reactos.iso || echo "Menuet already downloaded."
 fi
 }
+
+netbootxyz () {
+mirror="https://boot.netboot.xyz/ipxe/netboot.xyz.iso"
+new="$mirror"
+output="netboot.xyz.iso"
+wgetcmd
+}
+
+netbootsal () {
+mirror="http://boot.salstar.sk/ipxe/ipxe.iso"
+new="$mirror"
+output="ipxe.iso"
+wgetcmd
+}
+
+# this one is currently broken
+netbootipxe () {
+#mirror="http://cloudboot.nchc.org.tw/cloudboot/cloudboot_img/cloudboot_1.0.iso"
+mirror="http://boot.ipxe.org/ipxe.iso"
+new="$mirror"
+output="bootipxe.iso"
+wgetcmd
+}
