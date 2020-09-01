@@ -27,6 +27,10 @@ echo "* 'netbootsal' option will boot from boot.salstar.sk"
 # "WIP". Todo:	1. Multiple architecture support;
 #		2. Multiple download mirror support;
 
+# add netbsd
+# openbsd 
+# ghostbsd
+
 ram=1024 # Amount (mb) of RAM, for VM.
 cmd="qemu-system-x86_64" # The name of the qemu file to search & launch
 
@@ -37,15 +41,16 @@ cmd="qemu-system-x86_64" # The name of the qemu file to search & launch
 arch=(archlinux manjaro arcolinux archbang parabola)
 deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy pureos elementary backbox)
 rpm=(fedora centos opensuse rosa mandriva mageia clearos)
-other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora)
+other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie)
 sourcebased=(gentoo sabayon calculate nixos guix)
 containers=(rancheros k3os flatcar silverblue photon coreos)
-notlinux=(freebsd openindiana minix haiku menuetos kolibrios reactos freedos)
+bsd=(freebsd netbsd openbsd ghostbsd)
+notlinux=(openindiana minix haiku menuetos kolibrios reactos freedos)
 
 # All distributions
-category_names=("Arch-based" "DEB-based" "RPM-based" "Other" "Source-based" "Containers" "Not linux")
-distro_all=("arch" "deb" "rpm" "other" "sourcebased" "containers" "notlinux")
-distro_arr=("${arch[@]}" "${deb[@]}" "${rpm[@]}" "${other[@]}" "${sourcebased[@]}" "${containers[@]}" "${notlinux[@]}")
+category_names=("Arch-based" "DEB-based" "RPM-based" "Other" "Source-based" "Containers" "BSD" "Not linux")
+distro_all=("arch" "deb" "rpm" "other" "sourcebased" "containers" "bsd" "notlinux")
+distro_arr=("${arch[@]}" "${deb[@]}" "${rpm[@]}" "${other[@]}" "${sourcebased[@]}" "${containers[@]}" "${bsd[@]}" "${notlinux[@]}")
 
 # Legend ## Distroname ## Arch  ## Type     ## Download URL 
 archlinux=("ArchLinux" "amd64" "rolling" "archurl")
@@ -88,6 +93,8 @@ fourmlinux=("4mlinux" "amd64" "release" "fourmurl")
 kaos=("kaos" "amd64" "release" "kaosurl")
 clearlinux=("ClearLinux" "amd64" "release" "clearurl")
 dragora=("Dragora" "amd64" "release" "dragoraurl")
+slackware=("Slackware" "amd64" "current" "slackwareurl")
+adelie=("adelie" "amd64" "rc1" "adelieurl")
 
 gentoo=("Gentoo" "amd64" "admincd" "gentoourl")
 sabayon=("Sabayon" "amd64" "daily" "sabayonurl")
@@ -103,6 +110,10 @@ photon=("PhotonOS" "amd64" "fulliso" "photonurl")
 coreos=("CoreOS" "amd64" "next" "coreosurl")
 
 freebsd=("FreeBSD" "amd64" "release" "freebsdurl")
+netbsd=("NetBSD" "amd64" "release" "netbsdurl")
+openbsd=("OpenBSD" "amd64" "release" "openbsdurl")
+ghostbsd=("GhostBSD" "amd64" "release" "ghostbsdurl")
+
 openindiana=("OpenIndiana" "amd64" "release" "indianaurl")
 minix=("MINIX" "amd64" "release" "minixurl")
 haiku=("Haiku" "amd64" "nightly" "haikuurl")
