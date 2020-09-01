@@ -353,6 +353,26 @@ output="dragora.iso"
 checkfile $1
 }
 
+slackwareurl () {
+mirror="https://mirrors.slackware.com/slackware/slackware-iso/"
+x=$(curl -s $mirror | grep slackware64 | tail -1 | awk -F"slack" '{ print $2 }' | awk -F"/" '{ print $1 }')
+other="slack$x"
+y=$(curl -s "$mirror/$other/" | grep dvd.iso | head -1 | awk -F"slack" '{ print $2 }' | awk -F\" '{ print $1 }')
+new="$mirror"; new+="$other"; new+="/slack"; new+="$y"
+echo "new=$new"
+output="slackware.iso"
+checkfile $1
+}
+
+adelieurl () {
+mirror="https://www.adelielinux.org/"
+x=$(curl -s https://www.adelielinux.org | grep Download | grep -m1 iso | awk -F\" '{ print $2 }')
+y=$(curl -sL $x | grep -m1 -e 'full.*x86_64' | awk -F\" '{ print $4 }')
+new="$x/$y"
+output="adelie.iso"
+checkfile $1
+}
+
 gentoourl () {
 mirror="https://gentoo.c3sl.ufpr.br//releases/amd64/autobuilds"
 one=$(curl -s "$mirror/latest-iso.txt" | grep "admin" | awk '{ print $1 }')
@@ -454,7 +474,34 @@ freebsdurl () {
 mirror="https://www.freebsd.org/where.html"
 x=$(curl -s $mirror | grep -m1 "amd64/amd64" | awk -F\" '{ print $2 }')
 one=$(curl -s $x | grep -m1 dvd1 | awk -F"FreeBSD" '{ print $2 }' | awk -F\" '{ print $1 }')
-new=$x; new+="FreeBSD"; new+=$one; output="freebsd.iso"
+new=$x; new+="FreeBSD"; new+=$one; 
+output="freebsd.iso"
+notlinux
+checkfile $1
+}
+
+netbsdurl () {
+mirror="https://www.netbsd.org/" 
+#mirror="https://wiki.netbsd.org/ports/amd64/"
+new=$(curl -s $mirror | grep -m1 "CD" | awk -F\" '{ print $4 }')
+output="netbsd.iso"
+notlinux
+checkfile $1
+}
+
+openbsdurl () {
+mirror="https://www.openbsd.org/faq/faq4.html"
+new=$(curl -s $mirror | grep -m1 -e 'iso.*amd64' | awk -F\" '{ print $2 }')
+output="openbsd.iso"
+notlinux
+checkfile $1
+}
+
+ghostbsdurl () {
+mirror="http://download.fr.ghostbsd.org/development/amd64/latest/"
+x=$(curl -s $mirror | grep ".iso<" | tail -1 | awk -F\" '{ print $2 }')
+new="$mirror$x"
+output="ghostbsd.iso"
 notlinux
 checkfile $1
 }
