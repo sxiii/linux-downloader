@@ -44,7 +44,7 @@ If you manually pick distros (opt. one or two) you will be prompted about launch
 Multiple values are also supported:
 * one distribution (e.g. type 0 for archlinux)*
 * several distros - space separated (e.g. for getting both Arch and Debian, type '0 4' (without quotes))*
-* 'all' option, the script will ONLY download ALL of the ISOs (warning: this can take a lot of space (~105 GB) !)
+* 'all' option, the script will ONLY download ALL of the ISOs (warning: this can take a lot of space (~105 GB) as well as several hours to download everything!)
 * 'filesize' option will check the local (downloaded) filesizes of ISOs vs. the current/recent ISOs filesizes on the websites
 * 'netbootxyz' option allows you to boot from netboot.xyz via network
 * 'netbootsal' option will boot from boot.salstar.sk
