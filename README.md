@@ -56,12 +56,13 @@ This script verified as working correctly on the following OSes:
 * Manjaro 20.1 Mikah
 
 ## How to add distribution yourself
-0. Clone the repo, if you hadn't already, and enter the resuling folder: `git clone https://github.com/sxiii/linux-downloader && cd linux-downloader`
+0. Clone the repo, if you hadn't already, and enter the resuling folder: 
+```git clone https://github.com/sxiii/linux-downloader && cd linux-downloader```
 1. Open file "download.sh" with your favourite text editor. In the according row of "Categories", add the name of your distro in the end of the array.
 2. In the same file, little bit down further, add your distro variable (array) like this: (the order is the same as in "Categories")
-`distroname=("Full Distro Name" "arch" "releasename" "distronameurl")
+```distroname=("Full Distro Name" "arch" "releasename" "distronameurl")```
 Here is the real example to make it more obvious:
-`obarun=("Obarun" "amd64" "rolling" "obarunurl")`
+```obarun=("Obarun" "amd64" "rolling" "obarunurl")```
 3. Save & close the "download.sh" file. Now, open "distrofunctions.sh" file. This is more tricky. We need to AUTOMATICALLY get the URL of the most recent distribution (fixed-links are forbidden as they will destroy the idea behind this script of always get the recent release). So you need to find a way to get the recent release full download URL. For example, if we want to download from Sourceforge.net, make a new function like this:
 ```
 distronameurl () {
