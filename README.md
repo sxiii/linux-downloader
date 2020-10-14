@@ -55,6 +55,28 @@ This script verified as working correctly on the following OSes:
 * Ubuntu 20.04
 * Manjaro 20.1 Mikah
 
+## How to add distribution yourself
+0. Clone the repo, if you hadn't already, and enter the resuling folder: `git clone https://github.com/sxiii/linux-downloader && cd linux-downloader`
+1. Open file "download.sh" with your favourite text editor. In the according row of "Categories", add the name of your distro in the end of the array.
+2. In the same file, little bit down further, add your distro variable (array) like this: (the order is the same as in "Categories")
+`distroname=("Full Distro Name" "arch" "releasename" "distronameurl")
+Here is the real example to make it more obvious:
+`obarun=("Obarun" "amd64" "rolling" "obarunurl")`
+3. Save & close the "download.sh" file. Now, open "distrofunctions.sh" file. This is more tricky. We need to AUTOMATICALLY get the URL of the most recent distribution (fixed-links are forbidden as they will destroy the idea behind this script of always get the recent release). So you need to find a way to get the recent release full download URL. For example, if we want to download from Sourceforge.net, make a new function like this:
+```
+distronameurl () {
+mirror="https://sourceforge.net/projects/SF-Project-Name/files/latest/download"
+new="$mirror"
+output="distroname.iso"
+checkfile $1
+}
+```
+Here you will need to edit: function name (distronameurl), mirror address (in this example we're downloading project "SF-Project-Name" from sourceforge), output file name. Checkfile is the function that checks if file exists and downloads the file if not, so don't touch it. If you are going to download not from sourceforge, but from some other website, please check the other distributions for examples - there are plenty of examples of how to parse websites to get the recent download links automatically. In the end, you need to supply "new" variable with full ISO URL, as well as "output" var with filename (and mirror variable is there for cleaniness of the code and code consistancy). Other than that, you can use "grep, awk, xargs" or other classic UNIX tools to parse the HTML (or several files) and get the actual download link. If you'll create temporary files, please don't forget to remove them in the end of the function. You can as well parse file listings like HTTP or FTP server mirror hosts. If you can't write the correct code, feel free to create an issue and ask me for help.
+4. Now, save the "distrofunctions.sh" file. Run the ./download.sh script, type-in number of your distribution, and check, that it's downloaded correctly.
+5. Last but very important, please create a pull request, so I could check and add distribution of your choice.
+
+Thank you!
+
 ## Help needed
 "Work-in-progress". To do:	
 1. Multiple architecture support
@@ -62,7 +84,7 @@ This script verified as working correctly on the following OSes:
 3. Adding more distributions
 
 ## Notes
-* automation.sh is in the main script
+* download.sh is in the main script
 * distrofunctions.sh contains all URL/mirror/HTTP scraping stuff
 
 Feel free to do a pull request or ask me to add your favourite distro in the issues.
