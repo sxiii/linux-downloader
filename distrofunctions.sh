@@ -133,11 +133,12 @@ checkfile $1
 }
 
 popurl () {
-mirror="https://pop-iso.sfo2.cdn.digitaloceanspaces.com"
-x=$(curl -s $mirror | html2text | grep intel_5 | tail -2 | head -1 | awk -F".iso" '{ print $1 }')
-v=$(echo $x | awk -F"_" '{ print $2 }')
-arch=$(echo $x | awk -F"_" '{ print $3 }')
-new="$mirror/$v/$arch/$x.iso"
+# Requires: xpath (perl xml xpath package)
+wget https://pop-iso.sfo2.cdn.digitaloceanspaces.com -O pop.xml
+xpath -q -e '/ListBucketResult/Contents/Key' pop.xml > nodes.txt
+x=$(cat nodes.txt | grep intel_13.iso | head -1 | awk -F"<Key>" '{ print $2 }' | awk -F"</Key>" '{ print $1 }')
+new="https://pop-iso.sfo2.cdn.digitaloceanspaces.com/$x"
+rm pop.xml nodes.txt
 output="popos.iso"
 checkfile $1
 }
@@ -365,10 +366,9 @@ checkfile $1
 }
 
 adelieurl () {
-mirror="https://www.adelielinux.org/"
-x=$(curl -s https://www.adelielinux.org | grep Download | grep -m1 iso | awk -F\" '{ print $2 }')
-y=$(curl -sL $x | grep -m1 -e 'full.*x86_64' | awk -F\" '{ print $4 }')
-new="$x/$y"
+mirror="https://www.adelielinux.org/download/"
+x=$(curl -s $mirror | grep -A4 Live | grep iso | awk -F"https://" '{ print $2 }' | awk -F\" '{ print $1 }')
+new="https://$x"
 output="adelie.iso"
 checkfile $1
 }
@@ -383,18 +383,18 @@ checkfile $1
 }
 
 sabayonurl () {
-x="http://sabayonlinux.mirror.garr.it/mirrors/sabayonlinux//iso/daily/Sabayon_Linux_DAILY_amd64_Xfce.iso"
-new="$x"
+mirror="https://www.sabayon.org/desktop/"
+new=$(curl -s $mirror | grep GNOME.iso | head -1 | awk -F"http://" '{ print $2 }' | awk -F\" '{ print $1 }')
 output="sabayon.iso"
 checkfile $1
 }
 
 calcurl () {
-mirror="https://mirror.yandex.ru/calculate/nightly/"
+mirror="http://mirror.yandex.ru/calculate/nightly/"
 x=$(curl -s $mirror | grep "<a" | tail -1 | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
 mirror+=$x
 x=$(curl -s $mirror | grep -m1 cldc | awk -F\" '{ print $2 }')
-new="$mirror/$x"
+new="$mirror$x"
 output="calculate.iso"
 checkfile $1
 }
