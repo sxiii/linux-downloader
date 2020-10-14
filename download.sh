@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "/----------------------------------------------------------------------------------------------------------------------------------------\ "
 echo "| Script downloads recent (latest release) linux ISOs and spins a VM for a test. This is kinda distrohopper dream machine.               | "
-echo "| It consist of the file with distro download functions (distrofunctions.sh) as well as this script.                                     | "
+echo "| It consist of the file with distro download functions (distrofunctions.sh) as well as this script (download.sh).                       | "
 echo "| Theoretically, the script should always download recent linux ISOs without any updates. But, if the developer(s)                       | "
 echo "| change the download URL or something else, it might be required to do manual changes - probably in distrofunctions.sh.                 | "
 echo "| Requirements: linux, bash, curl, wget, awk, grep, xargs, pr (these tools usually are preinstalled on linux)                            | "
@@ -38,7 +38,7 @@ cmd="qemu-system-x86_64" # The name of the qemu file to search & launch
 . distrofunctions.sh
 
 # Categories
-arch=(archlinux manjaro arcolinux archbang parabola)
+arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun)
 deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy pureos elementary backbox)
 rpm=(fedora centos opensuse rosa mandriva mageia clearos)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie)
@@ -58,6 +58,14 @@ manjaro=("Manjaro" "amd64" "rolling" "manjarourl")
 arcolinux=("Arcolinux" "amd64" "rolling" "arcourl")
 archbang=("Archbang" "amd64" "rolling" "archbangurl")
 parabola=("Parabola" "amd64" "rolling" "parabolaurl")
+endeavour=("EendeavourOS" "amd64" "latest" "endeavoururl")
+artix=("ArtixLinux" "amd64" "daily" "artixurl")
+arco=("ArcoLinux" "amd64" "release" "arcourl")
+garuda=("Garuda" "amd64" "release" "garudaurl")
+rebornos=("RebornOS" "amd64" "release" "rebornurl")
+archlabs=("ArchLabs" "amd64" "release" "archlabsurl")
+namib=("Namib" "amd64" "release" "namiburl")
+obarun=("Obarun" "amd64" "rolling" "obarunurl")
 
 debian=("Debian" "amd64" "testing" "debianurl")
 ubuntu=("Ubuntu" "amd64" "daily-live" "ubuntuurl")
