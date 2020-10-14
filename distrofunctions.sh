@@ -86,6 +86,65 @@ output="parabola.iso"
 checkfile $1
 }
 
+endeavoururl () {
+mirror="https://sourceforge.net/projects/endeavouros-repository/files/latest/download"
+new="$mirror"
+output="endeavour.iso"
+checkfile $1
+}
+
+artixurl () {
+mirror="https://mirrors.dotsrc.org/artix-linux/iso/"
+x=$(curl -s $mirror | grep mate-openrc | head -1 | awk -F\" '{ print $2 }')
+new="$mirror/$x"
+output="artix.iso"
+checkfile $1
+}
+
+arcourl () {
+mirror="https://sourceforge.net/projects/arcolinux/files/latest/download"
+new="$mirror"
+output="arco.iso"
+checkfile $1
+}
+
+garudaurl () {
+mirror="https://sourceforge.net/projects/garuda-linux/files/latest/download"
+new="$mirror"
+output="garuda.iso"
+checkfile $1
+}
+
+rebornurl () {
+mirror="https://sourceforge.net/projects/rebornos/files/latest/download"
+new="$mirror"
+output="rebornos.iso"
+checkfile $1
+}
+
+archlabsurl () {
+mirror="https://sourceforge.net/projects/archlabs-linux-minimo/files/latest/download"
+new="$mirror"
+output="archlabs.iso"
+checkfile $1
+}
+
+namiburl () {
+mirror="https://sourceforge.net/projects/namib-gnu-linux/files/latest/download"
+new="$mirror"
+output="namib.iso"
+checkfile $1
+}
+
+obarunurl () {
+mirror="https://repo.obarun.org/iso/"
+x=$(curl -s $mirror | grep "<tr><td" | tail -1 | awk -F"href=\"" '{ print $2 }' | awk -F"/" '{ print $1 }')
+y=$(curl -s $mirror/$x/ | grep obarun | head -1 | awk -F"href=\"" '{ print $2 }' | awk -F\" '{ print $1 }')
+new="$mirror/$x/$y"
+output="obarun.iso"
+checkfile $1
+}
+
 debianurl () {
 x="https://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-dvd/debian-testing-amd64-DVD-1.iso"
 new="$x"
