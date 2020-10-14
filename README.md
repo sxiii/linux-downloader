@@ -81,9 +81,9 @@ Thank you!
 "Work-in-progress". To do:	
 1. Multiple architecture support
 2. Multiple download mirror support
-3. Adding more distributions
+3. Adding more distributions (current goal: 100)
 
-## Notes
+## Notes on files
 * download.sh is in the main script
 * distrofunctions.sh contains all URL/mirror/HTTP scraping stuff
 
@@ -91,4 +91,6 @@ Feel free to do a pull request or ask me to add your favourite distro in the iss
 NB: I prefer the distros updated at least in 2019 or later.
 
 ## Author & License
-* Written by SecurityXIII / August 2020 / Kopimi un-license
+* Written by SecurityXIII
+* Project began in August 2020 - but since then improved several times
+* Kopimi un-license as well as MIT
