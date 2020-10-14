@@ -21,6 +21,7 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 ## Currently supported distributions
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
 ```
+Arch-based:    DEB-based:     RPM-based:     Other:	    Source-based:  Containers:	  BSD:		 Not linux:
 0 = archlinux  13 = debian    28 = fedora    35 = alpine    47 = gentoo	   52 = rancheros 58 = freebsd	 62 = openindia
 1 = manjaro    14 = ubuntu    29 = centos    36 = tinycore  48 = sabayon   53 = k3os	  59 = netbsd	 63 = minix
 2 = arcolinux  15 = linuxmint 30 = opensuse  37 = porteus   49 = calculate 54 = flatcar	  60 = openbsd	 64 = haiku
