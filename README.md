@@ -14,8 +14,9 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 ```
 
 ## Requirements: 
-* Basic stuff: linux, bash, curl, wget, awk, grep, xargs, pr (these tools usually are preinstalled on linux) 
-* Additional: some distros are shared as archive. So you'll need xz for guix, bzip2 for minix, zip for haiku & reactos, and, finally 7z for kolibri.
+* Basic stuff: linux, bash, curl, wget, awk, grep, xargs, pr (these tools usually are preinstalled on linux)
+* Additional: html2text (required to download recent Fedora)
+* Some distros are shared as archive. So you'll need xz for guix, bzip2 for minix, zip for haiku & reactos, and, finally 7z for kolibri.
 
 ## Currently supported distributions
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
@@ -47,6 +48,12 @@ Multiple values are also supported:
 * 'filesize' option will check the local (downloaded) filesizes of ISOs vs. the current/recent ISOs filesizes on the websites
 * 'netbootxyz' option allows you to boot from netboot.xyz via network
 * 'netbootsal' option will boot from boot.salstar.sk
+
+## Verified as working
+This script verified as working correctly on the following OSes:
+* Fedora 33 Workstation (Pre-release)
+* Ubuntu 20.04
+* Manjaro 20.1 Mikah
 
 ## Help needed
 "Work-in-progress". To do:	
