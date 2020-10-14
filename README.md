@@ -21,22 +21,21 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 ## Currently supported distributions
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
 ```
-Arch-based:    DEB-based:     RPM-based:     Other:	    Source-based:  Containers:	  BSD:		 Not linux:
-0 = archlinux  5 = debian     20 = fedora    27 = alpine    39 = gentoo	   44 = rancheros 50 = freebsd	 54 = openindia
-1 = manjaro    6 = ubuntu     21 = centos    28 = tinycore  40 = sabayon   45 = k3os	  51 = netbsd	 55 = minix
-2 = arcolinux  7 = linuxmint  22 = opensuse  29 = porteus   41 = calculate 46 = flatcar	  52 = openbsd	 56 = haiku
-3 = archbang   8 = altlinux   23 = rosa	     30 = slitaz    42 = nixos	   47 = silverblu 53 = ghostbsd	 57 = menuetos
-4 = parabola   9 = zorinos    24 = mandriva  31 = pclinuxos 43 = guix	   48 = photon	  		 58 = kolibrios
-	       10 = solus     25 = mageia    32 = void	    		   49 = coreos	  		 59 = reactos
-	       11 = popos     26 = clearos   33 = fourmlinu 		   		  		 60 = freedos
-	       12 = deepin    		     34 = kaos	    		   		  		 
-	       13 = mxlinux   		     35 = clearlinu 		   		  		 
-	       14 = knoppix   		     36 = dragora   		   		  		 
-	       15 = kali      		     37 = slackware 		   		  		 
-	       16 = puppy     		     38 = adelie    		   		  		 
-	       17 = pureos    		     		    		   		  		 
-	       18 = elementar 		     		    		   		  		 
-	       19 = backbox   			   		    		     		           		      
+0 = archlinux  13 = debian    28 = fedora    35 = alpine    47 = gentoo	   52 = rancheros 58 = freebsd	 62 = openindia
+1 = manjaro    14 = ubuntu    29 = centos    36 = tinycore  48 = sabayon   53 = k3os	  59 = netbsd	 63 = minix
+2 = arcolinux  15 = linuxmint 30 = opensuse  37 = porteus   49 = calculate 54 = flatcar	  60 = openbsd	 64 = haiku
+3 = archbang   16 = altlinux  31 = rosa	     38 = slitaz    50 = nixos	   55 = silverblu 61 = ghostbsd	 65 = menuetos
+4 = parabola   17 = zorinos   32 = mandriva  39 = pclinuxos 51 = guix	   56 = photon	  		 66 = kolibrios
+5 = endeavour  18 = solus     33 = mageia    40 = void	    		   57 = coreos	  		 67 = reactos
+6 = artix      19 = popos     34 = clearos   41 = fourmlinu 		   		  		 68 = freedos
+7 = arco       20 = deepin    		     42 = kaos	    		   		  		 
+8 = garuda     21 = mxlinux   		     43 = clearlinu 		   		  		 
+9 = rebornos   22 = knoppix   		     44 = dragora   		   		  		 
+10 = archlabs  23 = kali      		     45 = slackware 		   		  		 
+11 = namib     24 = puppy     		     46 = adelie    		   		  		 
+12 = obarun    25 = pureos    		     		    		   		  		 
+	       26 = elementar 		     		    		   		  		 
+	       27 = backbox
 ```
 
 ## How to use?
