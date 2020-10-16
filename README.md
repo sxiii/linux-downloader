@@ -1,5 +1,5 @@
 ## linux-downloader
-Bash script for autodownloading of different latest, "bleeding edge" Linux distros and testing them in qemu VM. Other than Linux, it also boots *BSDs families and other opensource projects. Currently around 60 distributions are supported in 8 different "families". Also, booting from iPXE mirrors (netboot.xyz and boot.salstar.sk) is supported.
+Bash script for autodownloading of different latest, "bleeding edge" Linux distros and testing them in qemu VM. Other than Linux, it also boots *BSDs families and other opensource projects. Currently around 70 distributions are supported in 8 different "families". Also, booting from iPXE mirrors (netboot.xyz and boot.salstar.sk) is supported.
 
 ## Linux Distrohopper Dream Machine Script
 ```
@@ -22,21 +22,22 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
 ```
 Arch-based:    DEB-based:     RPM-based:     Other:	    Source-based:  Containers:	  BSD:		 Not linux:
-0 = archlinux  13 = debian    28 = fedora    35 = alpine    47 = gentoo	   52 = rancheros 58 = freebsd	 62 = openindia
-1 = manjaro    14 = ubuntu    29 = centos    36 = tinycore  48 = sabayon   53 = k3os	  59 = netbsd	 63 = minix
-2 = arcolinux  15 = linuxmint 30 = opensuse  37 = porteus   49 = calculate 54 = flatcar	  60 = openbsd	 64 = haiku
-3 = archbang   16 = altlinux  31 = rosa	     38 = slitaz    50 = nixos	   55 = silverblu 61 = ghostbsd	 65 = menuetos
-4 = parabola   17 = zorinos   32 = mandriva  39 = pclinuxos 51 = guix	   56 = photon	  		 66 = kolibrios
-5 = endeavour  18 = solus     33 = mageia    40 = void	    		   57 = coreos	  		 67 = reactos
-6 = artix      19 = popos     34 = clearos   41 = fourmlinu 		   		  		 68 = freedos
-7 = arco       20 = deepin    		     42 = kaos	    		   		  		 
-8 = garuda     21 = mxlinux   		     43 = clearlinu 		   		  		 
-9 = rebornos   22 = knoppix   		     44 = dragora   		   		  		 
-10 = archlabs  23 = kali      		     45 = slackware 		   		  		 
-11 = namib     24 = puppy     		     46 = adelie    		   		  		 
-12 = obarun    25 = pureos    		     		    		   		  		 
+0 = archlinux  13 = debian    29 = fedora    36 = alpine    49 = gentoo	   54 = rancheros 60 = freebsd	 64 = openindia
+1 = manjaro    14 = ubuntu    30 = centos    37 = tinycore  50 = sabayon   55 = k3os	  61 = netbsd	 65 = minix
+2 = arcolinux  15 = linuxmint 31 = opensuse  38 = porteus   51 = calculate 56 = flatcar	  62 = openbsd	 66 = haiku
+3 = archbang   16 = altlinux  32 = rosa	     39 = slitaz    52 = nixos	   57 = silverblu 63 = ghostbsd	 67 = menuetos
+4 = parabola   17 = zorinos   33 = mandriva  40 = pclinuxos 53 = guix	   58 = photon	  		 68 = kolibrios
+5 = endeavour  18 = solus     34 = mageia    41 = void	    		   59 = coreos	  		 69 = reactos
+6 = artix      19 = popos     35 = clearos   42 = fourmlinu 		   		  		 70 = freedos
+7 = arco       20 = deepin    		     43 = kaos	    		   		  		 
+8 = garuda     21 = mxlinux   		     44 = clearlinu 		   		  		 
+9 = rebornos   22 = knoppix   		     45 = dragora   		   		  		 
+10 = archlabs  23 = kali      		     46 = slackware 		   		  		 
+11 = namib     24 = puppy     		     47 = adelie    		   		  		 
+12 = obarun    25 = pureos    		     48 = plop	    		   		  		 
 	       26 = elementar 		     		    		   		  		 
-	       27 = backbox
+	       27 = backbox   		     		    		   		  		 
+	       28 = devuan    		     		    		   		  		 
 ```
 
 ## How to use?
