@@ -266,6 +266,14 @@ output="backbox.iso"
 checkfile $1
 }
 
+devuanurl () {
+mirror="http://mirror.serverion.com/devuan/devuan_beowulf/desktop-live/"
+x="devuan$(curl -s $mirror | grep amd64 | awk -F"devuan" '{ print $2 }' | awk -F\" '{ print $1 }')"
+new="$mirror$x"
+output="devuan.iso"
+checkfile $1
+}
+
 fedoraurl () {
 mirror="https://www.happyassassin.net/nightlies.html"
 x=$(curl -s $mirror | grep -m1 Fedora-Workstation-Live-x86_64-Rawhide | awk -F\" '{ print $4 }')
@@ -429,6 +437,14 @@ mirror="https://www.adelielinux.org/download/"
 x=$(curl -s $mirror | grep -A4 Live | grep iso | awk -F"https://" '{ print $2 }' | awk -F\" '{ print $1 }')
 new="https://$x"
 output="adelie.iso"
+checkfile $1
+}
+
+plopurl () {
+mirror=""
+x="$(curl -s https://www.plop.at/en/ploplinux/downloads/full.html | grep x86_64.iso | head -1 | awk -F"https://" '{ print $2 }' | awk -F".iso" '{ print $1 }')"
+new="https://$x.iso"
+output="plop.iso"
 checkfile $1
 }
 
