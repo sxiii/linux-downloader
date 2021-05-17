@@ -1,0 +1,12 @@
+# These are supported funding model platforms
+
+github: ['sxiii']
+patreon: sxiii
+open_collective: sxiii
+ko_fi: sxiii
+tidelift: # Replace with a single Tidelift platform-name/package-name e.g., npm/babel
+community_bridge: # Replace with a single Community Bridge project-name e.g., cloud-foundry
+liberapay: sxiii
+issuehunt: sxiii
+otechie: meta
+custom: ['https://sxiii.ru/donate']
