@@ -15,8 +15,10 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 
 ## Requirements: 
 * Basic stuff: linux, bash, curl, wget, awk, grep, xargs, pr (these tools usually are preinstalled on linux)
-* Additional: html2text (unsure?) and xpath (for PopOS)
-* Some distros are shared as archive. So you'll need xz for guix, bzip2 for minix, zip for haiku & reactos, and, finally 7z for kolibri.
+* Additional: `html2text` (unsure?) and `xpath` (for PopOS)
+* If you want to run a VM after downloading, you'll need `QEMU`
+* Some distros are shared as archive. So you'll need `xz` for guix, `bzip2` for minix, `zip` for haiku & reactos, and, finally `7z` for kolibri.
+* Install all deps on Arch-based distro: `sudo pacman -S perl-xml-xpath p7zip xz bzip2 qemu`
 
 ## Currently supported distributions
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
@@ -41,6 +43,9 @@ Arch-based:    DEB-based:     RPM-based:     Other:	    Source-based:  Container
 ```
 
 ## How to use?
+1. `git clone https://github.com/sxiii/linux-downloader`
+2. `cd linux-downloader`
+3. `./download.sh`
 If you manually pick distros (opt. one or two) you will be prompted about launching a VM for test spin for each distro.
 Multiple values are also supported:
 * one distribution (e.g. type 0 for archlinux)*
@@ -54,7 +59,8 @@ Multiple values are also supported:
 This script verified as working correctly on the following OSes:
 * Fedora 33 Workstation (Pre-release)
 * Ubuntu 20.04
-* Manjaro 20.1 Mikah
+* Manjaro 21.0.5 Ornara
+* Probably will work mostly everywhere 
 
 ## How to add distribution yourself
 0. Clone the repo, if you hadn't already, and enter the resuling folder: 
