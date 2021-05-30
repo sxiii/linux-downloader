@@ -4,7 +4,7 @@
 
 wgetcmd () { 
 echo "Downloading $new to $output"
-wget -q --show-progress -c $new -O $output -o /dev/null
+wget -q --show-progress -c "$new" -O "$output" -o /dev/null
 }
 
 # Function to only get filesize
@@ -57,7 +57,7 @@ checkfile $1
 
 manjarourl () {
 mirror="https://manjaro.org/downloads/official/xfce/"
-x=$(curl -s $mirror | grep -m1 "manjaro/storage/xfce" | awk -F\" '{ print $2 }')
+x=$(curl -s $mirror | grep -m1 iso | awk -F\" '{ print $2 }')
 new="$x"
 output="manjaro.iso"
 checkfile $1
@@ -193,7 +193,8 @@ checkfile $1
 
 popurl () {
 # Requires: xpath (perl xml xpath package)
-wget https://pop-iso.sfo2.cdn.digitaloceanspaces.com -O pop.xml
+echo "Warning! This requires xpath! For ArchLinux, run 'sudo pacman -S perl-xml-xpath'"
+wget -q https://pop-iso.sfo2.cdn.digitaloceanspaces.com -O pop.xml
 xpath -q -e '/ListBucketResult/Contents/Key' pop.xml > nodes.txt
 x=$(cat nodes.txt | grep intel_13.iso | head -1 | awk -F"<Key>" '{ print $2 }' | awk -F"</Key>" '{ print $1 }')
 new="https://pop-iso.sfo2.cdn.digitaloceanspaces.com/$x"
@@ -242,8 +243,9 @@ checkfile $1
 }
 
 pureurl () {
-mirror="http://downloads.pureos.net/amber/live/gnome/"
-dd=$(date +%Y)
+mirror="https://downloads.pureos.net/amber/live/gnome/"
+#dd=$(date +%Y)
+dd="202"
 one=$(curl -s $mirror | grep $dd | tail -1 | awk -F\" '{ print $2 }')
 two=$(curl -s $mirror/$one | grep "hybrid.iso<" | awk -F\" '{ print $2 }')
 new="$mirror/$one/$two"
@@ -275,9 +277,13 @@ checkfile $1
 }
 
 fedoraurl () {
-mirror="https://www.happyassassin.net/nightlies.html"
-x=$(curl -s $mirror | grep -m1 Fedora-Workstation-Live-x86_64-Rawhide | awk -F\" '{ print $4 }')
-new="$x"
+one=$(curl -s "https://getfedora.org/en/workstation/download/" | html2text | grep -a4 "x86_64 DVD ISO" | tail -2)
+one=${one//$'\n'/}
+new=$(echo $one | awk -F"(" '{ print $2 }' | awk -F")" '{ print $1 }')
+# Legacy
+#mirror="https://www.happyassassin.net/nightlies.html"
+#x=$(curl -s $mirror | grep -m1 Fedora-Workstation-Live-x86_64-Rawhide | awk -F\" '{ print $4 }')
+#new="$x"
 output="fedora.iso"
 checkfile $1
 }
@@ -294,13 +300,18 @@ checkfile $1
 }
 
 suseurl () {
-mirrorone="https://software.opensuse.org/distributions/leap"
-one=$(curl -s $mirrorone | grep -m1 "openSUSE Leap" | awk -F"Leap" '{ print $2 }' | awk -F"<" '{ print $1 }' | xargs)
-mirror="http://mirror.yandex.ru/opensuse/distribution/leap/$one/iso/"
-x=$(curl -s $mirror | grep -m1 "x86_64.iso" | awk -F\" '{ print $2 }')
-new="$mirror/$x"
+mirrorone="https://get.opensuse.org/leap"
+one=$(curl -s $mirrorone | html2text | grep -m1 -a3 "Offline Image" | tail -2)
+one=${one//$'\n'/}
+new=$(echo $one | awk -F"(" '{ print $2 }' | awk -F")" '{ print $1 }')
 output="opensuse.iso"
 checkfile $1
+# Legacy
+#mirrorone="https://software.opensuse.org/distributions/leap"
+#one=$(curl -s $mirrorone | grep -m1 "openSUSE Leap" | awk -F"Leap" '{ print $2 }' | awk -F"<" '{ print $1 }' | xargs)
+#mirror="http://mirror.yandex.ru/opensuse/distribution/leap/$one/iso/"
+#x=$(curl -s $mirror | grep -m1 "x86_64.iso" | awk -F\" '{ print $2 }')
+#new="$mirror/$x"
 }
 
 rosaurl () {
@@ -319,7 +330,7 @@ checkfile $1
 }
 
 mageiaurl () {
-mirror="http://mirror.yandex.ru/mageia/iso/cauldron/"
+mirror="http://mirror.yandex.ru/mageia/iso/8/"
 one=$(curl -s $mirror | grep "href=\"mageia" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
 two=$(curl -s $mirror/$one | grep Plasma | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
 x=$(curl -s $mirror/$one/$two | grep ".iso\"" | awk -F\" '{ print $2 }')
@@ -328,14 +339,16 @@ output="mageia.iso"
 checkfile $1
 }
 
-clearurl () {
+clearosurl () {
 mirror="https://www.clearos.com/products/purchase/clearos-downloads"
 one=$(curl -s $mirror | grep -m1 ".iso\"")
 two=${one%.iso*}
-curl -s ${two#*http://}.iso
-new="$(cat ClearOS*iso | grep -m1 .iso | awk -F\' '{ print $2 }')"
+two=${two#*http://}.iso
+link="https://$two"
+new=$(curl -s "$link" | grep window.open | awk -F\' '{ print $2 }')
+#new="$(cat ClearOS*iso | grep -m1 .iso | awk -F\' '{ print $2 }')"
 output="clearos.iso"
-rm ${two#*http://}.iso
+#rm ${two#*http://}.iso
 notlive
 checkfile $1
 }
@@ -546,7 +559,7 @@ checkfile $1
 }
 
 freebsdurl () {
-mirror="https://www.freebsd.org/where.html"
+mirror="https://www.freebsd.org/where/"
 x=$(curl -s $mirror | grep -m1 "amd64/amd64" | awk -F\" '{ print $2 }')
 one=$(curl -s $x | grep -m1 dvd1 | awk -F"FreeBSD" '{ print $2 }' | awk -F\" '{ print $1 }')
 new=$x; new+="FreeBSD"; new+=$one; 

@@ -90,7 +90,7 @@ opensuse=("OpenSUSE" "amd64" "leap" "suseurl")
 rosa=("ROSA" "amd64" "desktop-fresh" "rosaurl")
 mandriva=("Mandriva" "amd64" "release" "mandrivaurl")
 mageia=("Mageia" "amd64" "release" "mageiaurl")
-clearos=("ClearOS" "amd64" "release" "clearurl")
+clearos=("ClearOS" "amd64" "release" "clearosurl")
 
 alpine=("Alpine" "amd64" "extended" "alpineurl")
 tinycore=("TinyCore" "amd64" "current" "tinycoreurl")
