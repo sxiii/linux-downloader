@@ -145,6 +145,28 @@ output="obarun.iso"
 checkfile $1
 }
 
+archcrafturl () {
+mirror="https://sourceforge.net/projects/archcraft/files/latest/download"
+new="$mirror"
+output="archcraft.iso"
+checkfile $1
+}
+
+cutefishosurl () {
+echo "At the time of adding, download wasn't still available."
+echo "Currently this is place-holder."
+echo "You can visit https://cutefishos.com/download to check if there is a release."
+echo "Also you can use test out this set of packages: https://archlinux.org/packages/?q=cutefish"
+echo "Please select N when asked about VM spinning as nothing was downloaded! Thanks."
+}
+
+peuxurl () {
+echo "Peux OS is delivered only as a torrent. Please download it with your favourite torrent "
+echo "client into the script folder to run in a VM: "
+echo "https://fosstorrents.com/files/download.php?file=peux_os_xfce-stable_21.01-x86_64.iso.torrent"
+echo "After downloading you can type Y to run VM. "
+}
+
 debianurl () {
 x="https://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-dvd/debian-testing-amd64-DVD-1.iso"
 new="$x"
@@ -273,6 +295,13 @@ mirror="http://mirror.serverion.com/devuan/devuan_beowulf/desktop-live/"
 x="devuan$(curl -s $mirror | grep amd64 | awk -F"devuan" '{ print $2 }' | awk -F\" '{ print $1 }')"
 new="$mirror$x"
 output="devuan.iso"
+checkfile $1
+}
+
+jingosurl () {
+mirror="https://download.jingos.com/os/JingOS-V0.9-a25ea3.iso"
+new="$mirror"
+output="jingos.iso"
 checkfile $1
 }
 
@@ -590,6 +619,16 @@ mirror="http://download.fr.ghostbsd.org/development/amd64/latest/"
 x=$(curl -s $mirror | grep ".iso<" | tail -1 | awk -F\" '{ print $2 }')
 new="$mirror$x"
 output="ghostbsd.iso"
+notlinux
+checkfile $1
+}
+
+hellosystemurl () {
+# https://github.com/helloSystem/ISO/releases/download/r0.5.0/hello-0.5.0_0E223-FreeBSD-12.2-amd64.iso
+mirror="https://github.com/helloSystem/ISO/releases/latest"
+x=$(curl -s -L $mirror | grep FreeBSD | grep -m1 iso | awk -F\" '{ print $2 }')
+new="https://github.com$x"
+output="hellosystem.iso"
 notlinux
 checkfile $1
 }

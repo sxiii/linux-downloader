@@ -27,10 +27,6 @@ echo "* 'netbootsal' option will boot from boot.salstar.sk"
 # "WIP". Todo:	1. Multiple architecture support;
 #		2. Multiple download mirror support;
 
-# add netbsd
-# openbsd 
-# ghostbsd
-
 ram=1024 # Amount (mb) of RAM, for VM.
 cmd="qemu-system-x86_64" # The name of the qemu file to search & launch
 
@@ -38,13 +34,13 @@ cmd="qemu-system-x86_64" # The name of the qemu file to search & launch
 . distrofunctions.sh
 
 # Categories
-arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun)
-deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan)
+arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun archcraft cutefishos peux)
+deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos)
 rpm=(fedora centos opensuse rosa mandriva mageia clearos)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop)
 sourcebased=(gentoo sabayon calculate nixos guix)
 containers=(rancheros k3os flatcar silverblue photon coreos)
-bsd=(freebsd netbsd openbsd ghostbsd)
+bsd=(freebsd netbsd openbsd ghostbsd hellosystem)
 notlinux=(openindiana minix haiku menuetos kolibrios reactos freedos)
 
 # All distributions
@@ -66,6 +62,9 @@ rebornos=("RebornOS" "amd64" "release" "rebornurl")
 archlabs=("ArchLabs" "amd64" "release" "archlabsurl")
 namib=("Namib" "amd64" "release" "namiburl")
 obarun=("Obarun" "amd64" "rolling" "obarunurl")
+archcraft=("ArchCraft" "amd64" "release" "archcrafturl")
+cutefishos=("CutefishOS" "amd64" "release" "cutefishosurl")
+peux=("Peux" "amd64" "release" "peuxurl")
 
 debian=("Debian" "amd64" "testing" "debianurl")
 ubuntu=("Ubuntu" "amd64" "daily-live" "ubuntuurl")
@@ -83,6 +82,7 @@ pureos=("PureOS" "amd64" "release" "pureurl")
 elementary=("ElementaryOS" "amd64" "release" "elementurl")
 backbox=("Backbox" "amd64" "release" "backboxurl")
 devuan=("Devuan" "amd64" "beowulf" "devuanurl")
+jingos=("JingOS" "amd64" "v0.9" "jingosurl")
 
 fedora=("Fedora" "amd64" "fedora-rawhide-nightly" "fedoraurl")
 centos=("CentOS" "amd64" "stream" "centosurl")
@@ -123,6 +123,7 @@ freebsd=("FreeBSD" "amd64" "release" "freebsdurl")
 netbsd=("NetBSD" "amd64" "release" "netbsdurl")
 openbsd=("OpenBSD" "amd64" "release" "openbsdurl")
 ghostbsd=("GhostBSD" "amd64" "release" "ghostbsdurl")
+hellosystem=("HelloSystem" "amd64" "v0.5" "hellosystemurl")
 
 openindiana=("OpenIndiana" "amd64" "release" "indianaurl")
 minix=("MINIX" "amd64" "release" "minixurl")
