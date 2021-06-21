@@ -36,7 +36,7 @@ cmd="qemu-system-x86_64" # The name of the qemu file to search & launch
 # Categories
 arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun archcraft cutefishos peux)
 deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos)
-rpm=(fedora centos opensuse rosa mandriva mageia clearos)
+rpm=(fedora centos opensuse rosa mandriva mageia clearos alma rocky)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop)
 sourcebased=(gentoo sabayon calculate nixos guix)
 containers=(rancheros k3os flatcar silverblue photon coreos)
@@ -91,6 +91,8 @@ rosa=("ROSA" "amd64" "desktop-fresh" "rosaurl")
 mandriva=("Mandriva" "amd64" "release" "mandrivaurl")
 mageia=("Mageia" "amd64" "release" "mageiaurl")
 clearos=("ClearOS" "amd64" "release" "clearosurl")
+alma=("AlmaLinux" "amd64" "release" "almaurl")
+rocky=("RockyLinux" "amd64" "rc" "rockyurl")
 
 alpine=("Alpine" "amd64" "extended" "alpineurl")
 tinycore=("TinyCore" "amd64" "current" "tinycoreurl")

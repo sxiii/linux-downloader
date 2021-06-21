@@ -382,6 +382,23 @@ notlive
 checkfile $1
 }
 
+almaurl () {
+mirror="https://mirrors.almalinux.org"
+one=$(curl -s $mirror/isos.html | html2text | grep -m1 x86_64 | awk -F'(' '{ print $2 }' | awk -F')' '{ print $1 }')
+two=$(curl -s $mirror$one | html2text | grep -A2 Norway | grep -m1 isos | awk -F'(' '{ print $2 }' | awk -F')' '{ print $1 }')
+three=$(curl -s $two/ | grep -m1 dvd | awk -F'>' '{ print $2 }' | awk -F'<' '{ print $1 }')
+new="$two/$three"
+output="alma.iso"
+checkfile $1
+}
+
+rockyurl () {
+mirror="https://rockylinux.org/download"
+new=$(curl -s $mirror | html2text | grep -m1 DVD | awk -F'(' '{ print $2 }' | awk -F')' '{ print $1 }')
+output="rocky.iso"
+checkfile $1
+}
+
 alpineurl () {
 mirrorone="https://alpinelinux.org/downloads/"
 one=$(curl -s $mirrorone | grep Current | awk -F">" '{ print $3 }' | awk -F"<" '{ print $1 }')
