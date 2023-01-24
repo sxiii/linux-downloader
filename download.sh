@@ -34,8 +34,8 @@ cmd="qemu-system-x86_64" # The name of the qemu file to search & launch
 . distrofunctions.sh
 
 # Categories
-arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun archcraft cutefishos peux)
-deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos)
+arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun archcraft peux)
+deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos cutefishos)
 rpm=(fedora centos opensuse rosa mandriva mageia clearos alma rocky)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop)
 sourcebased=(gentoo sabayon calculate nixos guix)
@@ -63,7 +63,6 @@ archlabs=("ArchLabs" "amd64" "release" "archlabsurl")
 namib=("Namib" "amd64" "release" "namiburl")
 obarun=("Obarun" "amd64" "rolling" "obarunurl")
 archcraft=("ArchCraft" "amd64" "release" "archcrafturl")
-cutefishos=("CutefishOS" "amd64" "release" "cutefishosurl")
 peux=("Peux" "amd64" "release" "peuxurl")
 
 debian=("Debian" "amd64" "testing" "debianurl")
@@ -83,6 +82,7 @@ elementary=("ElementaryOS" "amd64" "release" "elementurl")
 backbox=("Backbox" "amd64" "release" "backboxurl")
 devuan=("Devuan" "amd64" "beowulf" "devuanurl")
 jingos=("JingOS" "amd64" "v0.9" "jingosurl")
+cutefishos=("CutefishOS" "amd64" "release" "cutefishosurl")
 
 fedora=("Fedora" "amd64" "fedora-rawhide-nightly" "fedoraurl")
 centos=("CentOS" "amd64" "stream" "centosurl")

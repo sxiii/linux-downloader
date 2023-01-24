@@ -48,16 +48,17 @@ fi
 # Update latest distro URL functions
 
 archurl () {
-mirror="http://mirrors.evowise.com/archlinux/iso/latest/"
-x=$(curl -s $mirror | grep -m1 archlinux- | awk -F".iso" '{ print $1 }' | awk -F\" '{ print $2 }');
-new="$mirror/$x.iso"
+mirror="https://archlinux.org/download/"
+x=$(curl -s $mirror | grep -m1 geo | awk -F"\"" '{ print $2 }')
+y=$(curl -s $x | grep -m1 archlinux | awk -F".iso" '{ print $1 }' | awk -F"\"" '{ print $2 }' );
+new="$x/$y.iso"
 output="archlinux.iso"
 checkfile $1
 }
 
 manjarourl () {
-mirror="https://manjaro.org/downloads/official/xfce/"
-x=$(curl -s $mirror | grep -m1 iso | awk -F\" '{ print $2 }')
+mirror="https://manjaro.org/download/"
+x=$(curl -s $mirror | grep btn-fi | grep xfce | awk -F"\"" '{ print $4 }')
 new="$x"
 output="manjaro.iso"
 checkfile $1
@@ -80,8 +81,7 @@ checkfile $1
 
 parabolaurl () {
 mirror="https://wiki.parabola.nu/Get_Parabola"
-x=$(curl -s $mirror | grep systemd | grep lxde | grep ".iso" | grep Web | awk -F"redirector" '{ print $2 }' | awk -F\" '{ print $1 }')
-new="https://redirector$x"
+new=$(curl -s $mirror | grep iso | grep Web | awk -F"\"" '{ print $18 }' | grep iso -m1)
 output="parabola.iso"
 checkfile $1
 }
@@ -152,19 +152,11 @@ output="archcraft.iso"
 checkfile $1
 }
 
-cutefishosurl () {
-echo "At the time of adding, download wasn't still available."
-echo "Currently this is place-holder."
-echo "You can visit https://cutefishos.com/download to check if there is a release."
-echo "Also you can use test out this set of packages: https://archlinux.org/packages/?q=cutefish"
-echo "Please select N when asked about VM spinning as nothing was downloaded! Thanks."
-}
-
 peuxurl () {
-echo "Peux OS is delivered only as a torrent. Please download it with your favourite torrent "
-echo "client into the script folder to run in a VM: "
-echo "https://fosstorrents.com/files/download.php?file=peux_os_xfce-stable_21.01-x86_64.iso.torrent"
-echo "After downloading you can type Y to run VM. "
+mirror="https://sourceforge.net/projects/peux-os/files/latest/download"
+new="$mirror"
+output="peuxos.iso"
+checkfile $1
 }
 
 debianurl () {
@@ -302,6 +294,13 @@ jingosurl () {
 mirror="https://download.jingos.com/os/JingOS-V0.9-a25ea3.iso"
 new="$mirror"
 output="jingos.iso"
+checkfile $1
+}
+
+cutefishosurl () {
+mirror="https://sourceforge.net/projects/cutefish-ubuntu/files/latest/download"
+new="$mirror"
+output="cutefishos.iso"
 checkfile $1
 }
 
