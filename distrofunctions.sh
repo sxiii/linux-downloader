@@ -287,9 +287,8 @@ checkfile $1
 }
 
 fedoraurl () {
-one=$(curl -s "https://getfedora.org/en/workstation/download/" | html2text | grep -a4 "x86_64 DVD ISO" | tail -2)
-one=${one//$'\n'/}
-new=$(echo $one | awk -F"(" '{ print $2 }' | awk -F")" '{ print $1 }')
+mirror="https://getfedora.org/en/workstation/download/"
+new=$(curl -s $mirror | html2text | grep -m2 iso | awk -F "(" 'NR%2{printf "%s",$0;next;}1' | awk -F"(" '{ print $2 }' | awk -F")" '{ print $1 }')
 # Legacy
 #mirror="https://www.happyassassin.net/nightlies.html"
 #x=$(curl -s $mirror | grep -m1 Fedora-Workstation-Live-x86_64-Rawhide | awk -F\" '{ print $4 }')
@@ -299,35 +298,24 @@ checkfile $1
 }
 
 centosurl () {
-mirrorone="https://www.centos.org/centos-stream/"
-one=$(curl -s $mirrorone | grep x86_64 | awk -F\" '{ print $2 }' | awk -F"/" '{ print $5 }')
-mirror="http://mirror.yandex.ru/centos/$one/isos/x86_64/"
-x=$(curl -s $mirror | grep -m1 dvd1 | awk -F\" '{ print $2 }' | awk -F\" '{ print $1 }')
-new="$mirror/$x"
+mirror="https://www.centos.org/centos-stream/"
+x=$(curl -s $mirror | grep -m1 x86_64 | awk -F"\"" '{ print $2 }' | awk -F"&amp" '{ print $1 }')
+new=$(curl $x | grep https -m1)
 output="centos.iso"
 notlive
 checkfile $1
 }
 
 suseurl () {
-mirrorone="https://get.opensuse.org/leap"
-one=$(curl -s $mirrorone | html2text | grep -m1 -a3 "Offline Image" | tail -2)
-one=${one//$'\n'/}
-new=$(echo $one | awk -F"(" '{ print $2 }' | awk -F")" '{ print $1 }')
+mirror="https://get.opensuse.org/tumbleweed/#download"
+new=$(curl -s $mirror | grep -m1 Current.iso | awk -F"\"" '{ print $2 }' | awk -F"\"" '{ print $1 }')
 output="opensuse.iso"
 checkfile $1
-# Legacy
-#mirrorone="https://software.opensuse.org/distributions/leap"
-#one=$(curl -s $mirrorone | grep -m1 "openSUSE Leap" | awk -F"Leap" '{ print $2 }' | awk -F"<" '{ print $1 }' | xargs)
-#mirror="http://mirror.yandex.ru/opensuse/distribution/leap/$one/iso/"
-#x=$(curl -s $mirror | grep -m1 "x86_64.iso" | awk -F\" '{ print $2 }')
-#new="$mirror/$x"
 }
 
 rosaurl () {
 mirror="https://www.rosalinux.ru/rosa-linux-download-links/"
-x="$(curl -s $mirror | grep -A3 -m1 KDE4 | grep 64-bit | awk -F\" '{ print $4 }')"
-new="$x"
+new=$(curl -s $mirror | html2text | grep -m1 "64-bit ISO" | awk -F"(" '{ print $2 }' | awk -F" " '{ print $1 }')
 output="rosa.iso"
 checkfile $1
 }
@@ -340,11 +328,10 @@ checkfile $1
 }
 
 mageiaurl () {
-mirror="http://mirror.yandex.ru/mageia/iso/8/"
-one=$(curl -s $mirror | grep "href=\"mageia" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
-two=$(curl -s $mirror/$one | grep Plasma | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
-x=$(curl -s $mirror/$one/$two | grep ".iso\"" | awk -F\" '{ print $2 }')
-new="$mirror/$one/$two/$x"
+mirror="https://mirror.yandex.ru/mageia/iso/cauldron/"
+one=$(curl -s $mirror | grep Live-Xfce-x86_64 | awk -F"\"" '{ print $2 }')
+two=$(curl -s $mirror/$one | grep -m1 "x86_64.iso" | awk -F"\"" '{ print $2 }')
+new="$mirror/$one/$two"
 output="mageia.iso"
 checkfile $1
 }
@@ -365,10 +352,12 @@ checkfile $1
 
 almaurl () {
 mirror="https://mirrors.almalinux.org"
-one=$(curl -s $mirror/isos.html | html2text | grep -m1 x86_64 | awk -F'(' '{ print $2 }' | awk -F')' '{ print $1 }')
-two=$(curl -s $mirror$one | html2text | grep -A2 Norway | grep -m1 isos | awk -F'(' '{ print $2 }' | awk -F')' '{ print $1 }')
-three=$(curl -s $two/ | grep -m1 dvd | awk -F'>' '{ print $2 }' | awk -F'<' '{ print $1 }')
-new="$two/$three"
+x=$(curl -s "$mirror/isos.html" | grep x86_64 | tail -1 | awk -F"\"" '{ print $2 }')
+one=$(curl -s "$mirror/$x" | grep iso | wc -l)
+two=$(( $RANDOM % $one + 1 ))
+three=$(curl -s "$mirror/$x" | grep iso | head -n$two | tail -1 | awk -F"\"" '{ print $2 }')
+four=$(curl -s "$three/" | grep -m1 dvd.iso | html2text | grep -m1 iso | awk -F"AlmaLinux" '{ print $2 }' | awk -F".iso" '{ print $1 }')
+new="$three/AlmaLinux$four.iso"
 output="alma.iso"
 checkfile $1
 }
