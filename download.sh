@@ -35,9 +35,9 @@ cmd="qemu-system-x86_64" # The name of the qemu file to search & launch
 
 # Categories
 arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun archcraft peux)
-deb=(debian ubuntu linuxmint altlinux zorinos solus popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos cutefishos)
+deb=(debian ubuntu linuxmint altlinux zorinos popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos cutefishos)
 rpm=(fedora centos opensuse rosa mandriva mageia clearos alma rocky)
-other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop)
+other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop solus)
 sourcebased=(gentoo sabayon calculate nixos guix)
 containers=(rancheros k3os flatcar silverblue photon coreos)
 bsd=(freebsd netbsd openbsd ghostbsd hellosystem)

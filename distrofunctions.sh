@@ -176,9 +176,8 @@ checkfile $1
 }
 
 minturl () {
-mirror="https://linuxmint.com/download.php"
-x=$(curl -s $mirror | grep "latest release" | awk -F"Mint" '{ print $2 }' | awk -F"," '{ print $1 }' | xargs)
-new="http://mirrors.evowise.com/linuxmint/stable/$x/linuxmint-$x-cinnamon-64bit.iso"
+mirror="https://linuxmint.com/edition.php?id=302"
+new=$(curl -s $mirror | grep -m2 iso | grep -m1 -vwE "Torrent" | awk -F"\"" '{ print $2 }')
 output="linuxmint.iso"
 checkfile $1
 }
@@ -197,24 +196,8 @@ output="zorinos.iso"
 checkfile $1
 }
 
-solusurl () {
-mirror="https://getsol.us/download/"
-x=$(curl -s $mirror | grep -m1 iso | awk -F\" '{ print $2 }')
-new="$x"
-output="solus.iso"
-checkfile $1
-}
-
 popurl () {
-# Requires: xpath (perl xml xpath package)
-echo "Warning! This requires xpath! For ArchLinux, run 'sudo pacman -S perl-xml-xpath'"
-wget -q https://pop-iso.sfo2.cdn.digitaloceanspaces.com -O pop.xml
-xpath -q -e '/ListBucketResult/Contents/Key' pop.xml > nodes.txt
-x=$(cat nodes.txt | grep intel_13.iso | head -1 | awk -F"<Key>" '{ print $2 }' | awk -F"</Key>" '{ print $1 }')
-new="https://pop-iso.sfo2.cdn.digitaloceanspaces.com/$x"
-rm pop.xml nodes.txt
-output="popos.iso"
-checkfile $1
+echo "Warning! Right now PopOS downloading is broken. Maybe I'll fix it later."
 }
 
 deepinurl () {
@@ -234,7 +217,7 @@ checkfile $1
 
 knoppixurl () {
 mirror="http://mirror.yandex.ru/knoppix/DVD/"
-x=$(curl -s $mirror | grep -m1 EN.iso | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
+x=$(curl -s $mirror | grep -m1 "EN.iso\"" | awk -F"\"" '{ print $2 }')
 new="$mirror/$x"
 output="knoppix.iso"
 checkfile $1
@@ -257,12 +240,8 @@ checkfile $1
 }
 
 pureurl () {
-mirror="https://downloads.pureos.net/amber/live/gnome/"
-#dd=$(date +%Y)
-dd="202"
-one=$(curl -s $mirror | grep $dd | tail -1 | awk -F\" '{ print $2 }')
-two=$(curl -s $mirror/$one | grep "hybrid.iso<" | awk -F\" '{ print $2 }')
-new="$mirror/$one/$two"
+mirror="https://pureos.net/download/"
+new=$(curl -s $mirror | grep -m1 iso | awk -F"\"" '{ print $2 }')
 output="pureos.iso"
 checkfile $1
 }
@@ -283,9 +262,12 @@ checkfile $1
 }
 
 devuanurl () {
-mirror="http://mirror.serverion.com/devuan/devuan_beowulf/desktop-live/"
-x="devuan$(curl -s $mirror | grep amd64 | awk -F"devuan" '{ print $2 }' | awk -F\" '{ print $1 }')"
-new="$mirror$x"
+mirror="https://www.devuan.org/get-devuan"
+x=$(curl -s $mirror | grep -A5 HTTPS | grep href | awk -F"\"" '{ print $2 }')
+one=$(curl -s $x | grep daed | awk -F"\"" '{ print $4 }')
+two=$(curl -s $x/$one | grep desktop-live | awk -F"\"" '{ print $4 }')
+three=$(curl -s $x/$one/$two | grep -m1 amd64 | awk -F"\"" '{ print $4 }')
+new="$x/$one/$two/$three"
 output="devuan.iso"
 checkfile $1
 }
@@ -503,6 +485,14 @@ mirror=""
 x="$(curl -s https://www.plop.at/en/ploplinux/downloads/full.html | grep x86_64.iso | head -1 | awk -F"https://" '{ print $2 }' | awk -F".iso" '{ print $1 }')"
 new="https://$x.iso"
 output="plop.iso"
+checkfile $1
+}
+
+solusurl () {
+mirror="https://getsol.us/download/"
+x=$(curl -s $mirror | grep -m1 iso | awk -F\" '{ print $2 }')
+new="$x"
+output="solus.iso"
 checkfile $1
 }
 
