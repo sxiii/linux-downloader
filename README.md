@@ -58,10 +58,11 @@ Multiple values are also supported:
 
 ## Verified as working
 This script verified as working correctly on the following OSes:
+* Garuda Linux Soaring Talon
 * Fedora 33 Workstation (Pre-release)
 * Ubuntu 20.04
 * Manjaro 21.0.5 Ornara
-* Probably will work mostly everywhere 
+* Probably will work almost everywhere 
 
 ## How to add distribution yourself
 0. Clone the repo, if you hadn't already, and enter the resuling folder: 
