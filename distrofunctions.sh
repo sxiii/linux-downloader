@@ -665,7 +665,7 @@ if [ "$1" == "filesize" ]; then
 	notlinux
 	getsize
 	else
-	[ ! -f $output ] && wgetcmd && echo "Please wait, unzipping haiku..." && unzip haiku.zip && rm ReadMe.md && mv haiku*iso haiku.iso || echo "Haiku already downloaded."
+	[ ! -f $output ] && wgetcmd && echo "Please wait, unzipping haiku..." && unzip $output && rm ReadMe.md && mv haiku*iso haiku.iso || echo "Haiku already downloaded."
 fi
 }
 
@@ -677,19 +677,19 @@ if [ "$1" == "filesize" ]; then
 	notlinux
 	getsize
 	else
-	[ ! -f $output ] && wgetcmd && echo "Wait, unzipping menuetos..." && unzip menuetos.zip && mv M64*.IMG menuetos.img || echo "Menuet already downloaded."
+	[ ! -f $output ] && wgetcmd && echo "Wait, unzipping menuetos..." && unzip $output && mv M64*.IMG menuetos.img || echo "Menuet already downloaded."
 fi
 }
 
 kolibrios () {
-mirror="http://builds.kolibrios.org/eng/latest-iso.7z"
+mirror="https://builds.kolibrios.org/eng/latest-iso.7z"
 new="$mirror"
 output="kolibrios.7z"
 if [ "$1" == "filesize" ]; then
 	notlinux
 	getsize
 	else
-	[ ! -f $output ] && wgetcmd && echo "Un7zipping kolibri..." && 7z x kolibrios.7z && mv kolibri.iso kolibrios.iso || echo "Kolibri already downloaded."
+	[ ! -f $output ] && wgetcmd && echo "Un7zipping kolibri..." && 7z x $output && mv kolibri.iso kolibrios.iso || echo "Kolibri already downloaded."
 fi
 }
 
@@ -701,17 +701,22 @@ if [ "$1" == "filesize" ]; then
 	notlinux
 	getsize
 	else
-[ ! -f $output ] && wgetcmd && echo "Please wait, unzipping reactos..." && unzip reactos.zip && mv React*iso reactos.iso || echo "Menuet already downloaded."
+[ ! -f $output ] && wgetcmd && echo "Please wait, unzipping reactos..." && unzip $output && mv React*iso reactos.iso || echo "ReactOS already downloaded."
 fi
 }
 
 freedosurl () {
 #mirror="https://sourceforge.net/projects/freedos/files/latest/download"
-mirror="https://www.freedos.org/download/download/FD12CD.iso"
-new="$mirror"
-output="freedos.iso"
-notlinux
-checkfile $1
+#mirror="https://www.freedos.org/download/download/FD12CD.iso"
+mirror="https://www.freedos.org/download/"
+new=$(curl -s $mirror | grep FD13-LiveCD.zip | awk -F"\"" '{ print $2 }')
+output="freedos.zip"
+if [ "$1" == "filesize" ]; then 
+	notlinux
+	getsize
+	else
+[ ! -f $output ] && wgetcmd && echo "Please wait, unzipping FreeDOS..." && unzip $output && rm readme.txt && mv FD13BOOT.img freedos.img && mv FD13LIVE.iso freedos.iso || echo "FreeDOS already downloaded."
+fi
 }
 
 netbootxyz () {
