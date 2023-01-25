@@ -499,9 +499,11 @@ checkfile $1
 
 sabayonurl () {
 mirror="https://www.sabayon.org/desktop/"
-new=$(curl -s $mirror | grep GNOME.iso | head -1 | awk -F"http://" '{ print $2 }' | awk -F\" '{ print $1 }')
-output="sabayon.iso"
-checkfile $1
+echo "Unfortunately, current Sabayon mirror ($mirror) is unavailable"
+#x=$(curl -s $mirror | grep GNOME.iso | head -1 | awk -F"http://" '{ print $2 }' | awk -F\" '{ print $1 }')
+#new="http://$x"
+#output="sabayon.iso"
+#checkfile $1
 }
 
 calcurl () {

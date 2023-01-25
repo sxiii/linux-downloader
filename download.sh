@@ -149,7 +149,7 @@ printf "$col" > col$i.tmp
 col=""
 done
 
-pr -m -t -w120 col*tmp && rm *tmp
+pr -m -t -w150 col*tmp && rm *tmp
 
 echo "Please choose distro to download (type-in number or space-separated multiple numbers):"
 read x
