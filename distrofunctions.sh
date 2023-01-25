@@ -622,6 +622,13 @@ output="coreos.iso"
 checkfile $1
 }
 
+dcosurl () {
+new="https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
+output="dcos_generate_config.sh"
+echo "Warning! This is not an ISO or disk image, but rather a OS generator tool. After downloading, run chmod +x ./dc*sh"
+checkfile $1
+}
+
 freebsdurl () {
 mirror="https://www.freebsd.org/where/"
 x=$(curl -s $mirror | grep -m1 "amd64/amd64" | awk -F\" '{ print $2 }')

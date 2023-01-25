@@ -39,12 +39,12 @@ deb=(debian ubuntu linuxmint altlinux zorinos popos deepin mxlinux knoppix kali 
 rpm=(fedora centos opensuse rosa mandriva mageia clearos alma rocky)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop solus)
 sourcebased=(gentoo sabayon calculate nixos guix crux gobolinux)
-containers=(rancheros k3os flatcar silverblue photon coreos)
+containers=(rancheros k3os flatcar silverblue photon coreos dcos)
 bsd=(freebsd netbsd openbsd ghostbsd hellosystem)
 notlinux=(openindiana minix haiku menuetos kolibrios reactos freedos)
 
 # All distributions
-category_names=("Arch-based" "DEB-based" "RPM-based" "Other" "Source-based" "Containers" "BSD" "Not linux")
+category_names=("Arch-based" "DEB-based" "RPM-based" "Other" "Source-based" "Containers and DCs" "BSD, NAS, Firewall" "Not linux")
 distro_all=("arch" "deb" "rpm" "other" "sourcebased" "containers" "bsd" "notlinux")
 distro_arr=("${arch[@]}" "${deb[@]}" "${rpm[@]}" "${other[@]}" "${sourcebased[@]}" "${containers[@]}" "${bsd[@]}" "${notlinux[@]}")
 
@@ -128,13 +128,14 @@ guix=("Guix" "amd64" "release" "guixurl")
 crux=("CRUX" "amd64" "release" "cruxurl")
 gobolinux=("GoboLinux" "amd64" "release" "gobourl")
 
-# Distros for containers
+# Distros for containers and data-centers
 rancheros=("RancherOS" "amd64" "release" "rancherurl")
 k3os=("K3OS" "amd64" "release" "k3osurl")
 flatcar=("Flatcar" "amd64" "release" "flatcarurl")
 silverblue=("Silverblue" "amd64" "release" "silverblueurl")
 photon=("PhotonOS" "amd64" "fulliso" "photonurl")
 coreos=("CoreOS" "amd64" "next" "coreosurl")
+dcos=("DC/OS" "amd64" "script" "dcosurl")
 
 # FreeBSD family
 freebsd=("FreeBSD" "amd64" "release" "freebsdurl")
@@ -143,7 +144,23 @@ openbsd=("OpenBSD" "amd64" "release" "openbsdurl")
 ghostbsd=("GhostBSD" "amd64" "release" "ghostbsdurl")
 hellosystem=("HelloSystem" "amd64" "v0.5" "hellosystemurl")
 
+# Add more FreeBSD stuff
+# https://www.dragonflybsd.org/
+# https://www.pfsense.org/
+# https://xigmanas.com/xnaswp/
+# https://nomadbsd.org/
+# https://opnsense.org/
+# https://www.midnightbsd.org/
+# https://www.truenas.com/truenas-scale/
+# https://hardenedbsd.org/
+# https://clonos.convectix.com/
+# https://en.wikipedia.org/wiki/List_of_BSD_operating_systems
+# https://en.wikipedia.org/wiki/List_of_products_based_on_FreeBSD
+
 # Not linux, but free
+
+# Add More Solaris stuff https://solaris.com
+
 openindiana=("OpenIndiana" "amd64" "release" "indianaurl")
 minix=("MINIX" "amd64" "release" "minixurl")
 haiku=("Haiku" "amd64" "nightly" "haikuurl")
