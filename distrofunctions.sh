@@ -540,17 +540,15 @@ checkfile $1
 }
 
 rancherurl () {
-mirror="https://github.com/rancher/os/releases/latest"
-x=$(curl -s -L $mirror | grep -m1 rancheros.iso | awk -F\" '{ print $2 }')
-new="https://github.com$x"
+mirror="https://api.github.com/repos/rancher/os/releases/latest"
+new=$(curl -s $mirror | grep browser_download_url | grep rancheros.iso | awk -F"\"" '{ print $4 }')
 output="rancheros.iso"
 checkfile $1
 }
 
 k3osurl () {
-mirror="https://github.com/rancher/k3os/releases/latest"
-x=$(curl -s -L $mirror | grep -m1 k3os-amd64.iso | awk -F\" '{ print $2 }')
-new="https://github.com$x"
+mirror="https://api.github.com/repos/rancher/k3os/releases/latest"
+new=$(curl -s $mirror | grep browser_download_url | grep k3os-amd64.iso | awk -F"\"" '{ print $4 }')
 output="k3os.iso"
 checkfile $1
 }
@@ -581,7 +579,7 @@ checkfile $1
 
 coreosurl () {
 mirror="https://builds.coreos.fedoraproject.org/streams/next.json"
-x=$(curl -s $mirror | grep iso | grep location | awk -F\" '{ print $4 }')
+x=$(curl -s $mirror | grep iso | grep -m1 location | awk -F\" '{ print $4 }')
 new="$x"
 output="coreos.iso"
 checkfile $1
