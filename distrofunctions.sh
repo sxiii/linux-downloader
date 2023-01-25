@@ -444,10 +444,11 @@ checkfile $1
 
 dragoraurl () {
 mirror="http://rsync.dragora.org/current/iso/beta/"
-x=$(curl -s $mirror | grep -m1 x86_64 | awk -F\' '{ print $2 }')
-new="$mirror$x"
-output="dragora.iso"
-checkfile $1
+echo "Unfortunately, current Dragora mirror ($mirror) is unavailable"
+#x=$(curl -s $mirror | grep -m1 x86_64 | awk -F\' '{ print $2 }')
+#new="$mirror$x"
+#output="dragora.iso"
+#checkfile $1
 }
 
 slackwareurl () {
@@ -463,15 +464,16 @@ checkfile $1
 
 adelieurl () {
 mirror="https://www.adelielinux.org/download/"
-x=$(curl -s $mirror | grep -A4 Live | grep iso | awk -F"https://" '{ print $2 }' | awk -F\" '{ print $1 }')
-new="https://$x"
+x=$(curl -s $mirror | html2text | grep "Listing]" | awk -F"(" '{ print $2 }' | awk -F")" '{ print $1 }')
+y=$(curl -s $x | grep live-mate | grep -m1 "x86_64" | awk -F"\"" '{ print $2 }')
+new="$x$y"
 output="adelie.iso"
 checkfile $1
 }
 
 plopurl () {
-mirror=""
-x="$(curl -s https://www.plop.at/en/ploplinux/downloads/full.html | grep x86_64.iso | head -1 | awk -F"https://" '{ print $2 }' | awk -F".iso" '{ print $1 }')"
+mirror="https://www.plop.at/en/ploplinux/downloads/full.html"
+x="$(curl -s $mirror | grep x86_64.iso | head -1 | awk -F"https://" '{ print $2 }' | awk -F".iso" '{ print $1 }')"
 new="https://$x.iso"
 output="plop.iso"
 checkfile $1
@@ -479,10 +481,11 @@ checkfile $1
 
 solusurl () {
 mirror="https://getsol.us/download/"
-x=$(curl -s $mirror | grep -m1 iso | awk -F\" '{ print $2 }')
-new="$x"
-output="solus.iso"
-checkfile $1
+echo "Unfortunately, current Solus mirror ($mirror) is unavailable"
+#x=$(curl -s $mirror | grep -m1 iso | awk -F\" '{ print $2 }')
+#new="$x"
+#output="solus.iso"
+#checkfile $1
 }
 
 gentoourl () {
