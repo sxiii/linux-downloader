@@ -614,7 +614,7 @@ checkfile $1
 
 ghostbsdurl () {
 mirror="http://download.fr.ghostbsd.org/development/amd64/latest/"
-x=$(curl -s $mirror | grep ".iso<" | tail -1 | awk -F\" '{ print $2 }')
+x=$(curl -s -L $mirror | grep ".iso<" | tail -1 | awk -F\" '{ print $2 }')
 new="$mirror$x"
 output="ghostbsd.iso"
 notlinux
@@ -622,10 +622,12 @@ checkfile $1
 }
 
 hellosystemurl () {
-# https://github.com/helloSystem/ISO/releases/download/r0.5.0/hello-0.5.0_0E223-FreeBSD-12.2-amd64.iso
-mirror="https://github.com/helloSystem/ISO/releases/latest"
-x=$(curl -s -L $mirror | grep FreeBSD | grep -m1 iso | awk -F\" '{ print $2 }')
-new="https://github.com$x"
+#mirror="https://github.com/helloSystem/ISO/releases/download/r0.5.0/hello-0.5.0_0E223-FreeBSD-12.2-amd64.iso"
+#mirror="https://github.com/helloSystem/ISO/releases/latest"
+#x=$(curl -s -L $mirror | grep FreeBSD | grep -m1 iso | awk -F\" '{ print $2 }')
+#new="https://github.com$x"
+mirror="https://api.github.com/repos/helloSystem/ISO/releases/latest"
+new=$(curl -s $mirror | grep browser_download_url | grep -m1 amd64.iso | awk -F"\"" '{ print $4 }')
 output="hellosystem.iso"
 notlinux
 checkfile $1
