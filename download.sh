@@ -34,11 +34,11 @@ cmd="qemu-system-x86_64" # The name of the qemu file to search & launch
 . distrofunctions.sh
 
 # Categories
-arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun archcraft peux)
+arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun archcraft peux bluestar xerolinux)
 deb=(debian ubuntu linuxmint altlinux zorinos popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos cutefishos)
 rpm=(fedora centos opensuse rosa mandriva mageia clearos alma rocky)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop solus)
-sourcebased=(gentoo sabayon calculate nixos guix)
+sourcebased=(gentoo sabayon calculate nixos guix crux gobolinux)
 containers=(rancheros k3os flatcar silverblue photon coreos)
 bsd=(freebsd netbsd openbsd ghostbsd hellosystem)
 notlinux=(openindiana minix haiku menuetos kolibrios reactos freedos)
@@ -49,6 +49,8 @@ distro_all=("arch" "deb" "rpm" "other" "sourcebased" "containers" "bsd" "notlinu
 distro_arr=("${arch[@]}" "${deb[@]}" "${rpm[@]}" "${other[@]}" "${sourcebased[@]}" "${containers[@]}" "${bsd[@]}" "${notlinux[@]}")
 
 # Legend ## Distroname ## Arch  ## Type     ## Download URL 
+
+# Archlinux-based distros
 archlinux=("ArchLinux" "amd64" "rolling" "archurl")
 manjaro=("Manjaro" "amd64" "rolling" "manjarourl")
 arcolinux=("Arcolinux" "amd64" "rolling" "arcourl")
@@ -64,7 +66,14 @@ namib=("Namib" "amd64" "release" "namiburl")
 obarun=("Obarun" "amd64" "rolling" "obarunurl")
 archcraft=("ArchCraft" "amd64" "release" "archcrafturl")
 peux=("Peux" "amd64" "release" "peuxurl")
+bluestar=("Bluestar" "amd64" "release" "bluestarurl")
+xerolinux=("XeroLinux" "amd64" "rolling" "xerourl")
 
+# Consider in the future if the distros continue to evolve
+# https://sourceforge.net/projects/calinixos/
+# https://sourceforge.net/projects/hefftorlinux/
+
+# Debian/Ubuntu-based distros
 debian=("Debian" "amd64" "testing" "debianurl")
 ubuntu=("Ubuntu" "amd64" "daily-live" "ubuntuurl")
 linuxmint=("LinuxMint" "amd64" "release" "minturl")
@@ -84,6 +93,7 @@ devuan=("Devuan" "amd64" "beowulf" "devuanurl")
 jingos=("JingOS" "amd64" "v0.9" "jingosurl")
 cutefishos=("CutefishOS" "amd64" "release" "cutefishosurl")
 
+# Fedora/RedHat-based distros
 fedora=("Fedora" "amd64" "Workstation" "fedoraurl")
 centos=("CentOS" "amd64" "stream" "centosurl")
 opensuse=("OpenSUSE" "amd64" "tumbleweed" "suseurl")
@@ -94,6 +104,7 @@ clearos=("ClearOS" "amd64" "release" "clearosurl")
 alma=("AlmaLinux" "amd64" "release" "almaurl")
 rocky=("RockyLinux" "amd64" "rc" "rockyurl")
 
+# Other distros
 alpine=("Alpine" "amd64" "extended" "alpineurl")
 tinycore=("TinyCore" "amd64" "current" "tinycoreurl")
 porteus=("Porteus" "amd64" "kiosk" "porteusurl")
@@ -108,12 +119,16 @@ slackware=("Slackware" "amd64" "current" "slackwareurl")
 adelie=("Adelie" "amd64" "rc1" "adelieurl")
 plop=("Plop" "amd64" "current-stable" "plopurl")
 
+# Source-based distros
 gentoo=("Gentoo" "amd64" "admincd" "gentoourl")
 sabayon=("Sabayon" "amd64" "daily" "sabayonurl")
 calculate=("Calculate" "amd64" "release" "calcurl")
 nixos=("NixOS" "amd64" "unstable" "nixurl")
 guix=("Guix" "amd64" "release" "guixurl")
+crux=("CRUX" "amd64" "release" "cruxurl")
+gobolinux=("GoboLinux" "amd64" "release" "gobourl")
 
+# Distros for containers
 rancheros=("RancherOS" "amd64" "release" "rancherurl")
 k3os=("K3OS" "amd64" "release" "k3osurl")
 flatcar=("Flatcar" "amd64" "release" "flatcarurl")
@@ -121,12 +136,14 @@ silverblue=("Silverblue" "amd64" "release" "silverblueurl")
 photon=("PhotonOS" "amd64" "fulliso" "photonurl")
 coreos=("CoreOS" "amd64" "next" "coreosurl")
 
+# FreeBSD family
 freebsd=("FreeBSD" "amd64" "release" "freebsdurl")
 netbsd=("NetBSD" "amd64" "release" "netbsdurl")
 openbsd=("OpenBSD" "amd64" "release" "openbsdurl")
 ghostbsd=("GhostBSD" "amd64" "release" "ghostbsdurl")
 hellosystem=("HelloSystem" "amd64" "v0.5" "hellosystemurl")
 
+# Not linux, but free
 openindiana=("OpenIndiana" "amd64" "release" "indianaurl")
 minix=("MINIX" "amd64" "release" "minixurl")
 haiku=("Haiku" "amd64" "nightly" "haikuurl")

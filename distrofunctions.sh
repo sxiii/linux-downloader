@@ -17,7 +17,8 @@ printf "File: $new has size: $y while on disk it is $output - $ss ($sh) \n"
 }
 
 # This can be adopted for using torrents instead of direct HTTP/FTP files
-# ariacmd () { aria2c --seed-time=0 -c $new; } # Set seeding time after downloading to zero ( this is sad :-( remove --seed-time=0 if you like to seed :-) )
+ariacmd () { aria2c --seed-time=0 -c $new; } 
+# Set seeding time after downloading to zero ( this is sad :-( remove --seed-time=0 if you like to seed :-) )
 
 # Other functions
 
@@ -159,6 +160,20 @@ output="peuxos.iso"
 checkfile $1
 }
 
+bluestarurl () {
+mirror="https://sourceforge.net/projects/bluestarlinux/files/latest/download"
+new="$mirror"
+output="bluestar.iso"
+checkfile $1
+}
+
+xerourl () {
+mirror="https://sourceforge.net/projects/xerolinux/files/latest/download"
+new="$mirror"
+output="xerolinux.iso"
+checkfile $1
+}
+
 debianurl () {
 x="https://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-dvd/debian-testing-amd64-DVD-1.iso"
 new="$x"
@@ -197,7 +212,14 @@ checkfile $1
 }
 
 popurl () {
-echo "Warning! Right now PopOS downloading is broken. Maybe I'll fix it later."
+#mirror="https://fosstorrents.com/files/pop-os_22.04_amd64_intel_20.iso-hybrid.torrent"
+mirrorone="https://fosstorrents.com/distributions/pop-os/"
+x=$(curl -s $mirrorone | html2text | grep -m1 ".torrent)" | awk -F"(" '{ print $2 }' | awk -F")" '{ print $1 }')
+mirror="https://fosstorrents.com"
+new="$mirror$x"
+echo "Warning! This torrent is from fosstorrents, so unofficial. And to download (aria2c) you need to install aria2."
+ariacmd
+checkfile $1
 }
 
 deepinurl () {
@@ -537,6 +559,21 @@ output="guix.iso.xz"
 notlive
 checkfile $1
 [ -f "guix.iso" ] && echo "Please wait, unpacking guix..." && xz -k -d -v ./guix*xz && mv guix*iso guix.iso
+}
+
+cruxurl () {
+mirror="http://ftp.morpheus.net/pub/linux/crux/latest/iso/"
+x=$(curl -s $mirror | grep iso | grep href | awk -F"\"" '{ print $6 }' | awk -F"\"" '{ print $1 }')
+new="$mirror$x"
+output="crux.iso"
+checkfile $1
+}
+
+gobourl () {
+mirror="https://api.github.com/repos/gobolinux/LiveCD/releases/latest"
+new=$(curl -s $mirror | grep browser_download_url | grep x86_64.iso | awk -F"\"" '{ print $4 }')
+output="gobolinux.iso"
+checkfile $1
 }
 
 rancherurl () {
