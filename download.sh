@@ -93,6 +93,13 @@ devuan=("Devuan" "amd64" "beowulf" "devuanurl")
 jingos=("JingOS" "amd64" "v0.9" "jingosurl")
 cutefishos=("CutefishOS" "amd64" "release" "cutefishosurl")
 
+# Add if wanted
+# https://distrowatch.com/table.php?distribution=parrot
+# https://distrowatch.com/table.php?distribution=rebeccablackos
+# https://distrowatch.com/table.php?distribution=regata
+# https://distrowatch.com/table.php?distribution=uruk
+# https://distrowatch.com/table.php?distribution=netrunner
+
 # Fedora/RedHat-based distros
 fedora=("Fedora" "amd64" "Workstation" "fedoraurl")
 centos=("CentOS" "amd64" "stream" "centosurl")
@@ -103,6 +110,9 @@ mageia=("Mageia" "amd64" "cauldron" "mageiaurl")
 clearos=("ClearOS" "amd64" "release" "clearosurl")
 alma=("AlmaLinux" "amd64" "release" "almaurl")
 rocky=("RockyLinux" "amd64" "rc" "rockyurl")
+
+# Add some stuff
+# https://distrowatch.com/table.php?distribution=springdale
 
 # Other distros
 alpine=("Alpine" "amd64" "extended" "alpineurl")
