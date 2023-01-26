@@ -677,6 +677,95 @@ notlinux
 checkfile $1
 }
 
+dragonurl () {
+mirror="https://www.dragonflybsd.org/download/"
+new=$(curl -s $mirror | grep "Uncompressed ISO:" | awk -F"\"" '{ print $2 }')
+output="dragonflybsd.iso"
+notlinux
+checkfile $1
+}
+
+pfsenseurl () {
+mirror="https://atxfiles.netgate.com/mirror/downloads/"
+x=$(curl -s $mirror | grep "amd64.iso.gz</a>" | tail -1 | awk -F"\"" '{ print $2 }')
+new="$mirror$x"
+output="pfsense.iso.gz"
+if [ "$1" == "filesize" ]; then 
+	notlinux
+	getsize
+	else
+[ ! -f $output ] && wgetcmd && echo "Please wait, unpacking pfSense..." && gzip -d $output || echo "pfSense already downloaded."
+fi
+}
+
+opnsenseurl () {
+mirror="https://mirror.terrahost.no/opnsense/releases/"
+x=$(curl -s $mirror | grep -B1 mirror | head -1 | awk -F"\"" '{ print $2 }')
+y=$(curl -s $mirror$x | grep -m1 dvd | awk -F"\"" '{ print $2 }')
+new="$mirror$x$y"
+output="opnsense.iso.bz2"
+if [ "$1" == "filesize" ]; then
+	notlinux
+	getsize
+	else
+	[ ! -f $output ] && wgetcmd && echo "Please wait, unpacking opnsense..." && bzip2 -k -d $output && rm $output || echo "OpnSense already downloaded."
+fi
+}
+
+midnightbsdurl () {
+mirror="https://discovery.midnightbsd.org/releases/amd64/ISO-IMAGES/"
+x=$(curl -s $mirror | grep href | tail -1 | awk -F"\"" '{ print $2 }')
+y=$(curl -s $mirror$x | grep disc1.iso | awk -F"\"" '{ print $2 }')
+new="$mirror$x$y"
+output="midnightbsd.iso"
+notlinux
+checkfile $1
+}
+
+truenasurl () {
+mirror="https://www.truenas.com/download-truenas-core/"
+new=$(curl -s $mirror | grep -m1 iso | awk -F"\"" '{ print $6 }')
+output="truenas.iso"
+notlinux
+checkfile $1
+}
+
+nomadbsdurl () {
+mirror="https://nomadbsd.org/download.html"
+new=$(curl -s $mirror | grep -A2 "Main site" | grep -m1 img.lzma | awk -F"\"" '{ print $2 }')
+output="nomadbsd.img.lzma"
+if [ "$1" == "filesize" ]; then
+	notlinux
+	getsize
+	else
+	[[ ! -f $output && ! -f "nomadbsd.img" ]] && wgetcmd && echo "Please wait, unpacking NomadBSD..." && lzma -d $output || echo "NomadBSD already downloaded."
+fi
+}
+
+hardenedbsdurl () {
+new="https://installers.hardenedbsd.org/pub/current/amd64/amd64/installer/LATEST/disc1.iso"
+output="hardenedbsd.iso"
+notlinux
+checkfile $1
+}
+
+xigmanasurl () {
+new="https://sourceforge.net/projects/xigmanas/files/latest/download"
+output="xigmanas.iso"
+notlinux
+checkfile $1
+}
+
+clonosurl () {
+mirror="https://clonos.convectix.com/download.html"
+new=$(curl -s $mirror | grep .iso | awk -F"\"" '{ print $2 }')
+output="clonos.iso"
+notlinux
+checkfile $1
+}
+
+## Not Linux
+
 indianaurl () {
 mirror="https://www.openindiana.org/download/"
 x=$(curl -s $mirror | grep "Live DVD" | awk -F"http://" '{ print $2 }' | awk -F\" '{ print $1 }')
@@ -725,27 +814,25 @@ if [ "$1" == "filesize" ]; then
 fi
 }
 
-kolibrios () {
-mirror="https://builds.kolibrios.org/eng/latest-iso.7z"
-new="$mirror"
+kolibriurl () {
+new="https://builds.kolibrios.org/eng/latest-iso.7z"
 output="kolibrios.7z"
 if [ "$1" == "filesize" ]; then
 	notlinux
 	getsize
 	else
-	[ ! -f $output ] && wgetcmd && echo "Un7zipping kolibri..." && 7z x $output && mv kolibri.iso kolibrios.iso || echo "Kolibri already downloaded."
+	[[ ! -f $output && ! -f "kolibri.iso" ]] && wgetcmd && echo "Un7zipping kolibri..." && 7z x $output && sleep 7 && rm $output && rm "INSTALL.TXT" || echo "Kolibri already downloaded."
 fi
 }
 
 reactosurl () {
-mirror="https://sourceforge.net/projects/reactos/files/latest/download"
-new="$mirror"
+new="https://sourceforge.net/projects/reactos/files/latest/download"
 output="reactos.zip"
 if [ "$1" == "filesize" ]; then 
 	notlinux
 	getsize
 	else
-[ ! -f $output ] && wgetcmd && echo "Please wait, unzipping reactos..." && unzip $output && mv React*iso reactos.iso || echo "ReactOS already downloaded."
+ [[ ! -f $output && ! -f "reactos.iso" ]] && wgetcmd && echo "Please wait, unzipping reactos..." && unzip $output && mv React*iso reactos.iso || echo "ReactOS already downloaded."
 fi
 }
 
@@ -759,7 +846,7 @@ if [ "$1" == "filesize" ]; then
 	notlinux
 	getsize
 	else
-[ ! -f $output ] && wgetcmd && echo "Please wait, unzipping FreeDOS..." && unzip $output && rm readme.txt && mv FD13BOOT.img freedos.img && mv FD13LIVE.iso freedos.iso || echo "FreeDOS already downloaded."
+ [[ ! -f $output && ! -f "freedos.img" ]] && wgetcmd && echo "Please wait, unzipping FreeDOS..." && unzip $output && sleep 10 && rm $output && rm readme.txt && mv FD13BOOT.img freedos.img && mv FD13LIVE.iso freedos.iso || echo "FreeDOS already downloaded."
 fi
 }
 

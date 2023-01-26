@@ -6,14 +6,14 @@ echo "| Theoretically, the script should always download recent linux ISOs witho
 echo "| change the download URL or something else, it might be required to do manual changes - probably in distrofunctions.sh.                 | "
 echo "| Requirements: linux, bash, curl, wget, awk, grep, xargs, pr (these tools usually are preinstalled on linux)                            | "
 echo "| Some distros are shared as archive. So you'll need xz for guix, bzip2 for minix, zip for haiku & reactos, and, finally 7z for kolibri. | "
-echo "| Written by SecurityXIII / August 2020 / Kopimi un-license  /---------------------------------------------------------------------------/ "
-echo "\------------------------------------------------------------/"
+echo "| Written by SecurityXIII / Aug 2020 ~ Jan 2023 / Kopimi un-license /--------------------------------------------------------------------/ "
+echo "\-------------------------------------------------------------------/"
 echo "+ How to use?"
-echo "If you manually pick distros (opt. one or two) you will be prompted about launching a VM for test spin for each distro."
-echo "Multiple values are also supported. Please choose one out of five options:"
+echo " If you manually pick distros (opt. one or two) you will be prompted about launching a VM for test spin for each distro."
+echo " Multiple values are also supported. Please choose one out of five options:"
 echo "* one distribution (e.g. type 0 for archlinux)*"
 echo "* several distros - space separated (e.g. for getting both Arch and Debian, type '0 4' (without quotes))*"
-echo "* 'all' option, the script will ONLY download ALL of the ISOs (warning: this can take a lot of space (80+GB) !)"
+echo "* 'all' option, the script will ONLY download ALL of the ISOs (warning: this can take a lot of space (100+GB) !)"
 echo "* 'filesize' option will check the local (downloaded) filesizes of ISOs vs. the current/recent ISOs filesizes on the websites"
 echo "* 'netbootxyz' option allows you to boot from netboot.xyz via network"
 echo "* 'netbootsal' option will boot from boot.salstar.sk"
@@ -28,7 +28,7 @@ echo "* 'netbootsal' option will boot from boot.salstar.sk"
 #		2. Multiple download mirror support;
 
 ram=1024 # Amount (mb) of RAM, for VM.
-cmd="qemu-system-x86_64" # The name of the qemu file to search & launch
+cmd="qemu-system-x86_64" # The name of the qemu file to launch
 
 # Load the functions from distrofunctions.sh:
 . distrofunctions.sh
@@ -40,15 +40,15 @@ rpm=(fedora centos opensuse rosa mandriva mageia clearos alma rocky)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop solus)
 sourcebased=(gentoo sabayon calculate nixos guix crux gobolinux)
 containers=(rancheros k3os flatcar silverblue photon coreos dcos)
-bsd=(freebsd netbsd openbsd ghostbsd hellosystem)
-notlinux=(openindiana minix haiku menuetos kolibrios reactos freedos)
+bsd=(freebsd netbsd openbsd ghostbsd hellosystem dragonflybsd pfsense opnsense midnightbsd truenas nomadbsd hardenedbsd xigmanas clonos)
+notlinux=(openindiana minix haiku menuetos kolibri reactos freedos)
 
 # All distributions
 category_names=("Arch-based" "DEB-based" "RPM-based" "Other" "Source-based" "Containers and DCs" "BSD, NAS, Firewall" "Not linux")
 distro_all=("arch" "deb" "rpm" "other" "sourcebased" "containers" "bsd" "notlinux")
 distro_arr=("${arch[@]}" "${deb[@]}" "${rpm[@]}" "${other[@]}" "${sourcebased[@]}" "${containers[@]}" "${bsd[@]}" "${notlinux[@]}")
 
-# Legend ## Distroname ## Arch  ## Type     ## Download URL 
+# Legend ## Distroname ## Arch  ## Type     ## Download URL function name
 
 # Archlinux-based distros
 archlinux=("ArchLinux" "amd64" "rolling" "archurl")
@@ -153,16 +153,17 @@ netbsd=("NetBSD" "amd64" "release" "netbsdurl")
 openbsd=("OpenBSD" "amd64" "release" "openbsdurl")
 ghostbsd=("GhostBSD" "amd64" "release" "ghostbsdurl")
 hellosystem=("HelloSystem" "amd64" "v0.5" "hellosystemurl")
+dragonflybsd=("DragonflyBSD" "amd64" "release" "dragonurl")
+pfsense=("pfSense" "amd64" "release" "pfsenseurl")
+opnsense=("opnsense" "amd64" "release" "opnsenseurl")
+midnightbsd=("midnightbsd" "amd64" "release" "midnightbsdurl")
+truenas=("truenas" "amd64" "release" "truenasurl")
+nomadbsd=("nomadbsd" "amd64" "release" "nomadbsdurl")
+hardenedbsd=("hardenedbsd" "amd64" "latest" "hardenedbsdurl")
+xigmanas=("xigmanas" "amd64" "release" "xigmanasurl")
+clonos=("clonos" "amd64" "release" "clonosurl")
 
 # Add more FreeBSD stuff
-# https://www.dragonflybsd.org/
-# https://www.pfsense.org/
-# https://xigmanas.com/xnaswp/
-# https://nomadbsd.org/
-# https://opnsense.org/
-# https://www.midnightbsd.org/
-# https://www.truenas.com/truenas-scale/
-# https://hardenedbsd.org/
 # https://clonos.convectix.com/
 # https://en.wikipedia.org/wiki/List_of_BSD_operating_systems
 # https://en.wikipedia.org/wiki/List_of_products_based_on_FreeBSD
@@ -175,31 +176,40 @@ openindiana=("OpenIndiana" "amd64" "release" "indianaurl")
 minix=("MINIX" "amd64" "release" "minixurl")
 haiku=("Haiku" "amd64" "nightly" "haikuurl")
 menuetos=("MenuetOS" "amd64" "release" "menueturl")
-kolibrios=("KolibriOS" "amd64" "release" "kolibrios")
+kolibri=("Kolibri" "amd64" "release" "kolibriurl")
 reactos=("ReactOS" "amd64" "release" "reactosurl")
 freedos=("FreeDOS" "amd64" "release" "freedosurl")
 
-q=0;
+drawmenu () {
 
-for ((i=0; i<${#distro_all[@]}; i++)); do
-	col+="${category_names[$i]}: \n"
-	dist=${distro_all[$i]}
-	typeset -n arr=$dist
-	for ((d=0; d<${#arr[@]}; d++)); do
-		col+="$q = ${arr[$d]} \n"
-		(( q++ ));
-	done
-printf "$col" > col$i.tmp
-col=""
-done
+ q=0;
 
-pr -m -t -w150 col*tmp && rm *tmp
+ for ((i=0; i<${#distro_all[@]}; i++)); do
+	 col+="${category_names[$i]}: \n"
+	 dist=${distro_all[$i]}
+	 typeset -n arr=$dist
+	 for ((d=0; d<${#arr[@]}; d++)); do
+		 col+="$q = ${arr[$d]} \n"
+		 (( q++ ));
+	 done
+ printf "$col" > col$i.tmp
+ col=""
+ done
+
+ pr -m -t -w170 col*tmp && rm *tmp
+
+}
+
+drawmenu
 
 echo "Please choose distro to download (type-in number or space-separated multiple numbers):"
 read x
 
 # Happens if the input is empty
 if [ -z "$x" ]; then echo "Empty distribution number. Please type-in number of according distro. Exiting"; exit; fi # "Empty" handling
+
+# Happens if we ask only for menu
+if [ "$x" = "menu" ]; then drawmenu; exit; fi
 
 # This questions are asked ONLY if user hadn't used the option "all".
 if [ "$x" != "all" ] && [ "$x" != "filesize" ] && [ "$x" != "netbootxyz" ] && [ "$x" != "netbootsal" ] && [ "$x" != "netbootipxe" ]; then
@@ -223,7 +233,8 @@ if [ "$x" != "all" ] && [ "$x" != "filesize" ] && [ "$x" != "netbootxyz" ] && [ 
 		# qemu-system-x86_64 -hda ./${arr[0]}.img -boot d -cdrom ./${arr[0]}*.iso -m 1024   # a2. Booting from CDROM with HDD support (changes will be preserved)
 		[ -f ./$isoname ] && $cmd -boot d -cdrom ./$isoname -m $ram           # b1. This is liveCD boot without HDD (all changes will be lost)
 		# This is for floppy .IMG support
-		[ ! -f ./$isoname ] && imgname="$(echo ${arr[0]} | awk '{print tolower($0)}').img" && [ -f ./$imgname ] && $cmd --fda ./$imgname -m $ram
+		# [ ! -f ./$isoname ] && imgname="$(echo ${arr[0]} | awk '{print tolower($0)}').img" && [ -f ./$imgname ] && $cmd --fda ./$imgname -m $ram
+  [ ! -f ./$isoname ] && imgname="$(echo ${arr[0]} | awk '{print tolower($0)}').img" && [ -f ./$imgname ] && $cmd -drive format=raw,file=$imgname -m $ram
 		fi
 	fi
 
