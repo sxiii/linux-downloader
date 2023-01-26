@@ -23,24 +23,24 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 ## Currently supported distributions
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
 ```
-Arch-based:	  DEB-based:	    RPM-based:	      Other:		Source-based:	  Containers and DC BSD, NAS, Firewal Not linux:
-0 = archlinux	  17 = debian	    34 = fedora	      43 = alpine	57 = gentoo	  64 = rancheros    71 = freebsd      76 = openindiana
-1 = manjaro	  18 = ubuntu	    35 = centos	      44 = tinycore	58 = sabayon	  65 = k3os	    72 = netbsd	      77 = minix
-2 = arcolinux	  19 = linuxmint    36 = opensuse     45 = porteus	59 = calculate	  66 = flatcar	    73 = openbsd      78 = haiku
-3 = archbang	  20 = altlinux	    37 = rosa	      46 = slitaz	60 = nixos	  67 = silverblue   74 = ghostbsd     79 = menuetos
-4 = parabola	  21 = zorinos	    38 = mandriva     47 = pclinuxos	61 = guix	  68 = photon	    75 = hellosystem  80 = kolibrios
-5 = endeavour	  22 = popos	    39 = mageia	      48 = void		62 = crux	  69 = coreos	    		      81 = reactos
-6 = artix	  23 = deepin	    40 = clearos      49 = fourmlinux	63 = gobolinux	  70 = dcos	    		      82 = freedos
-7 = arco	  24 = mxlinux	    41 = alma	      50 = kaos				  		    		      
-8 = garuda	  25 = knoppix	    42 = rocky	      51 = clearlinux			  		    		      
-9 = rebornos	  26 = kali	    		      52 = dragora			  		    		      
-10 = archlabs	  27 = puppy	    		      53 = slackware			  		    		      
-11 = namib	  28 = pureos	    		      54 = adelie			  		    		      
-12 = obarun	  29 = elementary   		      55 = plop				  		    		      
-13 = archcraft	  30 = backbox	    		      56 = solus			  		    		      
-14 = peux	  31 = devuan	    		      					  		    		      
-15 = bluestar	  32 = jingos	    		      					  		    		      
-16 = xerolinux	  33 = cutefishos     		    		   		  		 
+Arch-based:	     DEB-based:		  RPM-based:	       Other:		    Source-based:	 Containers and DCs:  BSD, NAS, Firewall:  Not linux:
+0 = archlinux	     17 = debian	  34 = fedora	       43 = alpine	    57 = gentoo		 64 = rancheros	      71 = freebsd	   85 = openindiana
+1 = manjaro	     18 = ubuntu	  35 = centos	       44 = tinycore	    58 = sabayon	 65 = k3os	      72 = netbsd	   86 = minix
+2 = arcolinux	     19 = linuxmint	  36 = opensuse	       45 = porteus	    59 = calculate	 66 = flatcar	      73 = openbsd	   87 = haiku
+3 = archbang	     20 = altlinux	  37 = rosa	       46 = slitaz	    60 = nixos		 67 = silverblue      74 = ghostbsd	   88 = menuetos
+4 = parabola	     21 = zorinos	  38 = mandriva	       47 = pclinuxos	    61 = guix		 68 = photon	      75 = hellosystem	   89 = kolibri
+5 = endeavour	     22 = popos		  39 = mageia	       48 = void	    62 = crux		 69 = coreos	      76 = dragonflybsd	   90 = reactos
+6 = artix	     23 = deepin	  40 = clearos	       49 = fourmlinux	    63 = gobolinux	 70 = dcos	      77 = pfsense	   91 = freedos
+7 = arco	     24 = mxlinux	  41 = alma	       50 = kaos	    			 		      78 = opnsense	   
+8 = garuda	     25 = knoppix	  42 = rocky	       51 = clearlinux	    			 		      79 = midnightbsd	   
+9 = rebornos	     26 = kali		  		       52 = dragora	    			 		      80 = truenas	   
+10 = archlabs	     27 = puppy		  		       53 = slackware	    			 		      81 = nomadbsd	   
+11 = namib	     28 = pureos	  		       54 = adelie	    			 		      82 = hardenedbsd	   
+12 = obarun	     29 = elementary	  		       55 = plop	    			 		      83 = xigmanas	   
+13 = archcraft	     30 = backbox	  		       56 = solus	    			 		      84 = clonos	   
+14 = peux	     31 = devuan	  		       			    			 		      			   
+15 = bluestar	     32 = jingos	  		       			    			 		      			   
+16 = xerolinux	     33 = cutefishos	 		   		  		 
 ```
 
 ## How to use?
