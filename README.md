@@ -15,10 +15,10 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 
 ## Requirements: 
 * Basic stuff: linux, bash, curl, wget, awk, grep, xargs, pr (these tools usually are preinstalled on linux)
-* Additional: `html2text` (unsure?) and `xpath` (for PopOS)
+* Additional depencency: `html2text`
 * If you want to run a VM after downloading, you'll need `QEMU`
 * Some distros are shared as archive. So you'll need `xz` for guix, `bzip2` for minix, `zip` for haiku & reactos, and, finally `7z` for kolibri.
-* Install all deps on Arch-based distro: `sudo pacman -S perl-xml-xpath p7zip xz bzip2 qemu`
+* Install all deps on Arch-based distro: `sudo pacman -S html2text p7zip xz bzip2 qemu`
 
 ## Currently supported distributions
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
