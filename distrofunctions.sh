@@ -391,6 +391,41 @@ output="rocky.iso"
 checkfile $1
 }
 
+qubesurl () {
+mirror="https://www.qubes-os.org/downloads/"
+new=$(curl -s $mirror | grep -m1 x86_64.iso | awk -F"\"" '{ print $4 }')
+output="qubes.iso"
+checkfile $1
+}
+
+nobaraurl () {
+mirror="https://nobaraproject.org/download-nobara/"
+new=$(curl -s $mirror | grep -m1 "NA Download" | awk -F"\"" '{ print $8 }')
+output="nobara.iso"
+checkfile $1
+}
+
+ultraurl () {
+mirror="https://ultramarine-linux.org/download/"
+new=$(curl -s $mirror | grep -m1 "Download Flagship" | awk -F"\"" '{ print $14 }')
+output="ultramarine.iso"
+checkfile $1
+}
+
+springurl () {
+mirror="https://springdale.math.ias.edu/#Mirrors"
+new=$(curl -s $mirror | grep -m1 "/boot.iso" | awk -F"\"" '{ print $4 }')
+output="springdale.iso"
+checkfile $1
+}
+
+berryurl () {
+mirror="https://berry-lab.net/edownload.html"
+new=$(curl -s $mirror | grep -m1 .iso | awk -F"\"" '{ print $2 }')
+output="berry.iso"
+checkfile $1
+}
+
 alpineurl () {
 mirrorone="https://alpinelinux.org/downloads/"
 one=$(curl -s $mirrorone | grep Current | awk -F">" '{ print $3 }' | awk -F"<" '{ print $1 }')

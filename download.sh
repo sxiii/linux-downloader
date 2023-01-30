@@ -36,7 +36,7 @@ cmd="qemu-system-x86_64" # The name of the qemu file to launch
 # Categories
 arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun archcraft peux bluestar xerolinux)
 deb=(debian ubuntu linuxmint altlinux zorinos popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos cutefishos)
-rpm=(fedora centos opensuse rosa mandriva mageia clearos alma rocky)
+rpm=(fedora centos opensuse rosa mandriva mageia clearos alma rocky qubes nobara ultramarine springdale berry)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop solus)
 sourcebased=(gentoo sabayon calculate nixos guix crux gobolinux)
 containers=(rancheros k3os flatcar silverblue photon coreos dcos)
@@ -110,9 +110,11 @@ mageia=("Mageia" "amd64" "cauldron" "mageiaurl")
 clearos=("ClearOS" "amd64" "release" "clearosurl")
 alma=("AlmaLinux" "amd64" "release" "almaurl")
 rocky=("RockyLinux" "amd64" "rc" "rockyurl")
-
-# Add some stuff
-# https://distrowatch.com/table.php?distribution=springdale
+qubes=("QubesOS" "amd64" "release" "qubesurl")
+nobara=("Nobara" "amd64" "release" "nobaraurl")
+ultramarine=("Ultramarine" "amd64" "release" "ultraurl")
+springdale=("Springdale" "amd64" "release" "springurl")
+berry=("Berry" "amd64" "release" "berryurl")
 
 # Other distros
 alpine=("Alpine" "amd64" "extended" "alpineurl")
@@ -164,7 +166,6 @@ xigmanas=("xigmanas" "amd64" "release" "xigmanasurl")
 clonos=("clonos" "amd64" "release" "clonosurl")
 
 # Add more FreeBSD stuff
-# https://clonos.convectix.com/
 # https://en.wikipedia.org/wiki/List_of_BSD_operating_systems
 # https://en.wikipedia.org/wiki/List_of_products_based_on_FreeBSD
 
