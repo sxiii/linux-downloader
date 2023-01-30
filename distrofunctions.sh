@@ -569,6 +569,30 @@ echo "Unfortunately, current Solus mirror ($mirror) is unavailable"
 #checkfile $1
 }
 
+peropesisurl () {
+mirror="https://peropesis.org"
+mirror2="$mirror/get-peropesis/"
+x=$(curl -s $mirror2 | grep -m1 "live.iso" | awk -F"\"" '{ print $8 }')
+new="$mirror$x"
+output="peropesis.iso"
+checkfile $1
+}
+
+openmambaurl () {
+mirror="https://openmamba.org/en/downloads/"
+new=$(curl -s $mirror | grep "rolling livedvd" | awk -F"href" '{ print $2 }' | awk -F"\"" '{ print $2 }')
+output="openmamba.iso"
+checkfile $1
+}
+
+pisiurl () {
+new="https://sourceforge.net/projects/pisilinux/files/latest/download"
+output="pisi.iso"
+checkfile $1
+}
+
+###################################
+
 gentoourl () {
 mirror="https://gentoo.c3sl.ufpr.br//releases/amd64/autobuilds"
 one=$(curl -s "$mirror/latest-iso.txt" | grep "admin" | awk '{ print $1 }')

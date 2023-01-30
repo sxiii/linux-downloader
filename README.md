@@ -24,23 +24,23 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
 ```
 Arch-based:	     DEB-based:		  RPM-based:	       Other:		    Source-based:	 Containers and DCs:  BSD, NAS, Firewall:  Not linux:
-0 = archlinux	     17 = debian	  34 = fedora	       43 = alpine	    57 = gentoo		 64 = rancheros	      71 = freebsd	   85 = openindiana
-1 = manjaro	     18 = ubuntu	  35 = centos	       44 = tinycore	    58 = sabayon	 65 = k3os	      72 = netbsd	   86 = minix
-2 = arcolinux	     19 = linuxmint	  36 = opensuse	       45 = porteus	    59 = calculate	 66 = flatcar	      73 = openbsd	   87 = haiku
-3 = archbang	     20 = altlinux	  37 = rosa	       46 = slitaz	    60 = nixos		 67 = silverblue      74 = ghostbsd	   88 = menuetos
-4 = parabola	     21 = zorinos	  38 = mandriva	       47 = pclinuxos	    61 = guix		 68 = photon	      75 = hellosystem	   89 = kolibri
-5 = endeavour	     22 = popos		  39 = mageia	       48 = void	    62 = crux		 69 = coreos	      76 = dragonflybsd	   90 = reactos
-6 = artix	     23 = deepin	  40 = clearos	       49 = fourmlinux	    63 = gobolinux	 70 = dcos	      77 = pfsense	   91 = freedos
-7 = arco	     24 = mxlinux	  41 = alma	       50 = kaos	    			 		      78 = opnsense	   
-8 = garuda	     25 = knoppix	  42 = rocky	       51 = clearlinux	    			 		      79 = midnightbsd	   
-9 = rebornos	     26 = kali		  		       52 = dragora	    			 		      80 = truenas	   
-10 = archlabs	     27 = puppy		  		       53 = slackware	    			 		      81 = nomadbsd	   
-11 = namib	     28 = pureos	  		       54 = adelie	    			 		      82 = hardenedbsd	   
-12 = obarun	     29 = elementary	  		       55 = plop	    			 		      83 = xigmanas	   
-13 = archcraft	     30 = backbox	  		       56 = solus	    			 		      84 = clonos	   
-14 = peux	     31 = devuan	  		       			    			 		      			   
-15 = bluestar	     32 = jingos	  		       			    			 		      			   
-16 = xerolinux	     33 = cutefishos	 		   		  		 
+0 = archlinux	     17 = debian	  34 = fedora	       51 = alpine	    68 = gentoo		 76 = rancheros	      83 = freebsd	   97 = openindiana
+1 = manjaro	     18 = ubuntu	  35 = centos	       52 = tinycore	    69 = sabayon	 77 = k3os	      84 = netbsd	   98 = minix
+2 = arcolinux	     19 = linuxmint	  36 = opensuse	       53 = porteus	    70 = calculate	 78 = flatcar	      85 = openbsd	   99 = haiku
+3 = archbang	     20 = zorinos	  37 = rosa	       54 = slitaz	    71 = nixos		 79 = silverblue      86 = ghostbsd	   100 = menuetos
+4 = parabola	     21 = popos		  38 = altlinux	       55 = pclinuxos	    72 = guix		 80 = photon	      87 = hellosystem	   101 = kolibri
+5 = endeavour	     22 = deepin	  39 = mandriva	       56 = void	    73 = crux		 81 = coreos	      88 = dragonflybsd	   102 = reactos
+6 = artix	     23 = mxlinux	  40 = mageia	       57 = fourmlinux	    74 = gobolinux	 82 = dcos	      89 = pfsense	   103 = freedos
+7 = arco	     24 = knoppix	  41 = clearos	       58 = kaos	    75 = easyos		 		      90 = opnsense	   
+8 = garuda	     25 = kali		  42 = alma	       59 = clearlinux	    			 		      91 = midnightbsd	   
+9 = rebornos	     26 = puppy		  43 = rocky	       60 = dragora	    			 		      92 = truenas	   
+10 = archlabs	     27 = pureos	  44 = qubes	       61 = slackware	    			 		      93 = nomadbsd	   
+11 = namib	     28 = elementary	  45 = nobara	       62 = adelie	    			 		      94 = hardenedbsd	   
+12 = obarun	     29 = backbox	  46 = ultramarine     63 = plop	    			 		      95 = xigmanas	   
+13 = archcraft	     30 = devuan	  47 = springdale      64 = solus	    			 		      96 = clonos	   
+14 = peux	     31 = jingos	  48 = berry	       65 = peropesis	    			 		      			   
+15 = bluestar	     32 = cutefishos	  49 = risios	       66 = openmamba	    			 		      			   
+16 = xerolinux	     33 = parrot	  50 = eurolinux       67 = pisi	    			 		      			   
 ```
 
 ## How to use?

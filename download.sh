@@ -37,7 +37,7 @@ cmd="qemu-system-x86_64" # The name of the qemu file to launch
 arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun archcraft peux bluestar xerolinux)
 deb=(debian ubuntu linuxmint zorinos popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos cutefishos parrot)
 rpm=(fedora centos opensuse rosa altlinux mandriva mageia clearos alma rocky qubes nobara ultramarine springdale berry risios eurolinux)
-other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop solus)
+other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop solus peropesis openmamba pisi)
 sourcebased=(gentoo sabayon calculate nixos guix crux gobolinux easyos)
 containers=(rancheros k3os flatcar silverblue photon coreos dcos)
 bsd=(freebsd netbsd openbsd ghostbsd hellosystem dragonflybsd pfsense opnsense midnightbsd truenas nomadbsd hardenedbsd xigmanas clonos)
@@ -132,6 +132,9 @@ slackware=("Slackware" "amd64" "current" "slackwareurl")
 adelie=("Adelie" "amd64" "rc1" "adelieurl")
 plop=("Plop" "amd64" "current-stable" "plopurl")
 solus=("Solus" "amd64" "release" "solusurl")
+peropesis=("Peropesis" "amd64" "live" "peropesisurl")
+openmamba=("Openmamba" "amd64" "rolling" "openmambaurl")
+pisi=("Pisilinux" "amd64" "release" "pisiurl")
 
 # Source-based distros
 gentoo=("Gentoo" "amd64" "admincd" "gentoourl")
