@@ -308,6 +308,15 @@ output="cutefishos.iso"
 checkfile $1
 }
 
+parroturl () {
+mirror="https://deb.parrot.sh/direct/parrot/iso/testing/"
+x=$(curl -s $mirror | grep "home" | grep -m1 amd64.iso | awk -F"\"" '{ print $4 }')
+new="$mirror$x"
+output="parrot.iso"
+checkfile $1
+}
+
+
 fedoraurl () {
 mirror="https://getfedora.org/en/workstation/download/"
 new=$(curl -s $mirror | html2text | grep -m2 iso | awk -F "(" 'NR%2{printf "%s",$0;next;}1' | awk -F"(" '{ print $2 }' | awk -F")" '{ print $1 }')
@@ -423,6 +432,21 @@ berryurl () {
 mirror="https://berry-lab.net/edownload.html"
 new=$(curl -s $mirror | grep -m1 .iso | awk -F"\"" '{ print $2 }')
 output="berry.iso"
+checkfile $1
+}
+
+risiurl () {
+mirror="https://risi.io/downloads"
+new=$(curl -s $mirror | grep Download | grep -m1 .iso | awk -F"\"" '{ print $2 }')
+output="risios.iso"
+checkfile $1
+}
+
+eurourl () {
+mirror="https://fbi.cdn.euro-linux.com/isos/"
+x=$(curl -s $mirror | grep latest.iso | awk -F"\"" '{ print $2 }')
+new="$mirror$x"
+output="eurolinux.iso"
 checkfile $1
 }
 
@@ -610,6 +634,17 @@ new=$(curl -s $mirror | grep browser_download_url | grep x86_64.iso | awk -F"\""
 output="gobolinux.iso"
 checkfile $1
 }
+
+easyurl () {
+mirror="https://distro.ibiblio.org/easyos/amd64/releases/dunfell/2023/"
+x=$(curl -s $mirror | grep "Directory<" | tail -1 | awk -F "\"" '{ print $6 }')
+y=$(curl -s $mirror$x | grep img | awk -F"\"" '{ print $4 }')
+new="$mirror$x$y"
+output="easyos.img"
+checkfile $1
+}
+
+####################################
 
 rancherurl () {
 mirror="https://api.github.com/repos/rancher/os/releases/latest"

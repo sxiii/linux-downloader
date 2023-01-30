@@ -35,10 +35,10 @@ cmd="qemu-system-x86_64" # The name of the qemu file to launch
 
 # Categories
 arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun archcraft peux bluestar xerolinux)
-deb=(debian ubuntu linuxmint altlinux zorinos popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos cutefishos)
-rpm=(fedora centos opensuse rosa mandriva mageia clearos alma rocky qubes nobara ultramarine springdale berry)
+deb=(debian ubuntu linuxmint zorinos popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos cutefishos parrot)
+rpm=(fedora centos opensuse rosa altlinux mandriva mageia clearos alma rocky qubes nobara ultramarine springdale berry risios eurolinux)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop solus)
-sourcebased=(gentoo sabayon calculate nixos guix crux gobolinux)
+sourcebased=(gentoo sabayon calculate nixos guix crux gobolinux easyos)
 containers=(rancheros k3os flatcar silverblue photon coreos dcos)
 bsd=(freebsd netbsd openbsd ghostbsd hellosystem dragonflybsd pfsense opnsense midnightbsd truenas nomadbsd hardenedbsd xigmanas clonos)
 notlinux=(openindiana minix haiku menuetos kolibri reactos freedos)
@@ -77,9 +77,7 @@ xerolinux=("XeroLinux" "amd64" "rolling" "xerourl")
 debian=("Debian" "amd64" "testing" "debianurl")
 ubuntu=("Ubuntu" "amd64" "daily-live" "ubuntuurl")
 linuxmint=("LinuxMint" "amd64" "release" "minturl")
-altlinux=("ALTLinux" "amd64" "release" "alturl")
 zorinos=("ZorinOS" "amd64" "core" "zorinurl")
-solus=("Solus" "amd64" "release" "solusurl")
 popos=("PopOS" "amd64" "release" "popurl")
 deepin=("Deepin" "amd64" "release" "deepinurl")
 mxlinux=("MXLinux" "amd64" "release" "mxurl")
@@ -92,9 +90,9 @@ backbox=("Backbox" "amd64" "release" "backboxurl")
 devuan=("Devuan" "amd64" "beowulf" "devuanurl")
 jingos=("JingOS" "amd64" "v0.9" "jingosurl")
 cutefishos=("CutefishOS" "amd64" "release" "cutefishosurl")
+parrot=("Parrot" "amd64" "testing" "parroturl")
 
 # Add if wanted
-# https://distrowatch.com/table.php?distribution=parrot
 # https://distrowatch.com/table.php?distribution=rebeccablackos
 # https://distrowatch.com/table.php?distribution=regata
 # https://distrowatch.com/table.php?distribution=uruk
@@ -105,6 +103,7 @@ fedora=("Fedora" "amd64" "Workstation" "fedoraurl")
 centos=("CentOS" "amd64" "stream" "centosurl")
 opensuse=("OpenSUSE" "amd64" "tumbleweed" "suseurl")
 rosa=("ROSA" "amd64" "desktop-fresh" "rosaurl")
+altlinux=("ALTLinux" "amd64" "release" "alturl")
 mandriva=("Mandriva" "amd64" "release" "mandrivaurl")
 mageia=("Mageia" "amd64" "cauldron" "mageiaurl")
 clearos=("ClearOS" "amd64" "release" "clearosurl")
@@ -115,6 +114,8 @@ nobara=("Nobara" "amd64" "release" "nobaraurl")
 ultramarine=("Ultramarine" "amd64" "release" "ultraurl")
 springdale=("Springdale" "amd64" "release" "springurl")
 berry=("Berry" "amd64" "release" "berryurl")
+risios=("RisiOS" "amd64" "release" "risiurl")
+eurolinux=("EuroLinux" "amd64" "release" "eurourl")
 
 # Other distros
 alpine=("Alpine" "amd64" "extended" "alpineurl")
@@ -130,6 +131,7 @@ dragora=("Dragora" "amd64" "release" "dragoraurl")
 slackware=("Slackware" "amd64" "current" "slackwareurl")
 adelie=("Adelie" "amd64" "rc1" "adelieurl")
 plop=("Plop" "amd64" "current-stable" "plopurl")
+solus=("Solus" "amd64" "release" "solusurl")
 
 # Source-based distros
 gentoo=("Gentoo" "amd64" "admincd" "gentoourl")
@@ -139,6 +141,7 @@ nixos=("NixOS" "amd64" "unstable" "nixurl")
 guix=("Guix" "amd64" "release" "guixurl")
 crux=("CRUX" "amd64" "release" "cruxurl")
 gobolinux=("GoboLinux" "amd64" "release" "gobourl")
+easyos=("EasyOS" "amd64" "dunfell" "easyurl")
 
 # Distros for containers and data-centers
 rancheros=("RancherOS" "amd64" "release" "rancherurl")
