@@ -14,7 +14,7 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 ```
 
 ## Requirements: 
-* Basic stuff: linux, bash, curl, wget, awk, grep, xargs, pr (these tools usually are preinstalled on linux)
+* Basic stuff: `linux`, `bash`, `curl`, `wget`, `awk`, `grep`, `xargs`, `pr` (these tools usually are preinstalled on linux)
 * Additional depencency: `html2text`
 * If you want to run a VM after downloading, you'll need `QEMU`
 * Some distros are shared as archive. So you'll need `xz` for guix, `bzip2` for minix, `zip` for haiku & reactos, and, finally `7z` for kolibri.
@@ -88,6 +88,7 @@ checkfile $1
 }
 ```
 Here you will need to edit: function name (distronameurl), mirror address (in this example we're downloading project "SF-Project-Name" from sourceforge), output file name. Checkfile is the function that checks if file exists and downloads the file if not, so don't touch it. If you are going to download not from sourceforge, but from some other website, please check the other distributions for examples - there are plenty of examples of how to parse websites to get the recent download links automatically. In the end, you need to supply "new" variable with full ISO URL, as well as "output" var with filename (and mirror variable is there for cleaniness of the code and code consistancy). Other than that, you can use "grep, awk, xargs" or other classic UNIX tools to parse the HTML (or several files) and get the actual download link. If you'll create temporary files, please don't forget to remove them in the end of the function. You can as well parse file listings like HTTP or FTP server mirror hosts. If you can't write the correct code, feel free to create an issue and ask me for help.
+
 4. Now, save the "distrofunctions.sh" file. Run the ./download.sh script, type-in number of your distribution, and check, that it's downloaded correctly.
 5. Last but very important, please create a pull request, so I could check and add distribution of your choice.
 
@@ -97,14 +98,14 @@ Thank you!
 "Work-in-progress". To do:	
 1. Multiple architecture support
 2. Multiple download mirror support
-3. Adding more distributions (current goal: 100)
+~3. Adding more distributions (current goal: 100)~
 
 ## Notes on files
 * download.sh is in the main script
 * distrofunctions.sh contains all URL/mirror/HTTP scraping stuff
 
 Feel free to do a pull request or ask me to add your favourite distro in the issues.
-NB: I prefer the distros updated at least in 2019 or later.
+NB: I prefer the distros updated at least during the last 2-3 years (ideally, 1 year). Exceptions can be historically important releases and rare/special operating systems.
 
 ## Author & License
 * Written by SecurityXIII
