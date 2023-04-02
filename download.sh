@@ -1,4 +1,6 @@
 #!/bin/bash
+
+helpsection () {
 echo "/----------------------------------------------------------------------------------------------------------------------------------------\ "
 echo "| Script downloads recent (latest release) linux ISOs and spins a VM for a test. This is kinda distrohopper dream machine.               | "
 echo "| It consist of the file with distro download functions (distrofunctions.sh) as well as this script (download.sh).                       | "
@@ -17,6 +19,7 @@ echo "* 'all' option, the script will ONLY download ALL of the ISOs (warning: th
 echo "* 'filesize' option will check the local (downloaded) filesizes of ISOs vs. the current/recent ISOs filesizes on the websites"
 echo "* 'netbootxyz' option allows you to boot from netboot.xyz via network"
 echo "* 'netbootsal' option will boot from boot.salstar.sk"
+}
 
 # the public ipxe mirror does not work
 #echo "* 'netbootipxe' option will boot from boot.ipxe.org"
@@ -207,84 +210,145 @@ drawmenu () {
 
 }
 
-drawmenu
-
-echo "Please choose distro to download (type-in number or space-separated multiple numbers):"
-read x
-
-# Happens if the input is empty
-if [ -z "$x" ]; then echo "Empty distribution number. Please type-in number of according distro. Exiting"; exit; fi # "Empty" handling
-
-# Happens if we ask only for menu
-if [ "$x" = "menu" ]; then drawmenu; exit; fi
-
-# This questions are asked ONLY if user hadn't used the option "all".
-if [ "$x" != "all" ] && [ "$x" != "filesize" ] && [ "$x" != "netbootxyz" ] && [ "$x" != "netbootsal" ] && [ "$x" != "netbootipxe" ]; then
-	for distr in $x; do 
-	dist=${distro_arr[$distr]}
-	typeset -n arr=$dist
-
-	echo "You choose ${arr[0]} distro ${arr[2]}, built for ${arr[1]} arch. Do you want to download ${arr[0]} ISO? (y / n)"
-	read z
-	if [ $z = "y" ]; then $"${arr[3]}"; fi
-	echo "${arr[0]} downloaded, do you want to spin up the QEMU? (y / n)"
-	read z
-
-	if [ $z = "y" ]; then
-		isoname="$(echo ${arr[0]} | awk '{print tolower($0)}').iso"
-		if ! type $cmd > /dev/null 2>&1; then
-		echo "qemu seems not installed. Cannot run VM, skipping."
-		else
-		# Uncomment the following two rows (a1 & a2) and comment out others if you want to make QEMU HDD
-		# qemu-img create ./${arr[0]}.img 4G                                                # a1. Creating HDD (if you want changes to be preserved)
-		# qemu-system-x86_64 -hda ./${arr[0]}.img -boot d -cdrom ./${arr[0]}*.iso -m 1024   # a2. Booting from CDROM with HDD support (changes will be preserved)
-		[ -f ./$isoname ] && $cmd -boot d -cdrom ./$isoname -m $ram           # b1. This is liveCD boot without HDD (all changes will be lost)
-		# This is for floppy .IMG support
-		# [ ! -f ./$isoname ] && imgname="$(echo ${arr[0]} | awk '{print tolower($0)}').img" && [ -f ./$imgname ] && $cmd --fda ./$imgname -m $ram
-  [ ! -f ./$isoname ] && imgname="$(echo ${arr[0]} | awk '{print tolower($0)}').img" && [ -f ./$imgname ] && $cmd -drive format=raw,file=$imgname -m $ram
+normalmode () {
+	drawmenu
+	echo "Please choose distro to download (type-in number or space-separated multiple numbers):"
+	read x 
+			
+	# Happens if the input is empty
+	if [ -z "$x" ]; then echo "Empty distribution number. Please type-in number of according distro. Exiting"; exit; fi # "Empty" handling
+	
+	# Happens if we ask only for menu
+	if [ "$x" = "menu" ]; then drawmenu; exit; fi
+	
+	# This questions are asked ONLY if user hadn't used the option "all".
+	if [ "$x" != "all" ] && [ "$x" != "filesize" ] && [ "$x" != "netbootxyz" ] && [ "$x" != "netbootsal" ] && [ "$noconfirm" != "1" ] && [ "$x" != "netbootipxe" ]; then
+		for distr in $x; do 
+		dist=${distro_arr[$distr]}
+		typeset -n arr=$dist
+	
+		echo "You choose ${arr[0]} distro ${arr[2]}, built for ${arr[1]} arch. Do you want to download ${arr[0]} ISO? (y / n)"
+		read z
+		if [ $z = "y" ]; then $"${arr[3]}"; fi
+		echo "${arr[0]} downloaded, do you want to spin up the QEMU? (y / n)"
+		read z
+	
+		if [ $z = "y" ]; then
+			isoname="$(echo ${arr[0]} | awk '{print tolower($0)}').iso"
+			if ! type $cmd > /dev/null 2>&1; then
+				echo "qemu seems not installed. Cannot run VM, skipping."
+			else
+			# Uncomment the following two rows (a1 & a2) and comment out others if you want to make QEMU HDD
+			# qemu-img create ./${arr[0]}.img 4G                                                # a1. Creating HDD (if you want changes to be preserved)
+			# qemu-system-x86_64 -hda ./${arr[0]}.img -boot d -cdrom ./${arr[0]}*.iso -m 1024   # a2. Booting from CDROM with HDD support (changes will be preserved)
+				[ -f ./$isoname ] && $cmd -boot d -cdrom ./$isoname -m $ram           # b1. This is liveCD boot without HDD (all changes will be lost)
+			# This is for floppy .IMG support
+			# [ ! -f ./$isoname ] && imgname="$(echo ${arr[0]} | awk '{print tolower($0)}').img" && [ -f ./$imgname ] && $cmd --fda ./$imgname -m $ram
+  				[ ! -f ./$isoname ] && imgname="$(echo ${arr[0]} | awk '{print tolower($0)}').img" && [ -f ./$imgname ] && $cmd -drive format=raw,file=$imgname -m $ram
+			fi
+		fi
+	
+		done
+	else
+	
+	# All handling: automatic download will happen if user picked "all" option, no questions asked.
+		if [ "$x" = "all" ]; then 
+			for ((i=0; i<${#distro_arr[@]}; i++)); do xx+="$i "; done; x=$xx; 
+			#for ((i=0; i<${#distro_arr[@]}; i++)); do 
+			for distr in $x; do 
+				dist=${distro_arr[$distr]}
+				typeset -n arr=$dist
+				$"${arr[3]}"
+			done
+		#done
+		fi
+		
+		if [ "$noconfirm" = "1" ]; then 
+			for distr in $x; do 
+				dist=${distro_arr[$distr]}
+				typeset -n arr=$dist
+				$"${arr[3]}"
+			done
+		#done
+		fi
+		
+	# Sizecheck handling: show the distribution file sizes
+		if [ "$x" = "filesize" ]; then 
+		for ((i=0; i<${#distro_arr[@]}; i++)); do xx+="$i "; done; x=$xx;
+		#for ((i=0; i<${#distro_arr[@]}; i++)); do 
+			for distr in $x; do 
+				dist=${distro_arr[$distr]}
+				typeset -n arr=$dist	
+				$"${arr[3]}" "filesize"
+			done
+		#done
+		fi
+		
+		if [ "$x" = "netbootxyz" ]; then
+			echo "Downloading netboot image from netboot.xyz, please wait..." && netbootxyz
+			echo "Loading netboot.xyz.iso..." && $cmd -boot d -cdrom netboot.xyz.iso -m $ram
+		fi
+	
+		if [ "$x" = "netbootsal" ]; then
+			echo "Downloading netboot image from boot.salstar.sk, please wait..." && netbootsal
+			echo "Loading ipxe.iso..." && $cmd -boot d -cdrom ipxe.iso -m $ram
+		fi
+	
+		if [ "$x" = "netbootipxe" ]; then
+                	echo "Downloading netboot image from boot.ipxe.org, please wait..." && netbootipxe
+                	echo "Loading bootipxe.iso..." && $cmd -boot d -cdrom bootipxe.iso -m $ram
 		fi
 	fi
+}
 
+quickmode () {
+	IFS=,
+	for distr in $distros; do
+		dist=${distro_arr[$distr]}
+		typeset -n arr=$dist	
+		$"${arr[3]}"
 	done
-else
+	exit 0;
+}
 
-# All handling: automatic download will happen if user picked "all" option, no questions asked.
-	if [ $x = "all" ]; then 
-	for ((i=0; i<${#distro_arr[@]}; i++)); do xx+="$i "; done; x=$xx; 
-	#for ((i=0; i<${#distro_arr[@]}; i++)); do 
-		for distr in $x; do 
-			dist=${distro_arr[$distr]}
-			typeset -n arr=$dist
-			$"${arr[3]}"
-		done
-	#done
-	fi
-	
-# Sizecheck handling: show the distribution file sizes
-	if [ $x = "filesize" ]; then 
-	for ((i=0; i<${#distro_arr[@]}; i++)); do xx+="$i "; done; x=$xx;
-	#for ((i=0; i<${#distro_arr[@]}; i++)); do 
-		for distr in $x; do 
-			dist=${distro_arr[$distr]}
-			typeset -n arr=$dist	
-			$"${arr[3]}" "filesize"
-		done
-	#done
-	fi
-	
-
-	if [ $x = "netbootxyz" ]; then
-		echo "Downloading netboot image from netboot.xyz, please wait..." && netbootxyz
-		echo "Loading netboot.xyz.iso..." && $cmd -boot d -cdrom netboot.xyz.iso -m $ram
-	fi
-
-	if [ $x = "netbootsal" ]; then
-		echo "Downloading netboot image from boot.salstar.sk, please wait..." && netbootsal
-		echo "Loading ipxe.iso..." && $cmd -boot d -cdrom ipxe.iso -m $ram
-	fi
-
-	if [ $x = "netbootipxe" ]; then
-                echo "Downloading netboot image from boot.ipxe.org, please wait..." && netbootipxe
-                echo "Loading bootipxe.iso..." && $cmd -boot d -cdrom bootipxe.iso -m $ram
-	fi
+VALID_ARGS=$(getopt -o hysd: --long help,noconfirm,silent,distro: -- "$@")
+if [[ $? -ne 0 ]]; then
+    exit 1;
 fi
+
+eval set -- "$VALID_ARGS"
+while [ : ]; do
+  case "$1" in
+    -h | --help)
+        helpsection
+        echo "Valid command line flags:"
+		echo "-h/--help: Show this help"
+        echo "-y/--noconfirm: Download specified distro without confirmation. "
+        echo "-s/--silent: Don't show help or extra info."
+        echo "-d/--distro: Download distributions specified in the comma-separated list. Example: 0,2,34"
+        exit 0;
+        ;;
+    -y | --noconfirm)
+        echo "-y/--noconfirm option specified. Script will download specified distro without confirmation."
+        noconfirm=1
+        shift
+        ;;
+    -s | --silent)
+        echo "-s/--silent option specified. Script will not show help or extra info."
+        silent=1
+        shift
+        ;;
+    -d | --distro)
+        echo "-d/--distro option specified. Script will download distributions with the following numbers: '$2'"
+        distros="$2"
+        quickmode
+        ;;
+    --) shift; 
+        break 
+        ;;
+  esac
+done
+
+if [ "$silent" != "1" ]; then helpsection; fi
+
+normalmode
