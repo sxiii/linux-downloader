@@ -966,3 +966,12 @@ new="$mirror"
 output="bootipxe.iso"
 checkfile $1
 }
+
+tailsurl () {
+mirror="https://mirrors.edge.kernel.org/tails/stable/"
+version=$(curl -s $mirror | grep -o 'tails-amd64-[0-9.]*' | head -n1)
+x="https://mirrors.edge.kernel.org/tails/stable/${version}/${version}.img"
+new="$x"
+output="tailsos.img"
+checkfile $1
+}
