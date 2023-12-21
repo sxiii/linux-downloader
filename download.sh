@@ -38,7 +38,7 @@ cmd="qemu-system-x86_64" # The name of the qemu file to launch
 
 # Categories
 arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun archcraft peux bluestar xerolinux)
-deb=(debian ubuntu linuxmint zorinos popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos cutefishos parrot tailsos)
+deb=(debian ubuntu linuxmint zorinos popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos cutefishos parrot tailsos proxmox)
 rpm=(fedora centos opensuse rosa altlinux mandriva mageia clearos alma rocky qubes nobara ultramarine springdale berry risios eurolinux)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop solus peropesis openmamba pisi)
 sourcebased=(gentoo sabayon calculate nixos guix crux gobolinux easyos)
@@ -95,6 +95,7 @@ jingos=("JingOS" "amd64" "v0.9" "jingosurl")
 cutefishos=("CutefishOS" "amd64" "release" "cutefishosurl")
 parrot=("Parrot" "amd64" "testing" "parroturl")
 tailsos=("Tailsos" "amd64" "stable" "tailsurl" )
+proxmox=("Proxmox" "amd64" "stable" "proxmoxurl" )
 
 # Add if wanted
 # https://distrowatch.com/table.php?distribution=rebeccablackos

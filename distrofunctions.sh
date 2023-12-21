@@ -975,3 +975,11 @@ new="$x"
 output="tailsos.img"
 checkfile $1
 }
+
+proxmoxurl () {
+mirror="https://enterprise.proxmox.com/iso/"
+filename=$(curl -s $mirror | grep proxmox-ve  | tail -1 | awk -F"\"" '{ print $2 }')
+new="${mirror}${filename}"
+output="proxmox.iso"
+checkfile $1
+}
