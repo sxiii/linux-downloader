@@ -69,7 +69,7 @@ mirror="https://archlinux.org/download/"
 x=$(curl -s $mirror | grep -m1 geo | awk -F"\"" '{ print $2 }')
 y=$(curl -s $x | grep -m1 archlinux | awk -F".iso" '{ print $1 }' | awk -F"\"" '{ print $2 }' );
 new="$x/$y.iso"
-output_path "$y.iso"
+output_path "archlinux.iso"
 checkfile $1
 }
 
