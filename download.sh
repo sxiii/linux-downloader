@@ -42,7 +42,7 @@ deb=(debian ubuntu linuxmint zorinos popos deepin mxlinux knoppix kali puppy pur
 rpm=(fedora centos opensuse rosa altlinux mandriva mageia clearos alma rocky qubes nobara ultramarine springdale berry risios eurolinux)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop solus peropesis openmamba pisi)
 sourcebased=(gentoo sabayon calculate nixos guix crux gobolinux easyos)
-containers=(rancheros k3os flatcar silverblue photon coreos dcos)
+containers=(rancheros k3os flatcar silverblue photon coreos dcos proxmox)
 bsd=(freebsd netbsd openbsd ghostbsd hellosystem dragonflybsd pfsense opnsense midnightbsd truenas nomadbsd hardenedbsd xigmanas clonos)
 notlinux=(openindiana minix haiku menuetos kolibri reactos freedos)
 
@@ -158,6 +158,7 @@ silverblue=("Silverblue" "amd64" "release" "silverblueurl")
 photon=("PhotonOS" "amd64" "fulliso" "photonurl")
 coreos=("CoreOS" "amd64" "next" "coreosurl")
 dcos=("DC/OS" "amd64" "script" "dcosurl")
+proxmox=("Proxmox" "amd64" "stable" "proxmoxurl" )
 
 # FreeBSD family
 freebsd=("FreeBSD" "amd64" "release" "freebsdurl")
@@ -312,7 +313,7 @@ quickmode () {
 	exit 0;
 }
 
-VALID_ARGS=$(getopt -o hysd: --long help,noconfirm,silent,distro: -- "$@")
+VALID_ARGS=$(getopt -o hysod: --long help,noconfirm,silent,output_dir,distro: -- "$@")
 if [[ $? -ne 0 ]]; then
     exit 1;
 fi
@@ -326,6 +327,7 @@ while [ : ]; do
 		echo "-h/--help: Show this help"
         echo "-y/--noconfirm: Download specified distro without confirmation. "
         echo "-s/--silent: Don't show help or extra info."
+        echo "-o/--output_dir: Path where the downloaded files will be stored."
         echo "-d/--distro: Download distributions specified in the comma-separated list. Example: 0,2,34"
         exit 0;
         ;;
@@ -337,6 +339,11 @@ while [ : ]; do
     -s | --silent)
         echo "-s/--silent option specified. Script will not show help or extra info."
         silent=1
+        shift
+        ;;
+	-o | --output_dir)
+        echo "-o/--output_dir option specified. The images will be downloaded in \"$3\"."
+        output_dir=$3
         shift
         ;;
     -d | --distro)

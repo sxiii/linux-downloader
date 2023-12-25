@@ -15,32 +15,36 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 
 ## Requirements: 
 * Basic stuff: `linux`, `bash`, `curl`, `wget`, `awk`, `grep`, `xargs`, `pr` (these tools usually are preinstalled on linux)
-* Additional depencency: `html2text`
+* Additional depencency: `html2text` (for PopOS, Fedora, Rosa, Alma, Rocky, Adelie), `aria2` (for PopOS)
 * If you want to run a VM after downloading, you'll need `QEMU`
 * Some distros are shared as archive. So you'll need `xz` for guix, `bzip2` for minix, `zip` for haiku & reactos, and, finally `7z` for kolibri.
-* Install all deps on Arch-based distro: `sudo pacman -S html2text p7zip xz bzip2 qemu`
+### Install all deps on Arch-based distro
+`sudo pacman -S html2text aria2 p7zip xz bzip2 qemu`
+### Install all deps on Debian based distro
+`sudo ap-get install html2text aria2 p7zip xz-utils bzip2 qemu`
 
 ## Currently supported distributions
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
 ```
 Arch-based:	     DEB-based:		  RPM-based:	       Other:		    Source-based:	 Containers and DCs:  BSD, NAS, Firewall:  Not linux:
-0 = archlinux	     17 = debian	  34 = fedora	       51 = alpine	    68 = gentoo		 76 = rancheros	      83 = freebsd	   97 = openindiana
-1 = manjaro	     18 = ubuntu	  35 = centos	       52 = tinycore	    69 = sabayon	 77 = k3os	      84 = netbsd	   98 = minix
-2 = arcolinux	     19 = linuxmint	  36 = opensuse	       53 = porteus	    70 = calculate	 78 = flatcar	      85 = openbsd	   99 = haiku
-3 = archbang	     20 = zorinos	  37 = rosa	       54 = slitaz	    71 = nixos		 79 = silverblue      86 = ghostbsd	   100 = menuetos
-4 = parabola	     21 = popos		  38 = altlinux	       55 = pclinuxos	    72 = guix		 80 = photon	      87 = hellosystem	   101 = kolibri
-5 = endeavour	     22 = deepin	  39 = mandriva	       56 = void	    73 = crux		 81 = coreos	      88 = dragonflybsd	   102 = reactos
-6 = artix	     23 = mxlinux	  40 = mageia	       57 = fourmlinux	    74 = gobolinux	 82 = dcos	      89 = pfsense	   103 = freedos
-7 = arco	     24 = knoppix	  41 = clearos	       58 = kaos	    75 = easyos		 		      90 = opnsense	   
-8 = garuda	     25 = kali		  42 = alma	       59 = clearlinux	    			 		      91 = midnightbsd	   
-9 = rebornos	     26 = puppy		  43 = rocky	       60 = dragora	    			 		      92 = truenas	   
-10 = archlabs	     27 = pureos	  44 = qubes	       61 = slackware	    			 		      93 = nomadbsd	   
-11 = namib	     28 = elementary	  45 = nobara	       62 = adelie	    			 		      94 = hardenedbsd	   
-12 = obarun	     29 = backbox	  46 = ultramarine     63 = plop	    			 		      95 = xigmanas	   
-13 = archcraft	     30 = devuan	  47 = springdale      64 = solus	    			 		      96 = clonos	   
-14 = peux	     31 = jingos	  48 = berry	       65 = peropesis	    			 		      			   
-15 = bluestar	     32 = cutefishos	  49 = risios	       66 = openmamba	    			 		      			   
-16 = xerolinux	     33 = parrot	  50 = eurolinux       67 = pisi	    			 		      			   
+0 = archlinux	     17 = debian	  35 = fedora	       52 = alpine	    69 = gentoo		 77 = rancheros	      85 = freebsd	   99 = openindiana
+1 = manjaro	     18 = ubuntu	  36 = centos	       53 = tinycore	    70 = sabayon	 78 = k3os	      86 = netbsd	   100 = minix
+2 = arcolinux	     19 = linuxmint	  37 = opensuse	       54 = porteus	    71 = calculate	 79 = flatcar	      87 = openbsd	   101 = haiku
+3 = archbang	     20 = zorinos	  38 = rosa	       55 = slitaz	    72 = nixos		 80 = silverblue      88 = ghostbsd	   102 = menuetos
+4 = parabola	     21 = popos		  39 = altlinux	       56 = pclinuxos	    73 = guix		 81 = photon	      89 = hellosystem	   103 = kolibri
+5 = endeavour	     22 = deepin	  40 = mandriva	       57 = void	    74 = crux		 82 = coreos	      90 = dragonflybsd	   104 = reactos
+6 = artix	     23 = mxlinux	  41 = mageia	       58 = fourmlinux	    75 = gobolinux	 83 = dcos	      91 = pfsense	   105 = freedos
+7 = arco	     24 = knoppix	  42 = clearos	       59 = kaos	    76 = easyos		 84 = proxmox	      92 = opnsense	   
+8 = garuda	     25 = kali		  43 = alma	       60 = clearlinux	    			 		      93 = midnightbsd	   
+9 = rebornos	     26 = puppy		  44 = rocky	       61 = dragora	    			 		      94 = truenas	   
+10 = archlabs	     27 = pureos	  45 = qubes	       62 = slackware	    			 		      95 = nomadbsd	   
+11 = namib	     28 = elementary	  46 = nobara	       63 = adelie	    			 		      96 = hardenedbsd	   
+12 = obarun	     29 = backbox	  47 = ultramarine     64 = plop	    			 		      97 = xigmanas	   
+13 = archcraft	     30 = devuan	  48 = springdale      65 = solus	    			 		      98 = clonos	   
+14 = peux	     31 = jingos	  49 = berry	       66 = peropesis	    			 		      			   
+15 = bluestar	     32 = cutefishos	  50 = risios	       67 = openmamba	    			 		      			   
+16 = xerolinux	     33 = parrot	  51 = eurolinux       68 = pisi	    			 		      			   
+		     34 = tailsos
 ```
 
 ## How to use?
