@@ -2,18 +2,34 @@
 
 # Download functions and commands
 
+output_path () {
+	if [ -n "$output_dir" ];then
+		local output_path="${output_dir}/";
+	fi
+	output="${output_path}$1"
+}
+
 wgetcmd () { 
-echo "Downloading $new to $output"
-wget -q --show-progress -c "$new" -O "$output" -o /dev/null
+	if [ -n "$output_dir" ] && [ ! -d "$output_dir" ];then
+		echo "The image destination path \"$output_dir\" doesn't exist. Do you want to create it ? (y / n)"
+		read create_path
+		if [ "$create_path" = "y" ];then
+			mkdir -p "$output_dir"
+		else
+			exit 1
+		fi
+	fi
+	echo "Downloading $new to $output"
+	wget -q --show-progress -c "$new" -O "$output" -o /dev/null
 }
 
 # Function to only get filesize
 getsize () { 
-abc=$(wget --spider $new 2>&1)
-y=$(echo $abc | awk -F"Length:" '{ print $2 }' | awk -F"[" '{ print $1 }')
-ss=$(ls -l -B $output | awk -F" " '{ print $5 }')
-sh=$(ls -lh $output | awk -F" " '{ print $5 }')
-printf "File: $new has size: $y while on disk it is $output - $ss ($sh) \n"
+	abc=$(wget --spider $new 2>&1)
+	y=$(echo $abc | awk -F"Length:" '{ print $2 }' | awk -F"[" '{ print $1 }')
+	ss=$(ls -l -B $output | awk -F" " '{ print $5 }')
+	sh=$(ls -lh $output | awk -F" " '{ print $5 }')
+	printf "File: $new has size: $y while on disk it is $output - $ss ($sh) \n"
 }
 
 # This can be adopted for using torrents instead of direct HTTP/FTP files
@@ -53,7 +69,7 @@ mirror="https://archlinux.org/download/"
 x=$(curl -s $mirror | grep -m1 geo | awk -F"\"" '{ print $2 }')
 y=$(curl -s $x | grep -m1 archlinux | awk -F".iso" '{ print $1 }' | awk -F"\"" '{ print $2 }' );
 new="$x/$y.iso"
-output="archlinux.iso"
+output_path "archlinux.iso"
 checkfile $1
 }
 
@@ -61,7 +77,7 @@ manjarourl () {
 mirror="https://manjaro.org/download/"
 x=$(curl -s $mirror | grep btn-fi | grep xfce | awk -F"\"" '{ print $4 }')
 new="$x"
-output="manjaro.iso"
+output_path "manjaro.iso"
 checkfile $1
 }
 
@@ -69,28 +85,28 @@ arcourl () {
 mirror="https://bike.seedhost.eu/arcolinux/iso/"
 x=$(curl -s $mirror | grep -m1 arcolinux- | awk -F">" '{ print $3 }' | awk -F"<" '{ print $1 }')
 new="$mirror/$x"
-output="arcolinux.iso"
+output_path "arcolinux.iso"
 checkfile $1
 }
 
 archbangurl () {
 mirror="https://sourceforge.net/projects/archbang/files/latest/download"
 new="$mirror"
-output="archbang.iso"
+output_path "archbang.iso"
 checkfile $1
 }
 
 parabolaurl () {
 mirror="https://wiki.parabola.nu/Get_Parabola"
 new=$(curl -s $mirror | grep iso | grep Web | awk -F"\"" '{ print $18 }' | grep iso -m1)
-output="parabola.iso"
+output_path "parabola.iso"
 checkfile $1
 }
 
 endeavoururl () {
 mirror="https://sourceforge.net/projects/endeavouros-repository/files/latest/download"
 new="$mirror"
-output="endeavour.iso"
+output_path "endeavour.iso"
 checkfile $1
 }
 
@@ -98,42 +114,42 @@ artixurl () {
 mirror="https://mirrors.dotsrc.org/artix-linux/iso/"
 x=$(curl -s $mirror | grep mate-openrc | head -1 | awk -F\" '{ print $2 }')
 new="$mirror/$x"
-output="artix.iso"
+output_path "artix.iso"
 checkfile $1
 }
 
 arcourl () {
 mirror="https://sourceforge.net/projects/arcolinux/files/latest/download"
 new="$mirror"
-output="arco.iso"
+output_path "arco.iso"
 checkfile $1
 }
 
 garudaurl () {
 mirror="https://sourceforge.net/projects/garuda-linux/files/latest/download"
 new="$mirror"
-output="garuda.iso"
+output_path "garuda.iso"
 checkfile $1
 }
 
 rebornurl () {
 mirror="https://sourceforge.net/projects/rebornos/files/latest/download"
 new="$mirror"
-output="rebornos.iso"
+output_path "rebornos.iso"
 checkfile $1
 }
 
 archlabsurl () {
 mirror="https://sourceforge.net/projects/archlabs-linux-minimo/files/latest/download"
 new="$mirror"
-output="archlabs.iso"
+output_path "archlabs.iso"
 checkfile $1
 }
 
 namiburl () {
 mirror="https://sourceforge.net/projects/namib-gnu-linux/files/latest/download"
 new="$mirror"
-output="namib.iso"
+output_path "namib.iso"
 checkfile $1
 }
 
@@ -142,42 +158,42 @@ mirror="https://repo.obarun.org/iso/"
 x=$(curl -s $mirror | grep "<tr><td" | tail -1 | awk -F"href=\"" '{ print $2 }' | awk -F"/" '{ print $1 }')
 y=$(curl -s $mirror/$x/ | grep obarun | head -1 | awk -F"href=\"" '{ print $2 }' | awk -F\" '{ print $1 }')
 new="$mirror/$x/$y"
-output="obarun.iso"
+output_path "obarun.iso"
 checkfile $1
 }
 
 archcrafturl () {
 mirror="https://sourceforge.net/projects/archcraft/files/latest/download"
 new="$mirror"
-output="archcraft.iso"
+output_path "archcraft.iso"
 checkfile $1
 }
 
 peuxurl () {
 mirror="https://sourceforge.net/projects/peux-os/files/latest/download"
 new="$mirror"
-output="peuxos.iso"
+output_path "peuxos.iso"
 checkfile $1
 }
 
 bluestarurl () {
 mirror="https://sourceforge.net/projects/bluestarlinux/files/latest/download"
 new="$mirror"
-output="bluestar.iso"
+output_path "bluestar.iso"
 checkfile $1
 }
 
 xerourl () {
 mirror="https://sourceforge.net/projects/xerolinux/files/latest/download"
 new="$mirror"
-output="xerolinux.iso"
+output_path "xerolinux.iso"
 checkfile $1
 }
 
 debianurl () {
 x="https://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-dvd/debian-testing-amd64-DVD-1.iso"
 new="$x"
-output="debian.iso"
+output_path "debian.iso"
 notlive
 checkfile $1
 }
@@ -186,28 +202,28 @@ ubuntuurl () {
 mirror="http://cdimage.ubuntu.com/daily-live/current/"
 x=$(curl -s $mirror | grep -m1 desktop-amd64.iso | awk -F\" '{ print $2 }' | awk -F\" '{ print $1 }')
 new="$mirror/$x"
-output="ubuntu.iso"
+output_path "ubuntu.iso"
 checkfile $1
 }
 
 minturl () {
 mirror="https://linuxmint.com/edition.php?id=302"
 new=$(curl -s $mirror | grep -m2 iso | grep -m1 -vwE "Torrent" | awk -F"\"" '{ print $2 }')
-output="linuxmint.iso"
+output_path "linuxmint.iso"
 checkfile $1
 }
 
 alturl () {
 x="http://mirror.yandex.ru/altlinux-nightly/current/regular-cinnamon-latest-x86_64.iso"
 new="$x"
-output="altlinux.iso"
+output_path "altlinux.iso"
 checkfile $1
 }
 
 zorinurl () {
 mirror="https://sourceforge.net/projects/zorin-os/files/latest/download"
 new="$mirror"
-output="zorinos.iso"
+output_path "zorinos.iso"
 checkfile $1
 }
 
@@ -225,7 +241,7 @@ checkfile $1
 deepinurl () {
 mirror="https://sourceforge.net/projects/deepin/files/latest/download"
 new="$mirror"
-output="deepin.iso"
+output_path "deepin.iso"
 notlive
 checkfile $1
 }
@@ -233,7 +249,7 @@ checkfile $1
 mxurl () {
 mirror="https://sourceforge.net/projects/mx-linux/files/latest/download"
 new="$mirror"
-output="mxlinux.iso"
+output_path "mxlinux.iso"
 checkfile $1
 }
 
@@ -241,7 +257,7 @@ knoppixurl () {
 mirror="http://mirror.yandex.ru/knoppix/DVD/"
 x=$(curl -s $mirror | grep -m1 "EN.iso\"" | awk -F"\"" '{ print $2 }')
 new="$mirror/$x"
-output="knoppix.iso"
+output_path "knoppix.iso"
 checkfile $1
 }
 
@@ -249,7 +265,7 @@ kaliurl () {
 mirror="http://cdimage.kali.org/kali-weekly/"
 x=$(curl -s $mirror | grep -m1 live-amd64.iso | awk -F">" '{ print $7 }' | awk -F"<" '{ print $1 }')
 new="$mirror/$x"
-output="kali.iso"
+output_path "kali.iso"
 checkfile $1
 }
 
@@ -257,14 +273,14 @@ puppyurl () {
 mirror="http://distro.ibiblio.org/puppylinux/puppy-bionic/bionicpup64/"
 x=$(curl -s $mirror | grep -m1 uefi.iso | awk -F">" '{ print $4 }' | awk -F"<" '{ print $1 }')
 new="$mirror/$x"
-output="puppy.iso"
+output_path "puppy.iso"
 checkfile $1
 }
 
 pureurl () {
 mirror="https://pureos.net/download/"
 new=$(curl -s $mirror | grep -m1 iso | awk -F"\"" '{ print $2 }')
-output="pureos.iso"
+output_path "pureos.iso"
 checkfile $1
 }
 
@@ -272,14 +288,14 @@ elementurl () {
 mirror="https://elementary.io"
 one=$(curl -s $mirror 2>&1 | grep -m1 download-link | awk -F"//" '{ print $2 }' | awk -F\" '{ print $1 }')
 new="$one"
-output="elementaryos.iso"
+output_path "elementaryos.iso"
 checkfile $1
 }
 
 backboxurl () {
 mirror="https://bit.ly/2yNWmF3"
 new="$mirror"
-output="backbox.iso"
+output_path "backbox.iso"
 checkfile $1
 }
 
@@ -290,21 +306,21 @@ one=$(curl -s $x | grep daed | awk -F"\"" '{ print $4 }')
 two=$(curl -s $x/$one | grep desktop-live | awk -F"\"" '{ print $4 }')
 three=$(curl -s $x/$one/$two | grep -m1 amd64 | awk -F"\"" '{ print $4 }')
 new="$x/$one/$two/$three"
-output="devuan.iso"
+output_path "devuan.iso"
 checkfile $1
 }
 
 jingosurl () {
 mirror="https://download.jingos.com/os/JingOS-V0.9-a25ea3.iso"
 new="$mirror"
-output="jingos.iso"
+output_path "jingos.iso"
 checkfile $1
 }
 
 cutefishosurl () {
 mirror="https://sourceforge.net/projects/cutefish-ubuntu/files/latest/download"
 new="$mirror"
-output="cutefishos.iso"
+output_path "cutefishos.iso"
 checkfile $1
 }
 
@@ -312,7 +328,7 @@ parroturl () {
 mirror="https://deb.parrot.sh/direct/parrot/iso/testing/"
 x=$(curl -s $mirror | grep "home" | grep -m1 amd64.iso | awk -F"\"" '{ print $4 }')
 new="$mirror$x"
-output="parrot.iso"
+output_path "parrot.iso"
 checkfile $1
 }
 
@@ -324,7 +340,7 @@ new=$(curl -s $mirror | html2text | grep -m2 iso | awk -F "(" 'NR%2{printf "%s",
 #mirror="https://www.happyassassin.net/nightlies.html"
 #x=$(curl -s $mirror | grep -m1 Fedora-Workstation-Live-x86_64-Rawhide | awk -F\" '{ print $4 }')
 #new="$x"
-output="fedora.iso"
+output_path "fedora.iso"
 checkfile $1
 }
 
@@ -332,7 +348,7 @@ centosurl () {
 mirror="https://www.centos.org/centos-stream/"
 x=$(curl -s $mirror | grep -m1 x86_64 | awk -F"\"" '{ print $2 }' | awk -F"&amp" '{ print $1 }')
 new=$(curl $x | grep https -m1)
-output="centos.iso"
+output_path "centos.iso"
 notlive
 checkfile $1
 }
@@ -340,21 +356,21 @@ checkfile $1
 suseurl () {
 mirror="https://get.opensuse.org/tumbleweed/#download"
 new=$(curl -s $mirror | grep -m1 Current.iso | awk -F"\"" '{ print $2 }' | awk -F"\"" '{ print $1 }')
-output="opensuse.iso"
+output_path "opensuse.iso"
 checkfile $1
 }
 
 rosaurl () {
 mirror="https://www.rosalinux.ru/rosa-linux-download-links/"
 new=$(curl -s $mirror | html2text | grep -m1 "64-bit ISO" | awk -F"(" '{ print $2 }' | awk -F" " '{ print $1 }')
-output="rosa.iso"
+output_path "rosa.iso"
 checkfile $1
 }
 
 mandrivaurl () {
 mirror="https://sourceforge.net/projects/openmandriva/files/latest/download"
 new="$mirror"
-output="mandriva.iso"
+output_path "mandriva.iso"
 checkfile $1
 }
 
@@ -363,7 +379,7 @@ mirror="https://mirror.yandex.ru/mageia/iso/cauldron/"
 one=$(curl -s $mirror | grep Live-Xfce-x86_64 | awk -F"\"" '{ print $2 }')
 two=$(curl -s $mirror/$one | grep -m1 "x86_64.iso" | awk -F"\"" '{ print $2 }')
 new="$mirror/$one/$two"
-output="mageia.iso"
+output_path "mageia.iso"
 checkfile $1
 }
 
@@ -375,7 +391,7 @@ two=${two#*http://}.iso
 link="https://$two"
 new=$(curl -s "$link" | grep window.open | awk -F\' '{ print $2 }')
 #new="$(cat ClearOS*iso | grep -m1 .iso | awk -F\' '{ print $2 }')"
-output="clearos.iso"
+output_path "clearos.iso"
 #rm ${two#*http://}.iso
 notlive
 checkfile $1
@@ -389,56 +405,56 @@ two=$(( $RANDOM % $one + 1 ))
 three=$(curl -s "$mirror/$x" | grep iso | head -n$two | tail -1 | awk -F"\"" '{ print $2 }')
 four=$(curl -s "$three/" | grep -m1 dvd.iso | html2text | grep -m1 iso | awk -F"AlmaLinux" '{ print $2 }' | awk -F".iso" '{ print $1 }')
 new="$three/AlmaLinux$four.iso"
-output="alma.iso"
+output_path "alma.iso"
 checkfile $1
 }
 
 rockyurl () {
 mirror="https://rockylinux.org/download"
 new=$(curl -s $mirror | html2text | grep -m1 DVD | awk -F'(' '{ print $2 }' | awk -F')' '{ print $1 }')
-output="rocky.iso"
+output_path "rocky.iso"
 checkfile $1
 }
 
 qubesurl () {
 mirror="https://www.qubes-os.org/downloads/"
 new=$(curl -s $mirror | grep -m1 x86_64.iso | awk -F"\"" '{ print $4 }')
-output="qubes.iso"
+output_path "qubes.iso"
 checkfile $1
 }
 
 nobaraurl () {
 mirror="https://nobaraproject.org/download-nobara/"
 new=$(curl -s $mirror | grep -m1 "NA Download" | awk -F"\"" '{ print $8 }')
-output="nobara.iso"
+output_path "nobara.iso"
 checkfile $1
 }
 
 ultraurl () {
 mirror="https://ultramarine-linux.org/download/"
 new=$(curl -s $mirror | grep -m1 "Download Flagship" | awk -F"\"" '{ print $14 }')
-output="ultramarine.iso"
+output_path "ultramarine.iso"
 checkfile $1
 }
 
 springurl () {
 mirror="https://springdale.math.ias.edu/#Mirrors"
 new=$(curl -s $mirror | grep -m1 "/boot.iso" | awk -F"\"" '{ print $4 }')
-output="springdale.iso"
+output_path "springdale.iso"
 checkfile $1
 }
 
 berryurl () {
 mirror="https://berry-lab.net/edownload.html"
 new=$(curl -s $mirror | grep -m1 .iso | awk -F"\"" '{ print $2 }')
-output="berry.iso"
+output_path "berry.iso"
 checkfile $1
 }
 
 risiurl () {
 mirror="https://risi.io/downloads"
 new=$(curl -s $mirror | grep Download | grep -m1 .iso | awk -F"\"" '{ print $2 }')
-output="risios.iso"
+output_path "risios.iso"
 checkfile $1
 }
 
@@ -446,7 +462,7 @@ eurourl () {
 mirror="https://fbi.cdn.euro-linux.com/isos/"
 x=$(curl -s $mirror | grep latest.iso | awk -F"\"" '{ print $2 }')
 new="$mirror$x"
-output="eurolinux.iso"
+output_path "eurolinux.iso"
 checkfile $1
 }
 
@@ -456,7 +472,7 @@ one=$(curl -s $mirrorone | grep Current | awk -F">" '{ print $3 }' | awk -F"<" '
 shortv=$(echo $one | awk -F"." '{ print $1"."$2}')
 x="http://dl-cdn.alpinelinux.org/alpine/v$shortv/releases/x86_64/alpine-extended-$one-x86_64.iso"
 new="$x"
-output="alpine.iso"
+output_path "alpine.iso"
 checkfile $1
 }
 
@@ -465,7 +481,7 @@ mirrorone="http://tinycorelinux.net/downloads.html"
 one=$(curl -s $mirrorone | grep TinyCore-current.iso | awk -F\" '{ print $2 }')
 mirror="http://tinycorelinux.net/"
 new="$mirror/$one"
-output="tinycore.iso"
+output_path "tinycore.iso"
 checkfile $1
 }
 
@@ -474,14 +490,14 @@ mirrorone="https://porteus-kiosk.org/download.html"
 one=$(curl -s $mirrorone | grep "Porteus-Kiosk.*x86_64.iso" | grep -m1 public| awk -F\" '{ print $2 }')
 mirror="https://porteus-kiosk.org/"
 new="$mirror/$one"
-output="porteus.iso"
+output_path "porteus.iso"
 checkfile $1
 }
 
 slitazurl () {
 x="http://mirror.slitaz.org/iso/rolling/slitaz-rolling-core64.iso"
 new="$x"
-output="slitaz.iso"
+output_path "slitaz.iso"
 checkfile $1
 }
 
@@ -489,7 +505,7 @@ pclinuxosurl () {
 mirror="http://ftp.nluug.nl/pub/os/Linux/distr/pclinuxos/pclinuxos/live-cd/64bit/"
 x="pclinuxos$(curl -s $mirror | grep -m1 .iso | awk -F"pclinuxos" '{ print $2 }' | awk -F\" '{ print $1 }')"
 new="$mirror$x"
-output="pclinuxos.iso"
+output_path "pclinuxos.iso"
 checkfile $1
 }
 
@@ -497,21 +513,21 @@ voidurl () {
 mirror="https://alpha.de.repo.voidlinux.org/live/current/"
 x=$(curl -s $mirror | grep "live" | grep -m1 "x86_64" | awk -F">" '{ print $2 }' | awk -F"<" '{ print $1 }')
 new="$mirror/$x"
-output="void.iso"
+output_path "void.iso"
 checkfile $1
 }
 
 fourmurl () {
 mirror="https://sourceforge.net/projects/linux4m/files/latest/download"
 new="$mirror"
-output="4mlinux.iso"
+output_path "4mlinux.iso"
 checkfile $1
 }
 
 kaosurl () {
 mirror="https://sourceforge.net/projects/kaosx/files/latest/download"
 new="$mirror"
-output="kaos.iso"
+output_path "kaos.iso"
 checkfile $1
 }
 
@@ -519,7 +535,7 @@ clearurl () {
 mirror="https://clearlinux.org/downloads"
 x=$(curl -s $mirror | grep live | grep -m1 iso | awk -F\" '{ print $2 }')
 new="$x"
-output="clearlinux.iso"
+output_path "clearlinux.iso"
 checkfile $1
 }
 
@@ -528,7 +544,7 @@ mirror="http://rsync.dragora.org/current/iso/beta/"
 echo "Unfortunately, current Dragora mirror ($mirror) is unavailable"
 #x=$(curl -s $mirror | grep -m1 x86_64 | awk -F\' '{ print $2 }')
 #new="$mirror$x"
-#output="dragora.iso"
+#output_path "dragora.iso"
 #checkfile $1
 }
 
@@ -539,7 +555,7 @@ other="slack$x"
 y=$(curl -s "$mirror/$other/" | grep dvd.iso | head -1 | awk -F"slack" '{ print $2 }' | awk -F\" '{ print $1 }')
 new="$mirror"; new+="$other"; new+="/slack"; new+="$y"
 echo "new=$new"
-output="slackware.iso"
+output_path "slackware.iso"
 checkfile $1
 }
 
@@ -548,7 +564,7 @@ mirror="https://www.adelielinux.org/download/"
 x=$(curl -s $mirror | html2text | grep "Listing]" | awk -F"(" '{ print $2 }' | awk -F")" '{ print $1 }')
 y=$(curl -s $x | grep live-mate | grep -m1 "x86_64" | awk -F"\"" '{ print $2 }')
 new="$x$y"
-output="adelie.iso"
+output_path "adelie.iso"
 checkfile $1
 }
 
@@ -556,7 +572,7 @@ plopurl () {
 mirror="https://www.plop.at/en/ploplinux/downloads/full.html"
 x="$(curl -s $mirror | grep x86_64.iso | head -1 | awk -F"https://" '{ print $2 }' | awk -F".iso" '{ print $1 }')"
 new="https://$x.iso"
-output="plop.iso"
+output_path "plop.iso"
 checkfile $1
 }
 
@@ -565,7 +581,7 @@ mirror="https://getsol.us/download/"
 echo "Unfortunately, current Solus mirror ($mirror) is unavailable"
 #x=$(curl -s $mirror | grep -m1 iso | awk -F\" '{ print $2 }')
 #new="$x"
-#output="solus.iso"
+#output_path "solus.iso"
 #checkfile $1
 }
 
@@ -574,20 +590,20 @@ mirror="https://peropesis.org"
 mirror2="$mirror/get-peropesis/"
 x=$(curl -s $mirror2 | grep -m1 "live.iso" | awk -F"\"" '{ print $8 }')
 new="$mirror$x"
-output="peropesis.iso"
+output_path "peropesis.iso"
 checkfile $1
 }
 
 openmambaurl () {
 mirror="https://openmamba.org/en/downloads/"
 new=$(curl -s $mirror | grep "rolling livedvd" | awk -F"href" '{ print $2 }' | awk -F"\"" '{ print $2 }')
-output="openmamba.iso"
+output_path "openmamba.iso"
 checkfile $1
 }
 
 pisiurl () {
 new="https://sourceforge.net/projects/pisilinux/files/latest/download"
-output="pisi.iso"
+output_path "pisi.iso"
 checkfile $1
 }
 
@@ -597,7 +613,7 @@ gentoourl () {
 mirror="https://gentoo.c3sl.ufpr.br//releases/amd64/autobuilds"
 one=$(curl -s "$mirror/latest-iso.txt" | grep "admin" | awk '{ print $1 }')
 new="$mirror/$one"
-output="gentoo.iso"
+output_path "gentoo.iso"
 notlive
 checkfile $1
 }
@@ -607,7 +623,7 @@ mirror="https://www.sabayon.org/desktop/"
 echo "Unfortunately, current Sabayon mirror ($mirror) is unavailable"
 #x=$(curl -s $mirror | grep GNOME.iso | head -1 | awk -F"http://" '{ print $2 }' | awk -F\" '{ print $1 }')
 #new="http://$x"
-#output="sabayon.iso"
+#output_path "sabayon.iso"
 #checkfile $1
 }
 
@@ -617,7 +633,7 @@ x=$(curl -s $mirror | grep "<a" | tail -1 | awk -F">" '{ print $2 }' | awk -F"<"
 mirror+=$x
 x=$(curl -s $mirror | grep -m1 cldc | awk -F\" '{ print $2 }')
 new="$mirror$x"
-output="calculate.iso"
+output_path "calculate.iso"
 checkfile $1
 }
 
@@ -629,7 +645,7 @@ file=$(echo $saved | awk -F"nixos" '{ print $28 }' | awk -F".iso" '{ print $1 }'
 result="nixos"; result+=$dir; result+="nixos"; result+=$file
 x="https://releases.nixos.org/nixos/unstable/$result.iso"
 new="$x"
-output="nixos.iso"
+output_path "nixos.iso"
 notlive
 checkfile $1
 }
@@ -638,7 +654,7 @@ guixurl () {
 mirror="https://guix.gnu.org/en/download/"
 x=$(curl -s $mirror | grep ".iso" | awk -F"https://" '{ print $2 }' | awk -F\" '{ print $1 }')
 new="https://$x"
-output="guix.iso.xz"
+output_path "guix.iso.xz"
 notlive
 checkfile $1
 [ -f "guix.iso" ] && echo "Please wait, unpacking guix..." && xz -k -d -v ./guix*xz && mv guix*iso guix.iso
@@ -648,14 +664,14 @@ cruxurl () {
 mirror="http://ftp.morpheus.net/pub/linux/crux/latest/iso/"
 x=$(curl -s $mirror | grep iso | grep href | awk -F"\"" '{ print $6 }' | awk -F"\"" '{ print $1 }')
 new="$mirror$x"
-output="crux.iso"
+output_path "crux.iso"
 checkfile $1
 }
 
 gobourl () {
 mirror="https://api.github.com/repos/gobolinux/LiveCD/releases/latest"
 new=$(curl -s $mirror | grep browser_download_url | grep x86_64.iso | awk -F"\"" '{ print $4 }')
-output="gobolinux.iso"
+output_path "gobolinux.iso"
 checkfile $1
 }
 
@@ -664,7 +680,7 @@ mirror="https://distro.ibiblio.org/easyos/amd64/releases/dunfell/2023/"
 x=$(curl -s $mirror | grep "Directory<" | tail -1 | awk -F "\"" '{ print $6 }')
 y=$(curl -s $mirror$x | grep img | awk -F"\"" '{ print $4 }')
 new="$mirror$x$y"
-output="easyos.img"
+output_path "easyos.img"
 checkfile $1
 }
 
@@ -673,21 +689,21 @@ checkfile $1
 rancherurl () {
 mirror="https://api.github.com/repos/rancher/os/releases/latest"
 new=$(curl -s $mirror | grep browser_download_url | grep rancheros.iso | awk -F"\"" '{ print $4 }')
-output="rancheros.iso"
+output_path "rancheros.iso"
 checkfile $1
 }
 
 k3osurl () {
 mirror="https://api.github.com/repos/rancher/k3os/releases/latest"
 new=$(curl -s $mirror | grep browser_download_url | grep k3os-amd64.iso | awk -F"\"" '{ print $4 }')
-output="k3os.iso"
+output_path "k3os.iso"
 checkfile $1
 }
 
 flatcarurl () {
 mirror="https://alpha.release.flatcar-linux.net/amd64-usr/current/flatcar_production_iso_image.iso"
 new="$mirror"
-output="flatcar.iso"
+output_path "flatcar.iso"
 checkfile $1
 }
 
@@ -695,7 +711,7 @@ silverblueurl () {
 mirror="https://silverblue.fedoraproject.org/download"
 x=$(curl -s $mirror | grep -m1 x86_64 | awk -F\' '{ print $2 }')
 new="$x"
-output="silverblue.iso"
+output_path "silverblue.iso"
 checkfile $1
 }
 
@@ -703,7 +719,7 @@ photonurl () {
 mirror="https://github.com/vmware/photon/wiki/Downloading-Photon-OS"
 x=$(curl -s $mirror | grep -m1 "Full ISO" | awk -F\" '{ print $2 }')
 new="$x"
-output="photonos.iso"
+output_path "photonos.iso"
 notlive
 checkfile $1
 }
@@ -712,13 +728,13 @@ coreosurl () {
 mirror="https://builds.coreos.fedoraproject.org/streams/next.json"
 x=$(curl -s $mirror | grep iso | grep -m1 location | awk -F\" '{ print $4 }')
 new="$x"
-output="coreos.iso"
+output_path "coreos.iso"
 checkfile $1
 }
 
 dcosurl () {
 new="https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
-output="dcos_generate_config.sh"
+output_path "dcos_generate_config.sh"
 echo "Warning! This is not an ISO or disk image, but rather a OS generator tool. After downloading, run chmod +x ./dc*sh"
 checkfile $1
 }
@@ -728,7 +744,7 @@ mirror="https://www.freebsd.org/where/"
 x=$(curl -s $mirror | grep -m1 "amd64/amd64" | awk -F\" '{ print $2 }')
 one=$(curl -s $x | grep -m1 dvd1 | awk -F"FreeBSD" '{ print $2 }' | awk -F\" '{ print $1 }')
 new=$x; new+="FreeBSD"; new+=$one; 
-output="freebsd.iso"
+output_path "freebsd.iso"
 notlinux
 checkfile $1
 }
@@ -737,7 +753,7 @@ netbsdurl () {
 mirror="https://www.netbsd.org/" 
 #mirror="https://wiki.netbsd.org/ports/amd64/"
 new=$(curl -s $mirror | grep -m1 "CD" | awk -F\" '{ print $4 }')
-output="netbsd.iso"
+output_path "netbsd.iso"
 notlinux
 checkfile $1
 }
@@ -745,7 +761,7 @@ checkfile $1
 openbsdurl () {
 mirror="https://www.openbsd.org/faq/faq4.html"
 new=$(curl -s $mirror | grep -m1 -e 'iso.*amd64' | awk -F\" '{ print $2 }')
-output="openbsd.iso"
+output_path "openbsd.iso"
 notlinux
 checkfile $1
 }
@@ -754,7 +770,7 @@ ghostbsdurl () {
 mirror="http://download.fr.ghostbsd.org/development/amd64/latest/"
 x=$(curl -s -L $mirror | grep ".iso<" | tail -1 | awk -F\" '{ print $2 }')
 new="$mirror$x"
-output="ghostbsd.iso"
+output_path "ghostbsd.iso"
 notlinux
 checkfile $1
 }
@@ -766,7 +782,7 @@ hellosystemurl () {
 #new="https://github.com$x"
 mirror="https://api.github.com/repos/helloSystem/ISO/releases/latest"
 new=$(curl -s $mirror | grep browser_download_url | grep -m1 amd64.iso | awk -F"\"" '{ print $4 }')
-output="hellosystem.iso"
+output_path "hellosystem.iso"
 notlinux
 checkfile $1
 }
@@ -774,7 +790,7 @@ checkfile $1
 dragonurl () {
 mirror="https://www.dragonflybsd.org/download/"
 new=$(curl -s $mirror | grep "Uncompressed ISO:" | awk -F"\"" '{ print $2 }')
-output="dragonflybsd.iso"
+output_path "dragonflybsd.iso"
 notlinux
 checkfile $1
 }
@@ -783,7 +799,7 @@ pfsenseurl () {
 mirror="https://atxfiles.netgate.com/mirror/downloads/"
 x=$(curl -s $mirror | grep "amd64.iso.gz</a>" | tail -1 | awk -F"\"" '{ print $2 }')
 new="$mirror$x"
-output="pfsense.iso.gz"
+output_path "pfsense.iso.gz"
 if [ "$1" == "filesize" ]; then 
 	notlinux
 	getsize
@@ -797,7 +813,7 @@ mirror="https://mirror.terrahost.no/opnsense/releases/"
 x=$(curl -s $mirror | grep -B1 mirror | head -1 | awk -F"\"" '{ print $2 }')
 y=$(curl -s $mirror$x | grep -m1 dvd | awk -F"\"" '{ print $2 }')
 new="$mirror$x$y"
-output="opnsense.iso.bz2"
+output_path "opnsense.iso.bz2"
 if [ "$1" == "filesize" ]; then
 	notlinux
 	getsize
@@ -811,7 +827,7 @@ mirror="https://discovery.midnightbsd.org/releases/amd64/ISO-IMAGES/"
 x=$(curl -s $mirror | grep href | tail -1 | awk -F"\"" '{ print $2 }')
 y=$(curl -s $mirror$x | grep disc1.iso | awk -F"\"" '{ print $2 }')
 new="$mirror$x$y"
-output="midnightbsd.iso"
+output_path "midnightbsd.iso"
 notlinux
 checkfile $1
 }
@@ -819,7 +835,7 @@ checkfile $1
 truenasurl () {
 mirror="https://www.truenas.com/download-truenas-core/"
 new=$(curl -s $mirror | grep -m1 iso | awk -F"\"" '{ print $6 }')
-output="truenas.iso"
+output_path "truenas.iso"
 notlinux
 checkfile $1
 }
@@ -827,7 +843,7 @@ checkfile $1
 nomadbsdurl () {
 mirror="https://nomadbsd.org/download.html"
 new=$(curl -s $mirror | grep -A2 "Main site" | grep -m1 img.lzma | awk -F"\"" '{ print $2 }')
-output="nomadbsd.img.lzma"
+output_path "nomadbsd.img.lzma"
 if [ "$1" == "filesize" ]; then
 	notlinux
 	getsize
@@ -838,14 +854,14 @@ fi
 
 hardenedbsdurl () {
 new="https://installers.hardenedbsd.org/pub/current/amd64/amd64/installer/LATEST/disc1.iso"
-output="hardenedbsd.iso"
+output_path "hardenedbsd.iso"
 notlinux
 checkfile $1
 }
 
 xigmanasurl () {
 new="https://sourceforge.net/projects/xigmanas/files/latest/download"
-output="xigmanas.iso"
+output_path "xigmanas.iso"
 notlinux
 checkfile $1
 }
@@ -853,7 +869,7 @@ checkfile $1
 clonosurl () {
 mirror="https://clonos.convectix.com/download.html"
 new=$(curl -s $mirror | grep .iso | awk -F"\"" '{ print $2 }')
-output="clonos.iso"
+output_path "clonos.iso"
 notlinux
 checkfile $1
 }
@@ -864,7 +880,7 @@ indianaurl () {
 mirror="https://www.openindiana.org/download/"
 x=$(curl -s $mirror | grep "Live DVD" | awk -F"http://" '{ print $2 }' | awk -F\" '{ print $1 }')
 new="http://$x"
-output="openindiana.iso"
+output_path "openindiana.iso"
 notlinux
 checkfile $1
 }
@@ -873,7 +889,7 @@ minixurl () {
 mirror="https://wiki.minix3.org/doku.php?id=www:download:start"
 x=$(curl -s $mirror | grep -m1 iso.bz2 | awk -F"http://" '{ print $2 }' | awk -F\" '{ print $1 }')
 new="http://$x"
-output="minix.iso.bz2"
+output_path "minix.iso.bz2"
 if [ "$1" == "filesize" ]; then
 	notlinux
 	notlive
@@ -887,7 +903,7 @@ haikuurl () {
 mirror="https://download.haiku-os.org/nightly-images/x86_64/"
 x=$(curl -s $mirror | grep -m1 zip | awk -F\" '{ print $2 }')
 new="$x"
-output="haiku.zip"
+output_path "haiku.zip"
 if [ "$1" == "filesize" ]; then 
 	notlinux
 	getsize
@@ -899,7 +915,7 @@ fi
 menueturl () {
 mirror="http://www.menuetos.be/download.php?CurrentMenuetOS"
 new="$mirror"
-output="menuetos.zip"
+output_path "menuetos.zip"
 if [ "$1" == "filesize" ]; then 
 	notlinux
 	getsize
@@ -921,7 +937,7 @@ fi
 
 reactosurl () {
 new="https://sourceforge.net/projects/reactos/files/latest/download"
-output="reactos.zip"
+output_path "reactos.zip"
 if [ "$1" == "filesize" ]; then 
 	notlinux
 	getsize
@@ -935,7 +951,7 @@ freedosurl () {
 #mirror="https://www.freedos.org/download/download/FD12CD.iso"
 mirror="https://www.freedos.org/download/"
 new=$(curl -s $mirror | grep FD13-LiveCD.zip | awk -F"\"" '{ print $2 }')
-output="freedos.zip"
+output_path "freedos.zip"
 if [ "$1" == "filesize" ]; then 
 	notlinux
 	getsize
@@ -947,14 +963,14 @@ fi
 netbootxyz () {
 mirror="https://boot.netboot.xyz/ipxe/netboot.xyz.iso"
 new="$mirror"
-output="netboot.xyz.iso"
+output_path "netboot.xyz.iso"
 checkfile $1
 }
 
 netbootsal () {
 mirror="http://boot.salstar.sk/ipxe/ipxe.iso"
 new="$mirror"
-output="ipxe.iso"
+output_path "ipxe.iso"
 checkfile $1
 }
 
@@ -963,7 +979,7 @@ netbootipxe () {
 #mirror="http://cloudboot.nchc.org.tw/cloudboot/cloudboot_img/cloudboot_1.0.iso"
 mirror="http://boot.ipxe.org/ipxe.iso"
 new="$mirror"
-output="bootipxe.iso"
+output_path "bootipxe.iso"
 checkfile $1
 }
 
@@ -972,6 +988,14 @@ mirror="https://mirrors.edge.kernel.org/tails/stable/"
 version=$(curl -s $mirror | grep -o 'tails-amd64-[0-9.]*' | head -n1)
 x="https://mirrors.edge.kernel.org/tails/stable/${version}/${version}.img"
 new="$x"
-output="tailsos.img"
+output_path "tailsos.img"
+checkfile $1
+}
+
+proxmoxurl () {
+mirror="https://enterprise.proxmox.com/iso/"
+filename=$(curl -s $mirror | grep proxmox-ve  | tail -1 | awk -F"\"" '{ print $2 }')
+new="${mirror}${filename}"
+output_path "proxmox.iso"
 checkfile $1
 }
