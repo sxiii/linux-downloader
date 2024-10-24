@@ -206,6 +206,14 @@ output_path "ubuntu.iso"
 checkfile $1
 }
 
+ubuntuserverurl () {
+mirror="http://cdimage.ubuntu.com/ubuntu-server/daily-live/current/"
+x=$(curl -s $mirror | grep -m1 server-amd64.iso | awk -F\" '{ print $2 }' | awk -F\" '{ print $1 }')
+new="$mirror/$x"
+output_path "ubuntu-server.iso"
+checkfile $1
+}
+
 minturl () {
 mirror="https://linuxmint.com/edition.php?id=302"
 new=$(curl -s $mirror | grep -m2 iso | grep -m1 -vwE "Torrent" | awk -F"\"" '{ print $2 }')

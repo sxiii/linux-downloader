@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 helpsection () {
 echo "/----------------------------------------------------------------------------------------------------------------------------------------\ "
@@ -38,7 +38,7 @@ cmd="qemu-system-x86_64" # The name of the qemu file to launch
 
 # Categories
 arch=(archlinux manjaro arcolinux archbang parabola endeavour artix arco garuda rebornos archlabs namib obarun archcraft peux bluestar xerolinux)
-deb=(debian ubuntu linuxmint zorinos popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos cutefishos parrot tailsos)
+deb=(debian ubuntu ubuntuserver linuxmint zorinos popos deepin mxlinux knoppix kali puppy pureos elementary backbox devuan jingos cutefishos parrot tailsos)
 rpm=(fedora centos opensuse rosa altlinux mandriva mageia clearos alma rocky qubes nobara ultramarine springdale berry risios eurolinux)
 other=(alpine tinycore porteus slitaz pclinuxos void fourmlinux kaos clearlinux dragora slackware adelie plop solus peropesis openmamba pisi)
 sourcebased=(gentoo sabayon calculate nixos guix crux gobolinux easyos)
@@ -79,6 +79,7 @@ xerolinux=("XeroLinux" "amd64" "rolling" "xerourl")
 # Debian/Ubuntu-based distros
 debian=("Debian" "amd64" "testing" "debianurl")
 ubuntu=("Ubuntu" "amd64" "daily-live" "ubuntuurl")
+ubuntuserver=("Ubuntu Server" "amd64" "daily-live" "ubuntuserverurl")
 linuxmint=("LinuxMint" "amd64" "release" "minturl")
 zorinos=("ZorinOS" "amd64" "core" "zorinurl")
 popos=("PopOS" "amd64" "release" "popurl")
