@@ -21,7 +21,7 @@ Bash script for autodownloading of different latest, "bleeding edge" Linux distr
 ### Install all deps on Arch-based distro
 `sudo pacman -S html2text aria2 p7zip xz bzip2 qemu`
 ### Install all deps on Debian based distro
-`sudo ap-get install html2text aria2 p7zip xz-utils bzip2 qemu`
+`sudo apt-get install html2text aria2 p7zip xz-utils bzip2 qemu`
 
 ## Currently supported distributions
 If you can't find your favourite linux distro in here, please create a github issue with details about it or add support for it yourself and do a pull request.
